@@ -1,0 +1,17 @@
+[
+    {
+        "rooms" : 2,
+        "arrivalDay" : "Monday",
+        "departureDay" : "Wednesday"
+    },
+    {
+        "rooms" : 4,
+        "arrivalDay" : "Tuesday",
+        "departureDay" : "Thursday"
+    },
+    {
+        "rooms" : 2,
+        "arrivalDay" : "Friday",
+        "departureDay" : "Sunday"
+    }
+]
