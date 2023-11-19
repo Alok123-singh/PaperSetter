@@ -186,12 +186,12 @@ function Table() {
 
 
     // Step 2: Save the matrix to local storage whenever it changes
-    // useEffect(() => {
-    // if(matrix.length === 0) return;
-    //     console.log("Matrix stored in local storage !");
-    //     localStorage.setItem('matrix', JSON.stringify(matrix));
-    //     // console.log("Matrix ",matrix);
-    // }, [matrix]);
+    useEffect(() => {
+    if(matrix.length === 0) return;
+        console.log("Matrix stored in local storage !");
+        localStorage.setItem('matrix', JSON.stringify(matrix));
+        // console.log("Matrix ",matrix);
+    }, [matrix]);
 
     // Step 3: Handle click on a block to mark/unmark it
     const handleBlockClick = (row, col) => {
@@ -315,7 +315,7 @@ function Table() {
     
     return (
         <div className='w-full h-auto flex flex-wrap justify-around items-center p-5'>
-            <div className='w-full h-auto flex flex-col justify-center items-center '>
+            <div className='w-full h-auto flex flex-col justify-center items-center shadow-md mb-3'>
                 <div className='w-full flex items-center justify-around'>
                     <textarea disabled={true} className=' w-[74%] h-[3rem] outline outline-black pt-3 rounded-3xl text-center queryShow'></textarea>
                     <div>
@@ -331,14 +331,14 @@ function Table() {
                         >
                             Deny
                         </button>
+                        <div className='w-full flex justify-end items-center pr-10'>
+                            <div className={`${index > queries.length ? 'invisible' : ''} pt-4`}>
+                                <p>Time Remaining : {formatTime(counter)}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className='w-full flex justify-end items-center pr-10'>
-                    <div className={`${index > queries.length ? 'invisible' : ''} pt-4`}>
-                        <p>Time Remaining : {formatTime(counter)}</p>
-                    </div>
-                </div>
             </div>
 
             <div className=' w-[80%] cursor-default'>
