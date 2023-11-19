@@ -368,7 +368,7 @@ function Table() {
                             className={`${ allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md  ${value === 1 ? 'bg-red-500 hover:bg-rose-600' : 'bg-white hover:bg-gray-300'} text-gray-200`}
                             onClick={() => handleBlockClick(rowIndex, colIndex)}
                             >
-                                {"click to book"}
+                                {value === 0 && "click to book"}
                             </div>
                             
                         ))}
