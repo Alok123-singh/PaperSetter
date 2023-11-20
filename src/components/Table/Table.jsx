@@ -426,7 +426,7 @@ function Table() {
                 <div className='w-full lg:w-[20%] flex flex-col lg:flex-row items-center'>
 
                     <button
-                        className={`${allowed === true ? 'w-full lg:w-[7.5rem]' : 'hidden'} p-[8px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 lg:ml-2`}
+                        className={`${allowed === true ? 'w-1/2 ' : 'hidden'} p-[8px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 lg:ml-2`}
                         onClick={() => goToNextQuery()}
                     >
                         {index < queries.length ? 'Next Query' : 'End Game'}
@@ -434,13 +434,13 @@ function Table() {
 
                     <div className='flex flex-col justify-center'>
                         
-                        <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full lg:w-[9rem] h-[2.2rem] p-[8px] cursor-pointer bg-blue-400 flex justify-center items-center rounded-lg`}>
+                        <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full h-[2.2rem] p-[8px] cursor-pointer bg-blue-400 flex justify-center items-center rounded-lg`}>
                             {showResult()}
                         </div>
                         <Link 
                         to={"/"} 
                         >
-                            <div className={`${index <= queries.length ? 'hidden' : 'mt-4'} w-full lg:w-[9rem] h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg`}>
+                            <div className={`${index <= queries.length ? 'hidden' : 'mt-4'} w-full mt-4  h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg`}>
                                 Terminate Game
                             </div>
                         </Link>
