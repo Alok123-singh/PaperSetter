@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
-import '../index.css'
-import data from '../JSON/queries.json'
+import '../../index.css'
+import data from '../../JSON/queries.json'
 
 function Table() {
 
@@ -58,6 +58,7 @@ function Table() {
         return newMatrix;
 
     });
+    
     const [percentage,setPercentage] = useState(() => {
         let array = [];
         for(let j = 0; j < defaultColumns; j++){
@@ -314,9 +315,9 @@ function Table() {
     };
     
     return (
-        <div className='w-full h-auto flex flex-wrap justify-around items-center p-5'>
-            <div className='w-full h-auto flex flex-col justify-center items-center shadow-md mb-3'>
-                <div className='w-full flex items-center justify-around'>
+        <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center p-5'>
+            <div className='w-full h-auto  flex flex-col justify-center items-center border-y-2 shadow-md mb-3'>
+                <div className='w-full flex items-center justify-around my-4'>
                     <textarea disabled={true} className=' w-[74%] h-[3rem] outline outline-black pt-3 rounded-3xl text-center queryShow'></textarea>
                     <div>
                         <button type='button' className={`${index > queries.length ? 'invisible' : 
@@ -358,14 +359,14 @@ function Table() {
                 {matrix.map((row, rowIndex) => (
 
                     <div className='flex' key={rowIndex}>
-                        <div className='w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 rounded-md'>
+                        <div className='w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md'>
                             {"Room " + (rowIndex+1).toString()}
                         </div>
                         {row.map((value, colIndex) => (
                             <div
 
                             key={colIndex}
-                            className={`${ allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md  ${value === 1 ? 'bg-red-500 hover:bg-rose-600' : 'bg-white hover:bg-gray-300'} text-gray-200`}
+                            className={`${ allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md  ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
                             onClick={() => handleBlockClick(rowIndex, colIndex)}
                             >
                                 {value === 0 && "click to book"}
