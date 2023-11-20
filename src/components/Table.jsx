@@ -13,12 +13,10 @@ function Table() {
         return data;
     });
 
-    const [query,setQuery] = useState(() => {
-        return queries[index];
-    });
+    const [query,setQuery] = useState(() => (queries[index]));
 
     const [rooms,setRooms] = useState(() => {
-        return query.rooms;
+        return 0;
     })
 
     const[defaultRows,setDefaultRows] = useState(10);
@@ -26,7 +24,7 @@ function Table() {
 
     const [prevMatrix,setPrevMatrix] = useState(() => {
         const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
-        if (storedMatrix) {
+        if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
             return storedMatrix;
         }
 
@@ -44,7 +42,7 @@ function Table() {
 
     const [matrix, setMatrix] = useState(() => {
         const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
-        if (storedMatrix) {
+        if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
             return storedMatrix;
         }
         
@@ -202,12 +200,14 @@ function Table() {
         let dayNo1 = getDayNo(queries[index-1].arrivalDay), dayNo2 = getDayNo(queries[index-1].departureDay) - 1;
         // console.log("DayNo1",dayNo1);
         // console.log("DayNo2",dayNo2);
+        // console.log("Rooms inside handleblockclick method",rooms);
+        // console.log("Query inside handleblockclick method",query);
         for(let j = dayNo1-1; j <= dayNo2-1; j++){
             if(prevMatrix[row][j] === 1) return;
         }
 
-        var confirmation = confirm("Do you want to make changes?");
-        if(!confirmation) return;
+        // var confirmation = confirm("Do you want to make changes?");
+        // if(!confirmation) return;
 
         const updatedMatrix = matrix.map((rowArray, rowIndex) => {
             if(rowIndex === row){
