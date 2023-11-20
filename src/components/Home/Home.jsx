@@ -18,14 +18,16 @@ function Home() {
                     <p class="mt-3 text-sm text-gray-600 text-center">
                         It books rooms according to query that comes at a time
                     </p>
-                    <button
-                    type="button"
-                    class="mt-4 rounded-lg bg-black py-3 px-4 text-[14px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                    >
-                        <Link to="/game">
-                            Play
-                        </Link>
-                    </button>
+                    <Link to="/game">
+                        <button
+                        type="button"
+                        class="mt-4 rounded-lg bg-black py-3 px-4 text-[14px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                        >
+                            
+                                Play
+                            
+                        </button>
+                    </Link>
                 </div>
             </div>
 
