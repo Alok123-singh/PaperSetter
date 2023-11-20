@@ -4,7 +4,11 @@ import data from '../../JSON/queries.json'
 
 function Table() {
 
+    const[defaultRows,setDefaultRows] = useState(10);
+    const[defaultColumns,setDefaultColumns] = useState(7);
+
     let cnt = 30;
+    const [text, setText] = useState('');
     const [counter, setCounter] = useState(cnt);
     const [index,setIndex] = useState(0);
     const [change, setChange] = useState(false);
@@ -18,9 +22,6 @@ function Table() {
     const [rooms,setRooms] = useState(() => {
         return 0;
     })
-
-    const[defaultRows,setDefaultRows] = useState(10);
-    const[defaultColumns,setDefaultColumns] = useState(7);
 
     const [prevMatrix,setPrevMatrix] = useState(() => {
         const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
@@ -313,6 +314,30 @@ function Table() {
         result = (cnt / (defaultRows * defaultColumns)) * 100;
         return ("Result - " + result.toFixed(2).toString() + " %");
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            // You can adjust the logic here based on your screen size requirements
+            if (window.innerWidth < 600) {
+                setText('');
+            } else if (window.innerWidth < 1024) {
+                setText('Book');
+            } else {
+                setText('Click to book');
+            }
+            };
+
+            // Initial setup
+            handleResize();
+
+            // Add event listener for window resize
+            window.addEventListener('resize', handleResize);
+
+            // Cleanup the event listener on component unmount
+            return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
     
     return (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center p-5'>
@@ -378,6 +403,7 @@ function Table() {
                                     className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
                                     onClick={() => handleBlockClick(rowIndex, colIndex)}
                                 >
+                                    {text}
                                     {/* {value === 0 && "click to book"} */}
                                 </div>
                             ))}
