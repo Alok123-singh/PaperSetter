@@ -316,90 +316,104 @@ function Table() {
     
     return (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center p-5'>
-            <div className='w-full h-auto  flex flex-col justify-center items-center border-y-2 shadow-md mb-3'>
-                <div className='w-full flex items-center justify-around my-4'>
-                    <textarea disabled={true} className=' w-[74%] h-[3rem] outline outline-black pt-3 rounded-3xl text-center queryShow'></textarea>
-                    <div>
-                        <button type='button' className={`${index > queries.length ? 'invisible' : 
-                        ''} yes w-[5rem] bg-green-600 hover:bg-green-500`}
-                        onClick={() => setAllowed(true)}
-                        >
-                            Accept
-                        </button>
+            <div className='w-full h-auto flex flex-col justify-center items-center border-y-2 shadow-md mb-3'>
 
-                        <button type='button' className={`${allowed || index > queries.length ? 'invisible' : ''} no ml-5 w-[5rem] bg-red-600 hover:bg-red-500`}
-                        onClick={() => setChange(true)}
-                        >
-                            Deny
-                        </button>
-                        <div className='w-full flex justify-end items-center pr-10'>
-                            <div className={`${index > queries.length ? 'invisible' : ''} pt-4`}>
-                                <p>Time Remaining : {formatTime(counter)}</p>
-                            </div>
+                <div className='w-full flex flex-col lg:flex-row items-center justify-around my-4'>
+                    <textarea
+                        disabled={true}
+                        className='w-full lg:w-[74%] h-[5rem] sm:h-[4rem] md:h-[3rem] outline outline-black pt-3 rounded-3xl text-center queryShow'
+                    ></textarea>
+
+                    <div className='mt-4 lg:mt-0'>
+                        <div className='mb-4'>
+                            <button
+                                type='button'
+                                className={`${index > queries.length ? 'invisible' : ''} yes w-[5rem] xl:w-[7rem] bg-green-600 hover:bg-green-500`}
+                                onClick={() => setAllowed(true)}
+                            >
+                                Accept
+                            </button>
+
+                            <button
+                                type='button'
+                                className={`${allowed || index > queries.length ? 'invisible' : ''} no ml-2 lg:ml-5 w-[5rem] xl:w-[7rem] bg-red-600 hover:bg-red-500`}
+                                onClick={() => setChange(true)}
+                            >
+                                Deny
+                            </button>
+                        </div>
+
+                        <div className={`${index > queries.length ? 'invisible' : 'pt-4'} lg:pt-0  xl:ml-8 flex items-center`}>
+                            <p className='text-sm lg:text-base'>
+                                Time Remaining: {formatTime(counter)}
+                            </p>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <div className=' w-[80%] cursor-default'>
-                <div className='flex '>
-                    <div className='w-[8rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-blue-400 rounded-md'>
-                        Day
-                    </div>
-                    {matrix.map((array,index1) => (
-                        index1 === 0 ? array.map((value,index2) => (
-                            <div key={index2} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md'>
-                                {showDay(index2+1)}
-                            </div>
-                        )) : ''
-                    ))}
-                </div>
-                
-                {matrix.map((row, rowIndex) => (
-
-                    <div className='flex' key={rowIndex}>
-                        <div className='w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md'>
-                            {"Room " + (rowIndex+1).toString()}
+            <div className='w-full lg:w-[97%] flex flex-col lg:flex-row justify-between cursor-default MainDiv'>
+                <div className='w-full lg:w-[80%]'>
+                    <div className='flex'>
+                        <div className='w-[8rem] p-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                            Day
                         </div>
-                        {row.map((value, colIndex) => (
-                            <div
-
-                            key={colIndex}
-                            className={`${ allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md  ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
-                            onClick={() => handleBlockClick(rowIndex, colIndex)}
-                            >
-                                {value === 0 && "click to book"}
-                            </div>
-                            
+                        {matrix.map((array, index1) => (
+                            index1 === 0 ? array.map((value, index2) => (
+                                <div key={index2} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                                    {showDay(index2 + 1)}
+                                </div>
+                            )) : ''
                         ))}
                     </div>
-                ))}
 
-                <div className='flex'>
-                    <div className='w-[8rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md'>Total</div>
-                    {percentage.map((value,index) => (
-                        <div key={index} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md'>
-                            {value};
+                    {matrix.map((row, rowIndex) => (
+                        <div className='flex' key={rowIndex}>
+                            <div className='w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md text-xs lg:text-base xl:text-lg'>
+                                {"R " + (rowIndex + 1).toString()}
+                            </div>
+                            {row.map((value, colIndex) => (
+                                <div
+                                    key={colIndex}
+                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
+                                    onClick={() => handleBlockClick(rowIndex, colIndex)}
+                                >
+                                    {/* {value === 0 && "click to book"} */}
+                                </div>
+                            ))}
                         </div>
                     ))}
+
+                    <div className='flex'>
+                        <div className='w-[8rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base xl:text-lg'>
+                            Total
+                        </div>
+                        {percentage.map((value, index) => (
+                            <div key={index} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                                {value};
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className='w-full lg:w-[20%] flex flex-col lg:flex-row items-center'>
+
+                    <button
+                        className={`${allowed === true ? 'w-full lg:w-[7.5rem]' : 'hidden'} mt-4 lg:mt-0 hover:bg-green-500 bg-green-600 lg:ml-2`}
+                        onClick={() => goToNextQuery()}
+                    >
+                        {index < queries.length ? 'Next Query' : 'End Game'}
+                    </button>
+
+                    <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full lg:w-[9rem] h-[2.2rem] p-2 bg-blue-400 flex justify-center items-center rounded-lg`}>
+                        {showResult()}
+                    </div>
+
                 </div>
 
             </div>
 
-            <div>
-                <button 
-                className = {`${allowed === true ? '' : 'invisible'} hover:bg-green-500 bg-green-600`} 
-                onClick={() => goToNextQuery()} 
-                >
-                    {index < queries.length ? 'Next Query' : 'End Game'}
-                </button>
 
-                <div className={`${index <= queries.length ? 'invisible': ''} w-[10rem] h-[2.2rem] p-2 bg-blue-400 flex justify-center items-center rounded-lg `}>
-                    {showResult()}
-                </div>
-
-            </div>
 
         </div>
     )
