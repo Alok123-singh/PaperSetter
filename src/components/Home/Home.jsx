@@ -5,13 +5,13 @@ import {Link, NavLink} from 'react-router-dom'
 
 function Home() {
     return (
-        <div className = 'my-5 flex justify-around items-center  flex-wrap'>
+        <div className = 'py-5 flex justify-around items-center dark:bg-gray-400  flex-wrap'>
 
-            <div class="w-[300px] rounded-md border-2">
+            <div class="w-[300px] rounded-md border-2 border-gray-300 dark:border-gray-600 flex flex-col justify-center items-center">
                 <img
                     src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60"
                     alt="Game"
-                    class="h-[200px] w-full rounded-md object-cover"
+                    class="h-[200px] w-[95%] rounded-lg object-cover mt-2"
                 />
                 <div class="p-4">
                     <h1 class="text-lg font-semibold">Query Game</h1>
