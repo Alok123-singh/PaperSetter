@@ -1,9 +1,9 @@
 import React from 'react'
-import LogoImage from '../../assets/logo.jpg'
+import LogoImage from '../../assets/logo2.jpg'
 
 function Logo({width = '100px'}) {
     return (
-        <img className='w-[3rem] h-[3rem] rounded-lg bg-cover' style={{backgroundImage: `url(${LogoImage})`}} />
+        <img className='w-[5rem] h-[4rem] rounded-lg bg-cover' style={{backgroundImage: `url(${LogoImage})`}} />
     )
 }
 
