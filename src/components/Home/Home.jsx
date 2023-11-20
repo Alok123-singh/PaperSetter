@@ -23,9 +23,7 @@ function Home() {
                         type="button"
                         class="mt-4 rounded-lg bg-black py-3 px-4 text-[14px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                         >
-                            
-                                Play
-                            
+                            Play
                         </button>
                     </Link>
                 </div>

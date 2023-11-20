@@ -12,11 +12,3 @@ body {
     font-family: Arial, sans-serif;
 }
 
-button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}

@@ -9,11 +9,11 @@ function Header() {
     const [loginStatus,setLoginStatus] = useState(false);
 
     const navItems = [
-        {
-            name : "Home",
-            slug : '/',
-            active : true
-        },
+        // {
+        //     name : "Home",
+        //     slug : '/',
+        //     active : true
+        // },
         {
             name : "Contact",
             slug : '/contact',
@@ -24,16 +24,11 @@ function Header() {
             slug : '/about',
             active : true
         },
-        {
-            name : "Login",
-            slug : '/login',
-            active : !loginStatus
-        },
-        {
-            name : "Signup",
-            slug : '/signup',
-            active : !loginStatus
-        }
+        // {
+        //     name : "Signup",
+        //     slug : '/signup',
+        //     active : !loginStatus
+        // }
     ]
 
     const navLinkStyles = ({ isActive }) => {
@@ -51,7 +46,7 @@ function Header() {
     }
 
     return (
-        <header className='w-full p-4 bg-slate-300 dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
+        <header className='w-full p-4  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
                 <nav className='flex justify-between pt-3 sm:pt-0 md:justify-between flex-wrap'>
                     <div className=' mx-2 my-1'>
@@ -59,7 +54,7 @@ function Header() {
                             <Logo width='70px'   />
                         </Link>
                     </div>
-                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'md:pl-[3.3rem]'} hidden text-black dark:text-white sm:pl-[1.2rem] w-auto sm:flex justify-evenly flex-wrap`}>
+                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'md:pl-[14.8rem]'} hidden text-black dark:text-white sm:pl-[1.2rem] w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
                         <NavLink key={item.name}
@@ -87,12 +82,32 @@ function Header() {
                                 My Account
                             </NavLink>
                         )}
+                        {!loginStatus && (
+                            <Link to="/login" >
+                                <button 
+                                className='mt-[0.6rem]  sm:pt-1 mx-2  p-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                                
+                                >
+                                    Login
+                                </button>
+                            </Link>
+                        )}
+                        {!loginStatus && (
+                            <Link to="/signup" >
+                                <button 
+                                className='mt-[0.6rem]  sm:pt-1 ml-7 mr-2 p-2 py-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                                
+                                >
+                                    Signup
+                                </button>
+                            </Link>
+                        )}
                         {loginStatus && (
                             <div className=''> 
                                 <LogoutBtn />
                             </div>
                         )}
-                        <div className={`${!loginStatus ? "m-4 sm:mt-[1.1rem]" : ' sm:m-[0.9rem]'}`}>
+                        <div className={`${!loginStatus ? "m-4 sm:mt-[0.9rem]" : ' sm:m-[0.9rem]'}`}>
                             <ThemeButton />
                         </div>
                     </div>
@@ -151,6 +166,26 @@ function Header() {
                         >
                             My Account
                         </NavLink>
+                    )}
+                    {loginStatus && (
+                        <Link to="/login" >
+                            <button 
+                            className='mt-[0.6rem]  sm:pt-1 mx-2  p-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                            
+                            >
+                                Login
+                            </button>
+                        </Link>
+                    )}
+                    {loginStatus && (
+                        <Link to="/signup" >
+                            <button 
+                            className='mt-[0.6rem]  sm:pt-1 ml-7 mr-2 p-2 py-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                            
+                            >
+                                Signup
+                            </button>
+                        </Link>
                     )}
                     {loginStatus && (
                         <div > 

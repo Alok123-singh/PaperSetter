@@ -5,7 +5,7 @@ import { Logo } from '../index.js'
 
 function Footer() {
     return (
-        <footer className="dark:bg-slate-700 dark:text-white overflow-hidden py-10 bg-slate-200  border-t-2 dark:border-t-yellow-600 border-t-fuchsia-700">
+        <footer className="dark:bg-slate-700 dark:text-white overflow-hidden py-10  border-t-2 dark:border-t-yellow-600 border-t-fuchsia-700">
             <div className="flex justify-around items-center px-4">
                 <div className="m-6 flex justify-center md:justify-between flex-wrap">
                     <div className="pt-6 md:w-1/2 lg:w-3/12">
@@ -81,13 +81,13 @@ function Footer() {
                                         className=" text-base font-medium text-gray-900 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500 cursor-pointer"
                                         to="/"
                                     >
-                                        Help
+                                        Home
                                     </Link>
                                 </li>
                                 <li className="mb-4">
                                     <Link
                                         className=" text-base font-medium text-gray-900 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500 cursor-pointer"
-                                        to="/"
+                                        to="/contact"
                                     >
                                         Contact Us
                                     </Link>

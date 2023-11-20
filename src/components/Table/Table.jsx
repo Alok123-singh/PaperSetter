@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react';
 import '../../index.css'
 import data from '../../JSON/queries.json'
+import { Link } from 'react-router-dom';
 
 function Table() {
 
@@ -321,9 +322,9 @@ function Table() {
             if (window.innerWidth < 600) {
                 setText('');
             } else if (window.innerWidth < 1024) {
-                setText('Book');
+                setText('');
             } else {
-                setText('Click to book');
+                setText('');
             }
             };
 
@@ -340,20 +341,20 @@ function Table() {
     }, []);
     
     return (
-        <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center p-5'>
+        <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center mb-5'>
             <div className='w-full h-auto flex flex-col justify-center items-center border-y-2 shadow-md mb-3'>
 
                 <div className='w-full flex flex-col lg:flex-row items-center justify-around my-4'>
                     <textarea
                         disabled={true}
-                        className='w-full lg:w-[74%] h-[5rem] sm:h-[4rem] md:h-[3rem] outline outline-black pt-3 rounded-3xl text-center queryShow'
+                        className='w-full lg:w-[67%] h-[5rem] sm:h-[4rem] md:h-[2.5rem]  outline outline-black pt-4 md:pt-2 rounded-3xl text-center queryShow'
                     ></textarea>
 
-                    <div className='mt-4 lg:mt-0'>
-                        <div className='mb-4'>
+                    <div className='mt-2 lg:mt-0'>
+                        <div className='mb-3'>
                             <button
                                 type='button'
-                                className={`${index > queries.length ? 'invisible' : ''} yes w-[5rem] xl:w-[7rem] bg-green-600 hover:bg-green-500`}
+                                className={`${index > queries.length ? 'invisible' : ''} p-[8px] rounded-lg cursor-pointer yes w-[5rem] xl:w-[7rem] bg-green-500 hover:bg-green-400`}
                                 onClick={() => setAllowed(true)}
                             >
                                 Accept
@@ -361,7 +362,7 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${allowed || index > queries.length ? 'invisible' : ''} no ml-2 lg:ml-5 w-[5rem] xl:w-[7rem] bg-red-600 hover:bg-red-500`}
+                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[8px] rounded-lg cursor-pointer ml-2 lg:ml-5 w-[5rem] xl:w-[7rem] bg-red-500 hover:bg-red-400`}
                                 onClick={() => setChange(true)}
                             >
                                 Deny
@@ -378,14 +379,14 @@ function Table() {
             </div>
 
             <div className='w-full lg:w-[97%] flex flex-col lg:flex-row justify-between cursor-default MainDiv'>
-                <div className='w-full lg:w-[80%]'>
+                <div className='w-full lg:w-[80%] ml-[2rem]'>
                     <div className='flex'>
-                        <div className='w-[8rem] p-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                        <div className='w-[7.5rem] h-[2.3rem] px-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
                             Day
                         </div>
                         {matrix.map((array, index1) => (
                             index1 === 0 ? array.map((value, index2) => (
-                                <div key={index2} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                                <div key={index2} className='w-[7.5rem] h-[2.3rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
                                     {showDay(index2 + 1)}
                                 </div>
                             )) : ''
@@ -394,16 +395,16 @@ function Table() {
 
                     {matrix.map((row, rowIndex) => (
                         <div className='flex' key={rowIndex}>
-                            <div className='w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md text-xs lg:text-base xl:text-lg'>
+                            <div className='w-[7.5rem] h-[2.3rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md text-xs lg:text-base xl:text-lg'>
                                 {"R " + (rowIndex + 1).toString()}
                             </div>
                             {row.map((value, colIndex) => (
                                 <div
                                     key={colIndex}
-                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[8rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
+                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[7.5rem] h-[2.3rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
                                     onClick={() => handleBlockClick(rowIndex, colIndex)}
                                 >
-                                    {text}
+                                    {value === 0 && text}
                                     {/* {value === 0 && "click to book"} */}
                                 </div>
                             ))}
@@ -411,11 +412,11 @@ function Table() {
                     ))}
 
                     <div className='flex'>
-                        <div className='w-[8rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base xl:text-lg'>
+                        <div className='w-[7.5rem] h-[2.3rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base xl:text-lg'>
                             Total
                         </div>
                         {percentage.map((value, index) => (
-                            <div key={index} className='w-[8rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                            <div key={index} className='w-[7.5rem] h-[2.3rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base xl:text-lg'>
                                 {value};
                             </div>
                         ))}
@@ -425,14 +426,25 @@ function Table() {
                 <div className='w-full lg:w-[20%] flex flex-col lg:flex-row items-center'>
 
                     <button
-                        className={`${allowed === true ? 'w-full lg:w-[7.5rem]' : 'hidden'} mt-4 lg:mt-0 hover:bg-green-500 bg-green-600 lg:ml-2`}
+                        className={`${allowed === true ? 'w-full lg:w-[7.5rem]' : 'hidden'} p-[8px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 lg:ml-2`}
                         onClick={() => goToNextQuery()}
                     >
                         {index < queries.length ? 'Next Query' : 'End Game'}
                     </button>
 
-                    <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full lg:w-[9rem] h-[2.2rem] p-2 bg-blue-400 flex justify-center items-center rounded-lg`}>
-                        {showResult()}
+                    <div className='flex flex-col justify-center'>
+                        
+                        <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full lg:w-[9rem] h-[2.2rem] p-2 bg-blue-400 flex justify-center items-center rounded-lg`}>
+                            {showResult()}
+                        </div>
+                        <Link 
+                        to={"/"} 
+                        >
+                            <div className={`${index <= queries.length ? 'hidden' : 'mt-4'} w-full lg:w-[9rem] h-[2.2rem] p-2 bg-rose-400 hover:bg-rose-300 flex justify-center items-center rounded-lg`}>
+                                Terminate Game
+                            </div>
+                        </Link>
+                        
                     </div>
 
                 </div>
