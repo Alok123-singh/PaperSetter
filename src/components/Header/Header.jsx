@@ -64,7 +64,7 @@ function Header() {
                             <button
 
                             // onClick={() => navigate(item.slug)}
-                            className='py-1 w-[6rem] hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-xl m-2'
+                            className='py-1 w-[6rem] hover:bg-slate-200 dark:hover:bg-slate-600  rounded-xl m-2'
                             >{item.name}</button>
                         </NavLink>
                         ) : null
@@ -75,7 +75,7 @@ function Header() {
                         {loginStatus && (
                             <NavLink 
                             style={navLinkStyles}
-                            className='px-2 sm:mr-2 py-1 my-2 h-[2.3rem] w-[7rem] flex items-center justify-center duration-200 hover:bg-slate-200 dark:hover:bg-emerald-700 rounded-full text-center cursor-pointer '
+                            className='px-2 sm:mr-2 py-1 my-2 h-[2.3rem] w-[7rem] flex items-center justify-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-full text-center cursor-pointer '
                             to={'/my-account'}
                             // onClick={() => navigate('/my-account')}
                             >
@@ -85,7 +85,7 @@ function Header() {
                         {!loginStatus && (
                             <Link to="/login" >
                                 <button 
-                                className='mt-[0rem]  sm:pt-1 mx-2  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-lg '
+                                className='mt-[0rem]  sm:pt-1 mx-2  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
                                 
                                 >
                                     Login
@@ -95,7 +95,7 @@ function Header() {
                         {!loginStatus && (
                             <Link to="/signup" >
                                 <button 
-                                className='mt-[0rem]  sm:pt-1 ml-7 mr-2 p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-lg '
+                                className='mt-[0rem]  sm:pt-1 ml-7 mr-2 p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
                                 
                                 >
                                     Signup
