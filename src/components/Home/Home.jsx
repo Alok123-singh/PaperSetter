@@ -21,7 +21,7 @@ function Home() {
                     <Link to="/game">
                         <button
                         type="button"
-                        class="mt-4 rounded-lg bg-black py-3 px-4 text-[14px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                        class="mt-4 py-2 px-4 text-[14px] font-semibold bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white border border-blue-400 hover:border-transparent rounded"
                         >
                             Play
                         </button>

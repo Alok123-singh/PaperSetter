@@ -355,7 +355,7 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${index > queries.length ? 'invisible' : ''} p-[4px] rounded-lg cursor-pointer yes w-[6rem] xl:w-[4rem]  bg-green-500 hover:bg-green-400`}
+                                className={`${index > queries.length ? 'invisible' : ''} px-[5px] py-[6px] cursor-pointer w-[6rem] xl:w-[4rem]  bg-blue-500 hover:bg-blue-400 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded`}
                                 onClick={() => setAllowed(true)}
                             >
                                 Accept
@@ -363,7 +363,7 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[4px] rounded-lg cursor-pointer w-[5rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400`}
+                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
                                 onClick={() => setChange(true)}
                             >
                                 Deny
@@ -426,7 +426,7 @@ function Table() {
                 <div className='w-full lg:w-[10rem] flex flex-col lg:flex-row items-center'>
 
                     <button
-                        className={`${allowed === true ? 'w-[6rem]' : 'hidden'} p-[6px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 `}
+                        className={`${allowed === true ? 'w-[6rem]' : 'hidden'} p-[5px] cursor-pointer mt-4 lg:mt-0 bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded `}
                         onClick={() => goToNextQuery()}
                     >
                         {index < queries.length ? 'Next Query' : 'End Game'}
@@ -434,7 +434,7 @@ function Table() {
 
                     <div className={`${index <= queries.length ? 'hidden' : ''} flex w-[10rem] flex-col items-center `}>
                         
-                        <div className='mt-4 lg:mt-0 w-[9rem] h-[2.2rem] p-[6px] cursor-default bg-blue-400 flex justify-center items-center rounded-lg'>
+                        <div className='mt-4 lg:mt-0 w-[9rem] h-[2.2rem] p-[3px] cursor-default flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded'>
                             {showResult()}
                         </div>
 
@@ -442,7 +442,7 @@ function Table() {
                         to={"/game"} 
                         onClick={() => window.location.reload()}
                         >
-                            <div className='w-[6rem] mt-4 h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg'>
+                            <div className='w-[6rem] mt-4 h-[2.2rem] p-[6px] cursor-pointer  flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
                                 Play Again
                             </div>
                         </Link>
@@ -450,7 +450,7 @@ function Table() {
                         <Link 
                         to={"/"} 
                         >
-                            <div className='w-[7rem] mt-4  h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg'>
+                            <div className='w-[7rem] mt-4  h-[2.2rem] p-[8px] cursor-pointer flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
                                 Go To Home
                             </div>
                         </Link>
