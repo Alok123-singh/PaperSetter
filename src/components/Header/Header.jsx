@@ -46,15 +46,15 @@ function Header() {
     }
 
     return (
-        <header className='w-full p-4  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
+        <header className='w-full py-1  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
-                <nav className='flex justify-between pt-3 sm:pt-0 md:justify-between flex-wrap'>
-                    <div className=' mx-2 my-1'>
+                <nav className='flex justify-between pt-2 sm:pt-0 md:justify-between flex-wrap'>
+                    <div className=' mx-2'>
                         <Link to='/' >
                             <Logo width='70px'   />
                         </Link>
                     </div>
-                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'md:pl-[12.2rem]'} hidden text-black dark:text-white sm:pl-[1.2rem] w-auto sm:flex justify-evenly flex-wrap`}>
+                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'md:pl-[12.7rem]'} hidden text-black dark:text-white sm:pl-[1.2rem] w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
                         <NavLink key={item.name}
@@ -64,7 +64,7 @@ function Header() {
                             <button
 
                             // onClick={() => navigate(item.slug)}
-                            className='py-2 w-[6rem] hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-xl m-2'
+                            className='py-1 w-[6rem] hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-xl m-2'
                             >{item.name}</button>
                         </NavLink>
                         ) : null
@@ -75,7 +75,7 @@ function Header() {
                         {loginStatus && (
                             <NavLink 
                             style={navLinkStyles}
-                            className='px-2 sm:mr-2 py-2 my-2 h-[2.3rem] w-[7rem] flex items-center justify-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700 rounded-full text-center cursor-pointer '
+                            className='px-2 sm:mr-2 py-1 my-2 h-[2.3rem] w-[7rem] flex items-center justify-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700 rounded-full text-center cursor-pointer '
                             to={'/my-account'}
                             // onClick={() => navigate('/my-account')}
                             >
@@ -85,7 +85,7 @@ function Header() {
                         {!loginStatus && (
                             <Link to="/login" >
                                 <button 
-                                className='mt-[0.6rem]  sm:pt-1 mx-2  p-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                                className='mt-[0rem]  sm:pt-1 mx-2  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
                                 
                                 >
                                     Login
@@ -95,7 +95,7 @@ function Header() {
                         {!loginStatus && (
                             <Link to="/signup" >
                                 <button 
-                                className='mt-[0.6rem]  sm:pt-1 ml-7 mr-2 p-2 py-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
+                                className='mt-[0rem]  sm:pt-1 ml-7 mr-2 p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-400 dark:hover:bg-emerald-700  rounded-lg '
                                 
                                 >
                                     Signup
@@ -107,7 +107,7 @@ function Header() {
                                 <LogoutBtn />
                             </div>
                         )}
-                        <div className={`${!loginStatus ? "m-4 sm:mt-[0.9rem]" : ' sm:m-[0.9rem]'}`}>
+                        <div className={`${!loginStatus ? "mx-4 sm:mt-[0.9rem]" : ' sm:m-[0.9rem]'}`}>
                             <ThemeButton />
                         </div>
                     </div>

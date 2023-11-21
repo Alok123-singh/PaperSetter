@@ -315,16 +315,16 @@ function Table() {
         result = (cnt / (defaultRows * defaultColumns)) * 100;
         return ("Result - " + result.toFixed(2).toString() + " %");
     };
-
+    
     useEffect(() => {
         const handleResize = () => {
             // You can adjust the logic here based on your screen size requirements
             if (window.innerWidth < 600) {
-                setText('');
+                setText('R ');
             } else if (window.innerWidth < 1024) {
-                setText('');
+                setText('Room ');
             } else {
-                setText('');
+                setText('Room ');
             }
             };
 
@@ -342,19 +342,20 @@ function Table() {
     
     return (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center mb-5'>
-            <div className='w-full h-auto flex flex-col justify-center items-center border-y-2 shadow-md mb-3'>
+            <div className='w-full h-auto flex flex-col justify-center items-center border-y-2 shadow-md mb-7'>
 
-                <div className='w-full flex flex-col lg:flex-row items-center justify-around my-4'>
+                <div className='w-full flex flex-col lg:flex-row items-center justify-around my-2'>
                     <textarea
                         disabled={true}
-                        className='w-full lg:w-[67%] h-[5rem] sm:h-[4rem] md:h-[2.5rem]  outline outline-black pt-4 md:pt-2 rounded-3xl text-center queryShow'
+                        className='w-full sm:ml-[0.9rem] lg:ml-[3rem] lg:w-[46rem] h-[5rem] sm:h-[4rem] md:h-[3rem]  outline outline-black pt-4 md:pt-3 rounded-3xl text-center queryShow'
                     ></textarea>
 
-                    <div className='mt-2 lg:mt-0'>
-                        <div className='mb-3'>
+                    <div className='mt-2 w-[16rem] flex flex-col items-center '>
+                        <div className='mb-2 flex justify-center w-[16rem] items-center'>
+
                             <button
                                 type='button'
-                                className={`${index > queries.length ? 'invisible' : ''} p-[8px] rounded-lg cursor-pointer yes w-[5rem] xl:w-[7rem] bg-green-500 hover:bg-green-400`}
+                                className={`${index > queries.length ? 'invisible' : ''} p-[4px] rounded-lg cursor-pointer yes w-[6rem] xl:w-[4rem]  bg-green-500 hover:bg-green-400`}
                                 onClick={() => setAllowed(true)}
                             >
                                 Accept
@@ -362,14 +363,14 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[8px] rounded-lg cursor-pointer ml-2 lg:ml-5 w-[5rem] xl:w-[7rem] bg-red-500 hover:bg-red-400`}
+                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[4px] rounded-lg cursor-pointer w-[5rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400`}
                                 onClick={() => setChange(true)}
                             >
                                 Deny
                             </button>
                         </div>
 
-                        <div className={`${index > queries.length ? 'invisible' : 'pt-4'} lg:pt-0  xl:ml-8 flex items-center`}>
+                        <div className={`${index > queries.length ? 'invisible' : 'pt-4'} lg:pt-0  flex items-center`}>
                             <p className='text-sm lg:text-base'>
                                 Time Remaining: {formatTime(counter)}
                             </p>
@@ -378,15 +379,15 @@ function Table() {
                 </div>
             </div>
 
-            <div className='w-full lg:w-[97%] flex flex-col lg:flex-row justify-between cursor-default MainDiv'>
-                <div className='w-full lg:w-[80%] ml-[2rem]'>
+            <div className='w-full lg:w-[97%] flex flex-col lg:flex-row justify-around cursor-default MainDiv'>
+                <div className='w-full flex flex-col md:items-center lg:justify-evenly sm:w-[95%] lg:w-[45rem] sm:ml-[0.9rem] lg:ml-[2rem]'>
                     <div className='flex'>
-                        <div className='w-[7.5rem] h-[2.3rem] px-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                        <div className='w-[6rem] h-[2rem] px-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base'>
                             Day
                         </div>
                         {matrix.map((array, index1) => (
                             index1 === 0 ? array.map((value, index2) => (
-                                <div key={index2} className='w-[7.5rem] h-[2.3rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                                <div key={index2} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base'>
                                     {showDay(index2 + 1)}
                                 </div>
                             )) : ''
@@ -395,16 +396,15 @@ function Table() {
 
                     {matrix.map((row, rowIndex) => (
                         <div className='flex' key={rowIndex}>
-                            <div className='w-[7.5rem] h-[2.3rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md text-xs lg:text-base xl:text-lg'>
-                                {"R " + (rowIndex + 1).toString()}
+                            <div className='w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-500 rounded-md text-xs lg:text-base'>
+                                {text + (rowIndex + 1).toString()}
                             </div>
                             {row.map((value, colIndex) => (
                                 <div
                                     key={colIndex}
-                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[7.5rem] h-[2.3rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
+                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-red-600 dark:hover:bg-rose-500' : 'bg-white hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400'} text-gray-200 dark:text-gray-600`}
                                     onClick={() => handleBlockClick(rowIndex, colIndex)}
                                 >
-                                    {value === 0 && text}
                                     {/* {value === 0 && "click to book"} */}
                                 </div>
                             ))}
@@ -412,36 +412,46 @@ function Table() {
                     ))}
 
                     <div className='flex'>
-                        <div className='w-[7.5rem] h-[2.3rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base xl:text-lg'>
+                        <div className='w-[6rem] h-[2rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base'>
                             Total
                         </div>
                         {percentage.map((value, index) => (
-                            <div key={index} className='w-[7.5rem] h-[2.3rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base xl:text-lg'>
+                            <div key={index} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base '>
                                 {value};
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className='w-full lg:w-[20%] flex flex-col lg:flex-row items-center'>
+                <div className='w-full lg:w-[10rem] flex flex-col lg:flex-row items-center'>
 
                     <button
-                        className={`${allowed === true ? 'w-1/2 ' : 'hidden'} p-[8px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 lg:ml-2`}
+                        className={`${allowed === true ? 'w-[6rem]' : 'hidden'} p-[6px] rounded-lg cursor-pointer mt-4 lg:mt-0 hover:bg-green-400 bg-green-500 `}
                         onClick={() => goToNextQuery()}
                     >
                         {index < queries.length ? 'Next Query' : 'End Game'}
                     </button>
 
-                    <div className='flex flex-col justify-center'>
+                    <div className={`${index <= queries.length ? 'hidden' : ''} flex w-[10rem] flex-col items-center `}>
                         
-                        <div className={`${index <= queries.length ? 'hidden' : 'mt-4 lg:mt-0'} w-full h-[2.2rem] p-[8px] cursor-pointer bg-blue-400 flex justify-center items-center rounded-lg`}>
+                        <div className='mt-4 lg:mt-0 w-[9rem] h-[2.2rem] p-[6px] cursor-default bg-blue-400 flex justify-center items-center rounded-lg'>
                             {showResult()}
                         </div>
+
+                        <Link 
+                        to={"/game"} 
+                        onClick={() => window.location.reload()}
+                        >
+                            <div className='w-[6rem] mt-4 h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg'>
+                                Play Again
+                            </div>
+                        </Link>
+
                         <Link 
                         to={"/"} 
                         >
-                            <div className={`${index <= queries.length ? 'hidden' : 'mt-4'} w-full mt-4  h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg`}>
-                                Terminate Game
+                            <div className='w-[7rem] mt-4  h-[2.2rem] p-[8px] bg-rose-400 cursor-pointer hover:bg-rose-300 flex justify-center items-center rounded-lg'>
+                                Go To Home
                             </div>
                         </Link>
                         

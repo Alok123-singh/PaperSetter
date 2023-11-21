@@ -23,7 +23,7 @@ function Login() {
     }
 
   return loading ? (
-        <div className='dark:bg-slate-600 w-full flex justify-center items-center h-[10rem]'>
+        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-[10rem]'>
         <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
         </div>
 
