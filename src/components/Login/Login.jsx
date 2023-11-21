@@ -30,9 +30,9 @@ function Login() {
     ) : 
     (
         <div
-        className='flex items-center justify-center w-full py-10 dark:bg-slate-600 dark:text-gray-800'
+        className='flex items-center justify-center w-full py-10 dark:bg-gray-400 dark:text-gray-800'
         >
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 dark:bg-slate-400 rounded-xl p-10 border border-black/10`}>
+            <div className={`mx-auto w-full max-w-lg bg-gray-100 dark:bg-gray-300 rounded-xl p-10 border border-black/10`}>
             <div className="mb-2 flex justify-center">
                         <span className="w-full flex justify-center items-center">
                             <Logo width="100%" />
