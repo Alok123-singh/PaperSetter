@@ -12,7 +12,7 @@ function Table() {
     const [text, setText] = useState('');
     const [counter, setCounter] = useState(cnt);
     const [index,setIndex] = useState(0);
-    const [change, setChange] = useState(false);
+    // const [change, setChange] = useState(false);
 
     const [queries,setQueries] = useState(() => {
         return data;
@@ -147,6 +147,13 @@ function Table() {
                 if(index <= queries.length){ 
 
                     // Execute your function every 30 seconds
+
+                    setPrevMatrix(() => matrix);
+                    console.log("Information about Query No : ",index);
+                    console.log("Check matrix",checkMatrix);
+                    console.log("Selectable column",selectableColumn);
+                    console.log("Selectable Row",selectableRow);
+                    console.log("------------------------------------");
                     
                     const showMessage = (status) => {
                         const text = document.querySelector('.queryShow');
@@ -169,10 +176,10 @@ function Table() {
             // Decrease the counter
             setCounter((prevCounter) => prevCounter - 1);
 
-            if(change === true){
-                setCounter(() => cnt);
-                setChange(() => false);
-            }
+            // if(change === true){
+            //     setCounter(() => cnt);
+            //     setChange(() => false);
+            // }
             
             if (counter <= 0) {
                 // Reset the counter to 30 seconds when it reaches 0
@@ -291,18 +298,6 @@ function Table() {
             .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    const goToNextQuery = () => {
-        setChange(true);
-        if(index <= queries.length){
-            setPrevMatrix(() => matrix);
-            console.log("Information about Query No : ",index);
-            console.log("Check matrix",checkMatrix);
-            console.log("Selectable column",selectableColumn);
-            console.log("Selectable Row",selectableRow);
-            console.log("------------------------------------");
-        }
-    } ;
-
     const showResult = () => {
         let result = 0;
         let cnt = 0;
@@ -364,7 +359,7 @@ function Table() {
                             <button
                                 type='button'
                                 className={`${allowed || index > queries.length ? 'invisible' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
-                                onClick={() => setChange(true)}
+                                onClick={() => setCounter(() => cnt)}
                             >
                                 Deny
                             </button>
@@ -427,7 +422,7 @@ function Table() {
 
                     <button
                         className={`${allowed === true ? 'w-[6rem]' : 'hidden'} p-[5px] cursor-pointer mt-4 lg:mt-0 bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded `}
-                        onClick={() => goToNextQuery()}
+                        onClick={() => setCounter(() => cnt)}
                     >
                         {index < queries.length ? 'Next Query' : 'End Game'}
                     </button>
