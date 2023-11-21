@@ -417,7 +417,7 @@ function Table() {
                         </div>
                         {percentage.map((value, index) => (
                             <div key={index} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base '>
-                                {value};
+                                {value}
                             </div>
                         ))}
                     </div>
