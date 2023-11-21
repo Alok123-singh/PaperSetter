@@ -342,7 +342,7 @@ function Table() {
                 <div className='w-full flex flex-col lg:flex-row items-center justify-around my-2'>
                     <textarea
                         disabled={true}
-                        className='w-full sm:ml-[0.9rem] lg:ml-[3rem] lg:w-[46rem] h-[5rem] sm:h-[4rem] md:h-[3rem] dark:bg-gray-100 outline outline-black pt-4 md:pt-3 rounded-3xl text-center queryShow'
+                        className='w-full sm:ml-0 lg:ml-[3rem] lg:w-[46rem] h-[5rem] sm:h-[4rem] md:h-[3rem] dark:bg-gray-100 outline outline-black pt-4 md:pt-3 rounded-3xl text-center queryShow'
                     ></textarea>
 
                     <div className='mt-2 w-[16rem] flex flex-col items-center '>
