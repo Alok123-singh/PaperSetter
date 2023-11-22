@@ -20,7 +20,7 @@ function Footer() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full py-4 md:w-1/2 lg:w-3/12">
+                    <div className="w-full py-3 md:py-4 md:w-1/2 lg:w-3/12">
                         <div className="h-full flex flex-col items-center">
                             <h3 className="flex justify-center items-center text-md tracking-px mb-7 font-semibold md:mt-0 dark:text-gray-400 text-gray-900 cursor-default">
                                 Company
@@ -61,9 +61,9 @@ function Footer() {
                             </ul>
                         </div>
                     </div>
-                    <div className="w-full py-4 md:w-1/2 lg:w-3/12">
+                    <div className="w-full py-3 md:py-4 md:w-1/2 lg:w-3/12">
                         <div className="h-full flex flex-col items-center">
-                            <h3 className="flex justify-center items-center font-md tracking-px mb-7 font-semibold mt-7 md:mt-0 text-gray-900 dark:text-gray-400 cursor-default">
+                            <h3 className="flex justify-center items-center font-md tracking-px mb-7 font-semibold mt-5 md:mt-0 text-gray-900 dark:text-gray-400 cursor-default">
                                 Support
                             </h3>
                             <ul className='flex flex-col justify-center items-center'>
@@ -103,9 +103,9 @@ function Footer() {
                             </ul>
                         </div>
                     </div>
-                    <div className="w-full md:py-4 md:w-1/2 lg:w-3/12">
+                    <div className="w-full py-4 md:py-4 md:w-1/2 lg:w-3/12">
                         <div className="h-full flex flex-col items-center">
-                            <h3 className="flex justify-center items-center tex-md tracking-px mb-7 font-semibold mt-7 md:mt-0 text-gray-900 dark:text-gray-400 cursor-default">
+                            <h3 className="flex justify-center items-center tex-md tracking-px mb-7 font-semibold mt-5 md:mt-0 text-gray-900 dark:text-gray-400 cursor-default">
                                 Legals
                             </h3>
                             <ul className='flex flex-col justify-center items-center'>

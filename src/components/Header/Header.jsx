@@ -48,30 +48,34 @@ function Header() {
     return (
         <header className='w-full py-1  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
-                <nav className='flex justify-between pt-2 sm:pt-0 md:justify-between flex-wrap'>
+                <nav className='flex justify-between py-1 sm:py-0 md:justify-between flex-wrap'>
                     <div className=' mx-2'>
                         <Link to='/' >
                             <Logo width='70px'   />
                         </Link>
                     </div>
-                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'md:pl-[12.7rem]'} hidden text-black dark:text-white sm:pl-[1.2rem] w-auto sm:flex justify-evenly flex-wrap`}>
+                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'sm:pl-[9.5rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
-                        <NavLink key={item.name}
-                        style={navLinkStyles}
-                        to={`${item.slug}`}
-                        >
-                            <button
+                        <div className='px-4'>
+                            <NavLink key={item.name}
+                            style={navLinkStyles}
+                            to={`${item.slug}`}
+                            >
+                                
+                                    <button
 
-                            // onClick={() => navigate(item.slug)}
-                            className='py-1 w-[6rem] hover:bg-slate-200 dark:hover:bg-slate-600  rounded-xl m-2'
-                            >{item.name}</button>
-                        </NavLink>
+                                    // onClick={() => navigate(item.slug)}
+                                    className='py-2 w-[4rem] hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg my-1'
+                                    >{item.name}</button>
+                                
+                            </NavLink>
+                        </div>
                         ) : null
                         )}
                         
                     </div>
-                    <div className='hidden sm:flex justify-between h-auto'>
+                    <div className='hidden sm:flex text-sm justify-between h-auto'>
                         {loginStatus && (
                             <NavLink 
                             style={navLinkStyles}
@@ -83,31 +87,39 @@ function Header() {
                             </NavLink>
                         )}
                         {!loginStatus && (
-                            <Link to="/login" >
-                                <button 
-                                className='mt-[0rem]  sm:pt-1 mx-2  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
-                                
+                            <div className='w-[3rem]'>
+                                <NavLink to="/login" 
+                                style={navLinkStyles}
                                 >
-                                    Login
-                                </button>
-                            </Link>
+                                    <button 
+                                    className='mt-[0rem]  sm:pt-[7px]  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
+                                    
+                                    >
+                                        Login
+                                    </button>
+                                </NavLink>
+                            </div>
                         )}
                         {!loginStatus && (
-                            <Link to="/signup" >
-                                <button 
-                                className='mt-[0rem]  sm:pt-1 ml-7 mr-2 p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
-                                
+                            <div className='w-[3rem] sm:ml-8 sm:mr-4'>
+                                <NavLink to="/signup" 
+                                style={navLinkStyles}
                                 >
-                                    Signup
-                                </button>
-                            </Link>
+                                    <button 
+                                    className='mt-[0rem] sm:pt-[7px] p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg '
+                                    
+                                    >
+                                        Signup
+                                    </button>
+                                </NavLink>
+                            </div>
                         )}
                         {loginStatus && (
                             <div className=''> 
                                 <LogoutBtn />
                             </div>
                         )}
-                        <div className={`${!loginStatus ? "mx-4 sm:mt-[0.9rem]" : ' sm:m-[0.9rem]'}`}>
+                        <div className={`${!loginStatus ? "mx-4 mt-0 sm:mt-[0.1rem]" : ' sm:m-[0.2rem]'}`}>
                             <ThemeButton />
                         </div>
                     </div>
@@ -117,7 +129,7 @@ function Header() {
                         className="relative group"
                         onClick={toggle}
                         >
-                            <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
+                            <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-400 dark:bg-slate-800 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
                                 <div className="transform transition-all duration-150 overflow-hidden -translate-y-5 group-focus:translate-y-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-bounce text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
@@ -137,8 +149,8 @@ function Header() {
                 </nav>
             </Container>
 
-            <div className={`${show ? 'flex' : 'hidden'} sm:hidden mt-8 flex flex-col item-center flex-wrap`}>
-                <div className={` text-black dark:text-white  flex justify-center flex-wrap`}>
+            <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
+                <div className={` text-black dark:text-white pl-5  flex justify-center flex-wrap`}>
                     {navItems.map((item) => 
                     item.active ? (
                     <NavLink key={item.name}
@@ -156,7 +168,7 @@ function Header() {
                     
                 </div>
 
-                <div className='flex justify-evenly h-auto mb-2'>
+                <div className='flex justify-evenly h-auto'>
                     {loginStatus && (
                         <NavLink 
                         style={navLinkStyles}
@@ -167,32 +179,40 @@ function Header() {
                             My Account
                         </NavLink>
                     )}
-                    {loginStatus && (
-                        <Link to="/login" >
-                            <button 
-                            className='mt-[0.6rem]  sm:pt-1 mx-2  p-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-lg '
-                            
+                    {!loginStatus && (
+                        <div className='w-[3rem]'>
+                            <NavLink to="/login" 
+                            style={navLinkStyles}
                             >
-                                Login
-                            </button>
-                        </Link>
+                                <button 
+                                className='mt-4 p-1 h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
+                                
+                                >
+                                    Login
+                                </button>
+                            </NavLink>
+                        </div>
                     )}
-                    {loginStatus && (
-                        <Link to="/signup" >
-                            <button 
-                            className='mt-[0.6rem]  sm:pt-1 ml-7 mr-2 p-2 py-2 sm:my-[0.6rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-lg '
-                            
+                    {!loginStatus && (
+                        <div className='w-[3rem] '>
+                            <NavLink to="/signup" 
+                            style={navLinkStyles}
                             >
-                                Signup
-                            </button>
-                        </Link>
+                                <button 
+                                className=' mt-4 p-1 h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
+                                
+                                >
+                                    Signup
+                                </button>
+                            </NavLink>
+                        </div>
                     )}
                     {loginStatus && (
                         <div > 
                             <LogoutBtn />
                         </div>
                     )}
-                    <div className={`${!loginStatus ? "m-4" : 'pt-[1.1rem]'}`}>
+                    <div className={`${!loginStatus ? "mt-4" : 'pt-[1.1rem]'}`}>
                         <ThemeButton />
                     </div>
                 </div>
