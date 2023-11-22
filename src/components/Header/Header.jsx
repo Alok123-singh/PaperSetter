@@ -150,7 +150,7 @@ function Header() {
             </Container>
 
             <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
-                <div className={` text-black dark:text-white pl-5  flex justify-center flex-wrap`}>
+                <div className={` text-black dark:text-white pl-3  flex justify-center flex-wrap`}>
                     {navItems.map((item) => 
                     item.active ? (
                     <NavLink key={item.name}
