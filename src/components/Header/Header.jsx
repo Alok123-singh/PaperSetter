@@ -150,7 +150,7 @@ function Header() {
             </Container>
 
             <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
-                <div className={` text-black dark:text-white pl-3  flex justify-center flex-wrap`}>
+                <div className={` text-black dark:text-white flex justify-center flex-wrap`}>
                     {navItems.map((item) => 
                     item.active ? (
                     <NavLink key={item.name}
@@ -160,7 +160,7 @@ function Header() {
                         <button
 
                         // onClick={() => navigate(item.slug)}
-                        className='py-2 w-[6rem] hover:bg-slate-200 dark:hover:bg-emerald-700  rounded-xl m-1'
+                        className='py-2 w-[6rem] hover:bg-slate-200 text-sm dark:hover:bg-slate-600  rounded-xl m-1'
                         >{item.name}</button>
                     </NavLink>
                     ) : null
@@ -172,7 +172,7 @@ function Header() {
                     {loginStatus && (
                         <NavLink 
                         style={navLinkStyles}
-                        className='py-2 my-2 w-[6.8rem] duration-200 hover:bg-blue-100 dark:hover:bg-emerald-700 rounded-full text-center cursor-pointer '
+                        className='py-2 my-2 w-[6.8rem] duration-200 text-sm hover:bg-blue-100 dark:hover:bg-slate-600 rounded-full text-center cursor-pointer '
                         to={'/my-account'}
                         // onClick={() => navigate('/my-account')}
                         >
@@ -185,7 +185,7 @@ function Header() {
                             style={navLinkStyles}
                             >
                                 <button 
-                                className='mt-4 p-1 h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
+                                className='mt-4 p-1 h-[2.3rem] text-sm flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
                                 
                                 >
                                     Login
@@ -199,7 +199,7 @@ function Header() {
                             style={navLinkStyles}
                             >
                                 <button 
-                                className=' mt-4 p-1 h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
+                                className=' mt-4 p-1 h-[2.3rem] text-sm flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
                                 
                                 >
                                     Signup
