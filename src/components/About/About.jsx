@@ -19,21 +19,21 @@ function About() {
         <section className="meet-the-team mb-8">
             <h2 className="text-2xl font-bold mb-4">Meet the Team</h2>
             <div className="flex flex-wrap justify-around">
-                <div className="team-member mr-4 mb-4">
+                <div className="team-member flex flex-col items-center sm:mr-4 mb-4">
                     <img
                     src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Team Member 1"
-                    className="w-[25rem] h-[25rem] object-cover rounded-full"
+                    className="w-[15rem] h-[15rem] sm:w-[25rem] sm:h-[25rem] object-cover rounded-full"
                     />
                     <h3 className="text-lg font-semibold mt-2">John Doe</h3>
                     <p className="text-gray-600">Co-Founder & CEO</p>
                 </div>
 
-                <div className="team-member mr-4 mb-4">
+                <div className="team-member flex flex-col items-center sm:mr-4 mb-4">
                     <img
                     src="https://images.unsplash.com/photo-1602306834394-6c8b7ea0ed9d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Team Member 2"
-                    className="w-[25rem] h-[25rem] object-cover rounded-full"
+                    className="w-[15rem] h-[15rem] sm:w-[25rem] sm:h-[25rem] object-cover rounded-full"
                     />
                     <h3 className="text-lg font-semibold mt-2">Jane Smith</h3>
                     <p className="text-gray-600">Co-Founder & CTO</p>

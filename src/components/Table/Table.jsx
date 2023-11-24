@@ -342,7 +342,7 @@ function Table() {
                 <div className='w-full flex flex-col lg:flex-row items-center justify-around my-2'>
                     <textarea
                         disabled={true}
-                        className='w-full sm:ml-0 lg:ml-[3rem] lg:w-[46rem] h-[5rem] sm:h-[4rem] md:h-[3rem] dark:bg-gray-100 outline outline-black pt-4 md:pt-3 rounded-3xl text-center queryShow'
+                        className={`${index > queries.length ? 'hidden' : ''} w-[98%] sm:w-[95%] sm:ml-0 lg:ml-[3rem] lg:w-[46rem] h-[5rem] sm:h-[4rem] md:h-[3rem] dark:bg-gray-100 outline outline-black pt-4 md:pt-3 rounded-3xl text-center queryShow`}
                     ></textarea>
 
                     <div className='mt-2 w-[16rem] flex flex-col items-center '>
@@ -350,7 +350,7 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${index > queries.length ? 'invisible' : ''} px-[5px] py-[6px] cursor-pointer w-[6rem] xl:w-[4rem]  bg-blue-500 hover:bg-blue-400 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded`}
+                                className={`${index > queries.length ? 'hidden' : ''} px-[5px] py-[6px] cursor-pointer w-[6rem] xl:w-[4rem]  bg-blue-500 hover:bg-blue-400 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded`}
                                 onClick={() => setAllowed(true)}
                             >
                                 Accept
@@ -358,14 +358,14 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${allowed || index > queries.length ? 'invisible' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
+                                className={`${allowed || index > queries.length ? 'hidden' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
                                 onClick={() => setCounter(() => cnt)}
                             >
                                 Deny
                             </button>
                         </div>
 
-                        <div className={`${index > queries.length ? 'invisible' : 'pt-4'} lg:pt-0  flex items-center`}>
+                        <div className={`${index > queries.length ? 'hidden md:invisible' : 'pt-4'} lg:pt-0  flex items-center`}>
                             <p className='text-sm lg:text-base'>
                                 Time Remaining: {formatTime(counter)}
                             </p>
@@ -374,8 +374,8 @@ function Table() {
                 </div>
             </div>
 
-            <div className='w-full py-[2.45rem] lg:w-[97%] flex flex-col lg:flex-row justify-around cursor-default MainDiv'>
-                <div className='w-full flex flex-col md:items-center lg:justify-evenly sm:w-[95%] lg:w-[45rem] sm:ml-[0.9rem] lg:ml-[2rem]'>
+            <div className='w-full sm:py-[2.45rem] lg:w-[97%] flex flex-col lg:flex-row justify-around cursor-default MainDiv'>
+                <div className='w-full flex flex-col md:items-center lg:justify-evenly sm:w-[95%] lg:w-[45rem] sm:ml-[1.1rem] md:ml-[1.3rem] lg:ml-[0.7rem]'>
                     <div className='flex'>
                         <div className='w-[6rem] h-[2rem] px-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base'>
                             Day
