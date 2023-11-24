@@ -358,7 +358,7 @@ function Table() {
 
                             <button
                                 type='button'
-                                className={`${allowed || index > queries.length ? 'hidden' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
+                                className={`${allowed ? 'invisible' : ''} ${index > queries.length ? 'hidden' : ''} p-[6px]  cursor-pointer w-[6rem] ml-4 xl:w-[4rem] bg-red-500 hover:bg-red-400 text-slate-100 font-bold border-b-4 border-red-700 hover:border-red-500 rounded`}
                                 onClick={() => setCounter(() => cnt)}
                             >
                                 Deny
@@ -377,12 +377,12 @@ function Table() {
             <div className='w-full sm:py-[2.45rem] lg:w-[97%] flex flex-col lg:flex-row justify-around cursor-default MainDiv'>
                 <div className='w-full flex flex-col md:items-center lg:justify-evenly sm:w-[95%] lg:w-[45rem] sm:ml-[1.1rem] md:ml-[1.3rem] lg:ml-[0.7rem]'>
                     <div className='flex'>
-                        <div className='w-[6rem] h-[2rem] px-2 border border-solid border-gray-300 flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base'>
+                        <div className='w-[6rem] h-[2rem] px-2 border border-solid border-gray-300 dark:border-black flex flex-wrap justify-center items-center bg-blue-400 rounded-md text-xs lg:text-base'>
                             Day
                         </div>
                         {matrix.map((array, index1) => (
                             index1 === 0 ? array.map((value, index2) => (
-                                <div key={index2} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 px-2 bg-blue-400 rounded-md text-xs lg:text-base'>
+                                <div key={index2} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 dark:border-black px-2 bg-blue-400 rounded-md text-xs lg:text-base'>
                                     {showDay(index2 + 1)}
                                 </div>
                             )) : ''
@@ -391,13 +391,13 @@ function Table() {
 
                     {matrix.map((row, rowIndex) => (
                         <div className='flex' key={rowIndex}>
-                            <div className='w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 bg-emerald-400 dark:bg-emerald-400 rounded-md text-xs lg:text-base'>
+                            <div className='w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 dark:border-black bg-emerald-400 dark:bg-emerald-400 rounded-md text-xs lg:text-base'>
                                 {text + (rowIndex + 1).toString()}
                             </div>
                             {row.map((value, colIndex) => (
                                 <div
                                     key={colIndex}
-                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-rose-500 dark:hover:bg-rose-600' : 'bg-white hover:bg-gray-300  dark:hover:bg-gray-200'} text-gray-200 dark:text-gray-600`}
+                                    className={`${allowed && selectableColumn[colIndex] && (rooms > 0 || selectableRow[rowIndex] === true) ? '' : 'pointer-events-none'} w-[6rem] h-[2rem] p-2 flex justify-center items-center border border-solid border-gray-300 dark:border-black text-left rounded-md text-xs lg:text-sm xl:text-base ${value === 1 ? 'bg-red-500 hover:bg-rose-600 dark:bg-rose-500 dark:hover:bg-rose-600' : 'bg-white hover:bg-gray-300  dark:hover:bg-gray-200'} text-gray-200 dark:text-gray-600`}
                                     onClick={() => handleBlockClick(rowIndex, colIndex)}
                                 >
                                     {/* {value === 0 && "click to book"} */}
@@ -407,11 +407,11 @@ function Table() {
                     ))}
 
                     <div className='flex'>
-                        <div className='w-[6rem] h-[2rem] p-2 border border-solid border-gray-300 flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base'>
+                        <div className='w-[6rem] h-[2rem] p-2 border border-solid border-gray-300 dark:border-black flex justify-center items-center bg-red-500 rounded-md text-xs lg:text-base'>
                             Total
                         </div>
                         {percentage.map((value, index) => (
-                            <div key={index} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 p-2 bg-red-400 rounded-md text-xs lg:text-base '>
+                            <div key={index} className='w-[6rem] h-[2rem] flex justify-center items-center border border-solid border-gray-300 dark:border-black p-2 bg-red-400 rounded-md text-xs lg:text-base '>
                                 {value}
                             </div>
                         ))}
