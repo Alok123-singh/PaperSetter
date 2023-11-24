@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import '../../index.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from '../../store/themeSlice';
+import { setTheme } from '../../store/themeSlice';
 
 function ThemeButton() {
     
@@ -10,13 +10,14 @@ function ThemeButton() {
     const dispatch = useDispatch();
 
     const changeTheme = (e) => {
-        dispatch(toggleTheme());
+        dispatch(setTheme(themeMode === 'dark' ? 'light' : 'dark'));
     };
 
     useEffect(() => {
         const html = document.querySelector('html');
         html.classList.remove('dark','light');
         html.classList.add(themeMode);
+
     }, [themeMode]);
 
     return (
