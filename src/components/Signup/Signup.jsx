@@ -60,17 +60,17 @@ function Signup() {
         
         // Validation for First Name
         if (!/^[a-zA-Z]{2,}$/.test(data.firstName)) {
-            errors.push("First name must have at least 1 character");
+            errors.push("First name must have at least 2 character long");
         }
 
         // Validation for Last Name
         if (!/^[a-zA-Z]{2,}$/.test(data.lastName)) {
-            errors.push("Last name must have at least 1 character");
+            errors.push("Last name must have at least 2 character long");
         }
 
         // Validation for Username
         if (!/^[a-zA-Z0-9]{2,}$/.test(data.username)) {
-            errors.push("Username is not valid");
+            errors.push("Username must be at least 2 characters long");
         }
 
         // Validation for Email
