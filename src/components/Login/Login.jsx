@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form"
 function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const {control, register, handleSubmit} = useForm()
+    const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
 
     const login = async(data) => {

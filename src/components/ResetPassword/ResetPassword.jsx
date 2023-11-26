@@ -7,13 +7,19 @@ function ResetPassword() {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const {control, register, handleSubmit} = useForm()
-    const [error, setError] = useState("")
+    const {register, handleSubmit} = useForm()
+    const [error, setError] = useState('');
 
     const reset = async (data) => {
         setLoading(true);
         console.log(data);
-        setError("")
+        setError('');
+
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
+            setError("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
+            setLoading(false);
+            return;
+        }
 
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
@@ -29,7 +35,7 @@ function ResetPassword() {
             // const data2 = await response.json();
             console.log("Response",response);
             
-            if(response.status === 200){
+            if(response.status === 202){
                 alert('Password has been reset');
                 console.log("Reset Successfull");
                 navigate('/login');
@@ -42,8 +48,8 @@ function ResetPassword() {
         }
         catch(error){
             console.log("Reset Password Error :",error);
-            setError(error);
         }
+
         setLoading(false);
     };
 
