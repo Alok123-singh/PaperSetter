@@ -39,6 +39,7 @@ function Signup() {
             }
         }
         catch (error) {
+            setUsernameAvailability(true);
             console.error('Error checking username availability:', error);
         }
 
