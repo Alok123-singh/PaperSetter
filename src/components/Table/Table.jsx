@@ -25,10 +25,10 @@ function Table() {
     })
 
     const [prevMatrix,setPrevMatrix] = useState(() => {
-        const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
-        if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
-            return storedMatrix;
-        }
+        // const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
+        // if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
+        //     return storedMatrix;
+        // }
 
         let newMatrix = [];
         for(let i = 1; i <= defaultRows; i++){
@@ -43,10 +43,10 @@ function Table() {
     });
 
     const [matrix, setMatrix] = useState(() => {
-        const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
-        if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
-            return storedMatrix;
-        }
+        // const storedMatrix = JSON.parse(localStorage.getItem('matrix'));
+        // if (storedMatrix && storedMatrix.length === defaultRows && storedMatrix[0].length === defaultColumns) {
+        //     return storedMatrix;
+        // }
         
         let newMatrix = [];
         for(let i = 1; i <= defaultRows; i++){
@@ -297,7 +297,7 @@ function Table() {
             .toString()
             .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
-
+    
     const showResult = () => {
         let result = 0;
         let cnt = 0;

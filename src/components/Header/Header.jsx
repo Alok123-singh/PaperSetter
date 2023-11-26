@@ -57,14 +57,13 @@ function Header() {
                     <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'sm:pl-[9.6rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
-                        <div className='px-4'>
-                            <NavLink key={item.name}
+                        <div className='px-4' key={item.name}>
+                            <NavLink 
                             style={navLinkStyles}
                             to={`${item.slug}`}
                             >
                                 
                                     <button
-
                                     // onClick={() => navigate(item.slug)}
                                     className='py-2 w-[4rem] hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg my-1'
                                     >{item.name}</button>
@@ -152,18 +151,21 @@ function Header() {
             <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
                 <div className={` text-black dark:text-white flex justify-center flex-wrap`}>
                     {navItems.map((item) => 
-                    item.active ? (
-                    <NavLink key={item.name}
-                    style={navLinkStyles}
-                    to={`${item.slug}`}
-                    >
-                        <button
-
-                        // onClick={() => navigate(item.slug)}
-                        className='py-2 w-[6rem] hover:bg-slate-200 text-sm dark:hover:bg-slate-600  rounded-xl m-1'
-                        >{item.name}</button>
-                    </NavLink>
-                    ) : null
+                        item.active ? (
+                        <div className='px-4' key={item.name}>
+                            <NavLink 
+                            style={navLinkStyles}
+                            to={`${item.slug}`}
+                            >
+                                
+                                    <button
+                                    // onClick={() => navigate(item.slug)}
+                                    className='py-2 w-[4rem] hover:bg-slate-200 dark:hover:bg-slate-600  rounded-lg my-1'
+                                    >{item.name}</button>
+                                
+                            </NavLink>
+                        </div>
+                        ) : null
                     )}
                     
                 </div>

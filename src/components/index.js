@@ -13,6 +13,7 @@ import LogoutBtn from './LogoutBtn/LogoutBtn'
 import Table from './Table/Table'
 import ThemeButton from './ThemeButton/ThemeButton'
 import Signup from './Signup/Signup'
+import ResetPassword from './ResetPassword/ResetPassword'
 
 export {
     About,
@@ -30,5 +31,7 @@ export {
     Table,
     ThemeButton,
     Signup,
+    ResetPassword,
+    
 
 };
