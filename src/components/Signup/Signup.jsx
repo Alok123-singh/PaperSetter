@@ -62,12 +62,12 @@ function Signup() {
         
         // Validation for First Name
         if (!/^[a-zA-Z]{2,}$/.test(data.firstName)) {
-            errors.push("First name must be at least 2 character long");
+            errors.push("First name must be at least 2 characters long");
         }
 
         // Validation for Last Name
         if (!/^[a-zA-Z]{2,}$/.test(data.lastName)) {
-            errors.push("Last name must be at least 2 character long");
+            errors.push("Last name must be at least 2 characters long");
         }
 
         // Validation for Username
