@@ -33,7 +33,7 @@ function Signup() {
                 console.log("Username not availaible");
 
             } else {
-                setError([]);
+                setError(prev => prev.filter(err => err !== 'Username is not availaible'));
                 setUsernameAvailability(true);
                 console.log("Username is availaible");
             }
@@ -43,6 +43,7 @@ function Signup() {
         }
 
         if(errors.length > 0){
+            error.map(err => errors.push(err));
             setError(errors);
         }
     };
@@ -60,12 +61,12 @@ function Signup() {
         
         // Validation for First Name
         if (!/^[a-zA-Z]{2,}$/.test(data.firstName)) {
-            errors.push("First name must have at least 2 character long");
+            errors.push("First name must be at least 2 character long");
         }
 
         // Validation for Last Name
         if (!/^[a-zA-Z]{2,}$/.test(data.lastName)) {
-            errors.push("Last name must have at least 2 character long");
+            errors.push("Last name must be at least 2 character long");
         }
 
         // Validation for Username
@@ -79,7 +80,7 @@ function Signup() {
         }
 
         // Validation for Password
-        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/.test(data.password)) {
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.password)) {
             errors.push("Password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
         }
 
@@ -156,7 +157,8 @@ function Signup() {
                 
                 {(error && error.length > 0) && <div className='flex flex-col'>
                     {
-                        error.map((err) => (<p className="text-red-600 mt-4 text-center">{err}</p>))
+                        error.map((err,index) => 
+                        (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
                     }
                 </div>}
 
