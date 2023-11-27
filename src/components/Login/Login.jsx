@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {Button, Input, Logo} from "../index.js"
 import {useForm} from "react-hook-form"
+import { useDispatch } from 'react-redux';
+import { setUsername } from '../../store/authSlice.js'
 
 function Login() {
     const [loading, setLoading] = useState(false);
@@ -9,7 +11,7 @@ function Login() {
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false);
-
+    const dispatch = useDispatch();
 
     const login = async(data) => {
         setLoading(true);
@@ -30,6 +32,7 @@ function Login() {
             const data2 = await response.json();
             
             if(data2 === true){
+                dispatch(setUsername(data.username));
                 console.log("Login Successfull");
                 navigate('/');
             }

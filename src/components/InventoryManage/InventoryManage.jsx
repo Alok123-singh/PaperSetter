@@ -1,17 +1,24 @@
 import { useState,useEffect } from 'react';
 import '../../index.css'
 import data from '../../JSON/queries.json'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { setResult } from '../../store/resultSlice';
 
 function InventoryManage() {
 
-    const[defaultRows,setDefaultRows] = useState(10);
-    const[defaultColumns,setDefaultColumns] = useState(7);
+    const[defaultRows,setDefaultRows] = useState(10); // no of rows in table
+    const[defaultColumns,setDefaultColumns] = useState(7); // no of columns in table
 
-    let cnt = 30;
+    let cnt = 30; // timer in seconds
+
     const [text, setText] = useState('');
     const [counter, setCounter] = useState(cnt);
     const [index,setIndex] = useState(0);
+    const [loading,setLoading] = useState(false);
+    const username = useSelector(state => state.auth.username);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     // const [change, setChange] = useState(false);
 
     const [queries,setQueries] = useState(() => {
@@ -93,6 +100,49 @@ function InventoryManage() {
         return (7);
     };
 
+    const calculateResult = () => {
+        let result = 0;
+        let cnt = 0;
+        matrix.map((row) => (
+            row.map((value) => {
+                if(value === 1) cnt++;
+                return value;
+            })
+        ))
+        result = (cnt / (defaultRows * defaultColumns)) * 100;
+        return (result.toString());
+    };
+
+    const saveResult = async (data) => {
+        setLoading(true);
+        console.log("Result Data",JSON.stringify(data));
+        
+        try{
+            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const response = await fetch('http://localhost:8081/simlearn/score/api/v1/save',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type as JSON
+                    'Authorization': `Basic ${credentials}`,
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify(data), // Convert the data to a JSON string
+            });
+
+            if(response.status === 201){
+                console.log("Result saved");
+                dispatch(setResult({noOfQueries: queries.length, score: data.score, title: data.examType}))
+                navigate('/inventory-management/result');
+            }
+
+        }
+        catch(err){
+            console.log("Inventory Management save result error :",err);
+        }
+
+        setLoading(false);
+    }
+
     useEffect(() => {
         
         if(index <= queries.length){
@@ -140,9 +190,9 @@ function InventoryManage() {
 
         if(index > queries.length){
             
+            const result = calculateResult();
+            saveResult({score: result, examType: 'INVENTORY_MANAGEMENT', username: username, time: ''});
             console.log("Game Ended");
-
-            
 
         }
 
@@ -306,19 +356,6 @@ function InventoryManage() {
             .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
     
-    const showResult = () => {
-        let result = 0;
-        let cnt = 0;
-        matrix.map((row) => (
-            row.map((value) => {
-                if(value === 1) cnt++;
-                return value;
-            })
-        ))
-        result = (cnt / (defaultRows * defaultColumns)) * 100;
-        return ("Result - " + result.toFixed(2).toString() + " %");
-    };
-    
     useEffect(() => {
         const handleResize = () => {
             // You can adjust the logic here based on your screen size requirements
@@ -343,7 +380,12 @@ function InventoryManage() {
         };
     }, []);
     
-    return (
+    return loading ? (
+        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-[10rem]'>
+        <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
+        </div>
+
+    ) : (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center'>
             <div className='w-full h-auto flex flex-col justify-center items-center border-y-2 dark:border-y-slate-400 shadow-md '>
 
@@ -438,7 +480,7 @@ function InventoryManage() {
                     <div className={`${index <= queries.length ? 'hidden' : ''} flex w-[10rem] flex-col items-center `}>
                         
                         <div className='mt-4 lg:mt-0 w-[9rem] h-[2.2rem] p-[3px] cursor-default flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded'>
-                            {showResult()}
+                            {calculateResult()}
                         </div>
 
                         <Link 

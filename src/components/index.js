@@ -14,6 +14,7 @@ import InventoryManage from './InventoryManage/InventoryManage'
 import ThemeButton from './ThemeButton/ThemeButton'
 import Signup from './Signup/Signup'
 import ResetPassword from './ResetPassword/ResetPassword'
+import Result from './Result/Result'
 
 export {
     About,
@@ -32,6 +33,7 @@ export {
     ThemeButton,
     Signup,
     ResetPassword,
+    Result,
     
 
 };
