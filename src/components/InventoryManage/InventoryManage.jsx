@@ -381,7 +381,7 @@ function InventoryManage() {
     }, []);
     
     return loading ? (
-        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-[10rem]'>
+        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-screen'>
         <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
         </div>
 
@@ -476,31 +476,6 @@ function InventoryManage() {
                     >
                         {index < queries.length ? 'Continue' : 'End Game'}
                     </button>
-
-                    <div className={`${index <= queries.length ? 'hidden' : ''} flex w-[10rem] flex-col items-center `}>
-                        
-                        <div className='mt-4 lg:mt-0 w-[9rem] h-[2.2rem] p-[3px] cursor-default flex justify-center items-center bg-blue-500 hover:bg-blue-600 text-slate-100 font-bold border-b-4 border-blue-700 hover:border-blue-500 rounded'>
-                            {calculateResult()}
-                        </div>
-
-                        <Link 
-                        to={"/game"} 
-                        onClick={() => window.location.reload()}
-                        >
-                            <div className='w-[6rem] mt-4 h-[2.2rem] p-[6px] cursor-pointer  flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
-                                Play Again
-                            </div>
-                        </Link>
-
-                        <Link 
-                        to={"/"} 
-                        >
-                            <div className='w-[7rem] mt-4  h-[2.2rem] p-[8px] cursor-pointer flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
-                                Go To Home
-                            </div>
-                        </Link>
-                        
-                    </div>
 
                 </div>
 

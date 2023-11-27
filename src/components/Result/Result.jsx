@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 function Result() {
 
@@ -28,7 +29,7 @@ function Result() {
     }
 
     return (
-        <div className='py-10 w-full h-auto flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>
+        <div className='w-full h-screen flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>
             <p className='font-bold text-xl font-serif h-auto'>Result Page</p>
 
             <div className='flex flex-col w-1/3 p-2 mt-7 '>
@@ -80,6 +81,26 @@ function Result() {
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <div className='flex w-[10rem] flex-col items-center'>
+
+                <Link 
+                to={"/inventory-management"}
+                >
+                    <div className='w-[6rem] mt-6 h-[2.2rem] p-[6px] cursor-pointer  flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
+                        Play Again
+                    </div>
+                </Link>
+
+                <Link 
+                to={"/"} 
+                >
+                    <div className='w-[7rem] mt-4  h-[2.2rem] p-[8px] cursor-pointer flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
+                        Go To Home
+                    </div>
+                </Link>
+                
             </div>
         </div>
     )

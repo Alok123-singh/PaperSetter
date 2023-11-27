@@ -8,19 +8,21 @@ function Layout() {
 
     const location = useLocation();
 
-    // Check if the current location pathname is "/game"
-    const isGameRoute = location.pathname === '/inventory-management';
+    const excludedUrls = ['/inventory-management', '/inventory-management/result'];
+
+    // Check if the current location pathname is in the excludedUrls array
+    const shouldHideHeaderFooter = excludedUrls.includes(location.pathname);
 
     return (
         <div className='min-h-screen w-full content-between'>
             <div className='w-full '>
-                {!isGameRoute && <Header />}
+                {!shouldHideHeaderFooter && <Header />}
 
                 <main>
                     <Outlet />
                 </main>
 
-                {!isGameRoute && <Footer />}
+                {!shouldHideHeaderFooter && <Footer />}
             </div>
         </div>
     )
