@@ -137,6 +137,7 @@ function InventoryManage() {
 
         }
         catch(err){
+            dispatch(setResult({noOfQueries: queries.length, score: data.score, title: data.examType}))
             navigate('/inventory-management/result');
             console.log("Inventory Management save result error :",err);
         }
