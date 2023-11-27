@@ -9,6 +9,9 @@ function ResetPassword() {
     const navigate = useNavigate()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState('');
+    const [showOldPassword,setShowOldPassword] = useState(false);
+    const [showNewPassword,setShowNewPassword] = useState(false);
+
 
     const reset = async (data) => {
         setLoading(true);
@@ -89,24 +92,48 @@ function ResetPassword() {
                             })}
                             
                             />
-    
-                            <Input
-                            // label="Password: "
-                            type="text"
-                            placeholder="Old password"
-                            {...register("oldPassword", {
-                                required: true,
-                            })}
-                            />
 
-                            <Input
-                            // label="Password: "
-                            type="text"
-                            placeholder="New password"
-                            {...register("newPassword", {
-                                required: true,
-                            })}
-                            />
+                            <div className='relative'>
+                                <Input
+                                    type={showOldPassword ? 'text' : 'password'}
+                                    placeholder='Old password'
+                                    {...register('oldPassword', {
+                                        required: true,
+                                    })}
+                                />
+
+                                <div
+                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
+                                onClick={() => setShowOldPassword(prev => !prev)}
+                                >
+                                    {showOldPassword ? (
+                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
+                                    ) : (
+                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className='relative'>
+                                <Input
+                                    type={showNewPassword ? 'text' : 'password'}
+                                    placeholder='New password'
+                                    {...register('newPassword', {
+                                        required: true,
+                                    })}
+                                />
+
+                                <div
+                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
+                                onClick={() => setShowNewPassword(prev => !prev)}
+                                >
+                                    {showNewPassword ? (
+                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
+                                    ) : (
+                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
+                                    )}
+                                </div>
+                            </div>
     
                             <Button
                             type="submit"

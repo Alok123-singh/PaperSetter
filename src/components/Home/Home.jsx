@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../index.css'
-import {Link, NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function Home() {
     return (
@@ -14,7 +14,7 @@ function Home() {
                         className="h-[130px] w-[90%] rounded-lg object-cover mt-2 ml-1.5"
                     />
                 </Link>
-                
+
                 <div className="p-2 pb-6 flex flex-col justify-center items-center">
                     <Link to="/game">
                         <div

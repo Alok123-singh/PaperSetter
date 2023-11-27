@@ -10,6 +10,8 @@ function Signup() {
     const {control, register, handleSubmit} = useForm();
     const [usernameAvailability, setUsernameAvailability] = useState(false);
     const [step,setStep] = useState(1);
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const checkUsernameAvailability = async (username) => {
         if(username === '') return;
@@ -239,19 +241,27 @@ function Signup() {
                             })}
                             />
 
-                            <Input
-                            // label="Password: "
-                            type="text"
-                            placeholder="Password"
-                            {...register("password", {
-                                required: true,
-                                // validate:{
-                                //     matchPatern: (value) => /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})$/.test(value) || 
-                                //     "Password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit and at least 5 characters long",
-                                // }
+                            <div className='relative'>
+                                <Input
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder='Password'
+                                    {...register('password', {
+                                        required: true,
+                                    })}
+                                />
                                 
-                            })}
-                            />
+                                <div
+                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
+                                onClick={() => setShowPassword(prev => !prev)}
+                                >
+                                    {showPassword ? (
+                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
+                                    ) : (
+                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
+                                    )}
+                                </div>
+                            </div>
+
                             <div className='flex justify-between'>
                                 <Button 
                                 type="button" 

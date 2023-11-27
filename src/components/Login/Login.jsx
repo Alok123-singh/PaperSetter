@@ -8,6 +8,8 @@ function Login() {
     const navigate = useNavigate()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const login = async(data) => {
         setLoading(true);
@@ -89,14 +91,25 @@ function Login() {
                         
                         />
 
-                        <Input
-                        // label="Password: "
-                        type="text"
-                        placeholder="Password"
-                        {...register("password", {
-                            required: true,
-                        })}
-                        />
+                        <div className='relative'>
+                            <Input
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder='Password'
+                                {...register('password', {
+                                required: true,
+                                })}
+                            />
+                            <div
+                            className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
+                            onClick={() => setShowPassword(prev => !prev)}
+                            >
+                                {showPassword ? (
+                                <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
+                                ) : (
+                                <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
+                                )}
+                            </div>
+                        </div>
 
                         <Button
                         type="submit"
