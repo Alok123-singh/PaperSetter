@@ -70,7 +70,7 @@ function Login() {
                         </Link>
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">
+                <h2 className="text-center text-2xl font-sans leading-tight">
                     Login
                 </h2>
                 <p className="mt-2 text-center text-base text-black/60 font-bold">
