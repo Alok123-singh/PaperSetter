@@ -4,34 +4,26 @@ import {Link, NavLink} from 'react-router-dom'
 
 function Home() {
     return (
-        <div className = 'py-10 flex justify-around items-center dark:bg-gray-400  flex-wrap'>
+        <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>
 
-            <div className="w-[270px] rounded-md border-2 dark:bg-gray-200 border-gray-300 dark:border-gray-500 flex flex-col justify-center items-center">
-                <img
-                    src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60"
-                    alt="Game"
-                    className="h-[160px] w-[95%] rounded-lg object-cover mt-2"
-                />
-                <div className="p-2 flex flex-col justify-center items-center">
+            <div className="w-[195px] rounded-md border-2 bg-gray-100 dark:bg-gray-200 border-gray-300 dark:border-gray-500 flex flex-col justify-center items-center">
+                <Link to={"/game"}>
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU"
+                        alt="Game"
+                        className="h-[130px] w-[90%] rounded-lg object-cover mt-2 ml-1.5"
+                    />
+                </Link>
+                
+                <div className="p-2 pb-6 flex flex-col justify-center items-center">
                     <Link to="/game">
-                        <button
-                            type="button"
-                            className=" py-2 px-2 text-[14px] font-semibold bg-transparent hover:bg-blue-500 text-blue-700   hover:text-white border border-blue-400 dark:border-blue-300 hover:border-transparent rounded"
+                        <div
+                            type="text"
+                            className=" text-xl text-center font-sans bg-transparent text-purple-700   hover:text-purple-600  rounded"
                         >
-                            Book Rooms
-                        </button>
+                            Inventory Management
+                        </div>
                     </Link>
-                    {/* <p class="mt-3 text-sm  text-center">
-                        It books rooms according to query that comes at a time
-                    </p>
-                    <Link to="/game">
-                        <button
-                        type="button"
-                        class="mt-4 py-2 px-4 text-[14px] font-semibold bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white border border-blue-400 hover:border-transparent rounded"
-                        >
-                            Play
-                        </button>
-                    </Link> */}
                 </div>
             </div>
 
