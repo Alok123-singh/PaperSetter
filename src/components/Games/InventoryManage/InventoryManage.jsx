@@ -1,9 +1,9 @@
 import { useState,useEffect } from 'react';
-import '../../index.css'
-import data from '../../JSON/queries.json'
+import '../../../index.css'
+import data from '../../../JSON/queries.json'
 import { Link,useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
-import { setResult } from '../../store/resultSlice';
+import { setResult } from '../../../store/resultSlice';
 
 function InventoryManage() {
 

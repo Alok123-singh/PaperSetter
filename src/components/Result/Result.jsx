@@ -30,7 +30,7 @@ function Result() {
 
     return (
         <div className='w-full h-screen flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>
-            <p className='font-bold text-xl font-serif h-auto'>Result Page</p>
+            <p className='font-bold text-xl font-serif h-auto'>Result</p>
 
             <div className='flex flex-col w-1/3 p-2 mt-7 '>
                 <div className=' w-full flex '>
