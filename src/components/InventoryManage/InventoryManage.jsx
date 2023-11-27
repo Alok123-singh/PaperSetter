@@ -132,12 +132,12 @@ function InventoryManage() {
             if(response.status === 201){
                 console.log("Result saved");
                 dispatch(setResult({noOfQueries: queries.length, score: data.score, title: data.examType}))
-                // navigate('/inventory-management/result');
+                navigate('/inventory-management/result');
             }
-            navigate('/inventory-management/result');
 
         }
         catch(err){
+            navigate('/inventory-management/result');
             console.log("Inventory Management save result error :",err);
         }
 
