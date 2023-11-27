@@ -2,11 +2,12 @@ import React,{ useState } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import '../../index.css'
 import { ThemeButton, LogoutBtn, Logo, Container } from '../index.js'
+import { useSelector } from 'react-redux';
 
 function Header() {
 
     const [show,setShow] = useState(false);
-    const [loginStatus,setLoginStatus] = useState(false);
+    const loginStatus = useSelector(state => state.auth.loginStatus);
 
     const navItems = [
         // {
@@ -24,11 +25,7 @@ function Header() {
             slug : '/about',
             active : true
         },
-        // {
-        //     name : "Signup",
-        //     slug : '/signup',
-        //     active : !loginStatus
-        // }
+        
     ]
 
     const navLinkStyles = ({ isActive }) => {
@@ -54,7 +51,7 @@ function Header() {
                             <Logo width='70px'   />
                         </Link>
                     </div>
-                    <div className={`${loginStatus? 'md:pl-[15.1rem]' : 'sm:pl-[8.85rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
+                    <div className={`${loginStatus? 'md:pl-[11.1rem]' : 'sm:pl-[9.2rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
                         <div className='px-4' key={item.name}>
@@ -75,16 +72,20 @@ function Header() {
                         
                     </div>
                     <div className='hidden sm:flex text-sm justify-between h-auto'>
+
                         {loginStatus && (
-                            <NavLink 
-                            style={navLinkStyles}
-                            className='px-2 sm:mr-2 py-1 my-2 h-[2.3rem] w-[7rem] flex items-center justify-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-full text-center cursor-pointer '
-                            to={'/my-account'}
-                            // onClick={() => navigate('/my-account')}
-                            >
-                                My Account
-                            </NavLink>
+                            <div className='w-[7rem]'>
+                                <NavLink 
+                                style={navLinkStyles}
+                                className='mt-[0rem]   sm:pt-[7px] mr-6  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 '
+                                to={'/my-account'}
+                                // onClick={() => navigate('/my-account')}
+                                >
+                                    My Account
+                                </NavLink>
+                            </div>
                         )}
+
                         {!loginStatus && (
                             <div className='w-[3rem]'>
                                 <NavLink to="/login" 
@@ -118,7 +119,7 @@ function Header() {
                                 <LogoutBtn />
                             </div>
                         )}
-                        <div className={`${!loginStatus ? "mx-4 mt-0 sm:mt-[0.1rem]" : ' sm:m-[0.2rem]'}`}>
+                        <div className={`${!loginStatus ? "mx-4 mt-0 sm:mt-[0.1rem]" : ' mx-4 mt-0 sm:mt-[0.1rem]'}`}>
                             <ThemeButton />
                         </div>
                     </div>
@@ -149,7 +150,7 @@ function Header() {
             </Container>
 
             <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
-                <div className={` text-black dark:text-white flex justify-center flex-wrap`}>
+                <div className={` text-black dark:text-white text-sm md:text-md flex justify-center flex-wrap`}>
                     {navItems.map((item) => 
                         item.active ? (
                         <div className='px-4' key={item.name}>
@@ -174,13 +175,14 @@ function Header() {
                     {loginStatus && (
                         <NavLink 
                         style={navLinkStyles}
-                        className='py-2 my-2 w-[6.8rem] duration-200 text-sm hover:bg-blue-100 dark:hover:bg-slate-600 rounded-full text-center cursor-pointer '
+                        className='mt-4 p-1 h-[2.3rem] text-sm pr-6 flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg'
                         to={'/my-account'}
                         // onClick={() => navigate('/my-account')}
                         >
                             My Account
                         </NavLink>
                     )}
+
                     {!loginStatus && (
                         <div className='w-[3rem]'>
                             <NavLink to="/login" 
@@ -188,7 +190,6 @@ function Header() {
                             >
                                 <button 
                                 className='mt-4 p-1 h-[2.3rem] text-sm flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg '
-                                
                                 >
                                     Login
                                 </button>
@@ -210,11 +211,11 @@ function Header() {
                         </div>
                     )}
                     {loginStatus && (
-                        <div > 
+                        <div className='text-sm md:text-md pt-4 mr-5'> 
                             <LogoutBtn />
                         </div>
                     )}
-                    <div className={`${!loginStatus ? "mt-4" : 'pt-[1.1rem]'}`}>
+                    <div className={`${!loginStatus ? "mt-4" : 'pt-[1.1rem] mr-2'}`}>
                         <ThemeButton />
                     </div>
                 </div>

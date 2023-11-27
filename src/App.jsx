@@ -1,11 +1,11 @@
-import React from 'react'
-import '../../index.css'
-import Header from '../Header/Header.jsx'
-import Footer from '../Footer/Footer.jsx'
+import React, { useState } from 'react'
+import './index.css'
+import { Header, Footer } from './components/index.js'
 import { Outlet, useLocation } from 'react-router-dom'
 
-function Layout() {
+function App() {
 
+    const [loading, setLoading] = useState(false);
     const location = useLocation();
 
     const excludedUrls = ['/inventory-management', '/inventory-management/result'];
@@ -13,7 +13,14 @@ function Layout() {
     // Check if the current location pathname is in the excludedUrls array
     const shouldHideHeaderFooter = excludedUrls.includes(location.pathname);
 
-    return (
+    return loading ? (
+
+        <div className='h-screen w-full flex justify-center items-center'>
+            <div className='bg-blue-400 w-[6rem] h-[3rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
+        </div>
+
+        ) : (
+
         <div className='min-h-screen w-full content-between'>
             <div className='w-full '>
                 {!shouldHideHeaderFooter && <Header />}
@@ -28,4 +35,4 @@ function Layout() {
     )
 }
 
-export default Layout
+export default App

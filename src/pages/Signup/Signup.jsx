@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
-import {Button, Input, Logo} from '../index.js'
+import {Button, Input, Logo} from '../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 
 function Signup() {
