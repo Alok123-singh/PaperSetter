@@ -10,7 +10,7 @@ import Layout from './Layout/Layout'
 import Login from './Login/Login'
 import Logo from './Logo/Logo'
 import LogoutBtn from './LogoutBtn/LogoutBtn'
-import Table from './Table/Table'
+import InventoryManage from './InventoryManage/InventoryManage'
 import ThemeButton from './ThemeButton/ThemeButton'
 import Signup from './Signup/Signup'
 import ResetPassword from './ResetPassword/ResetPassword'
@@ -28,7 +28,7 @@ export {
     Login,
     Logo,
     LogoutBtn,
-    Table,
+    InventoryManage,
     ThemeButton,
     Signup,
     ResetPassword,

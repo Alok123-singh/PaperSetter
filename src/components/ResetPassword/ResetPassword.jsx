@@ -38,7 +38,7 @@ function ResetPassword() {
             // const data2 = await response.json();
             console.log("Response",response);
             
-            if(response.status === 202){
+            if(response.status === 200){
                 alert('Password has been reset');
                 console.log("Reset Successfull");
                 navigate('/login');

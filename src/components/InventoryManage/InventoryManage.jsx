@@ -3,7 +3,7 @@ import '../../index.css'
 import data from '../../JSON/queries.json'
 import { Link } from 'react-router-dom';
 
-function Table() {
+function InventoryManage() {
 
     const[defaultRows,setDefaultRows] = useState(10);
     const[defaultColumns,setDefaultColumns] = useState(7);
@@ -138,6 +138,14 @@ function Table() {
         console.log("Current Query",query);
         console.log("Query No.",index);
 
+        if(index > queries.length){
+            
+            console.log("Game Ended");
+
+            
+
+        }
+
     }, [index]);
 
 
@@ -154,7 +162,7 @@ function Table() {
                     console.log("Selectable column",selectableColumn);
                     console.log("Selectable Row",selectableRow);
                     console.log("------------------------------------");
-                    
+
                     const showMessage = (status) => {
                         const text = document.querySelector('.queryShow');
                         if(status === true){
@@ -462,4 +470,4 @@ function Table() {
     )
 }
 
-export default Table
+export default InventoryManage

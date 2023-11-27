@@ -9,7 +9,7 @@ function Layout() {
     const location = useLocation();
 
     // Check if the current location pathname is "/game"
-    const isGameRoute = location.pathname === '/game';
+    const isGameRoute = location.pathname === '/inventory-management';
 
     return (
         <div className='min-h-screen w-full content-between'>
