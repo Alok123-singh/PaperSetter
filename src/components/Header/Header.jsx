@@ -1,11 +1,14 @@
 import React,{ useState } from 'react'
 import {Link, NavLink} from 'react-router-dom'
-import '../../index.css'
-import { ThemeButton, LogoutBtn, Logo, Container } from '../index.js'
-import { useSelector } from 'react-redux';
+import { Logo, Container } from '../index.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginStatus } from '../../store/authSlice'
+
 
 function Header() {
 
+    const dispatch = useDispatch();
+    const [showAccountOptions,setShowAccountOptions] = useState(false);
     const [show,setShow] = useState(false);
     const loginStatus = useSelector(state => state.auth.loginStatus);
 
@@ -15,16 +18,16 @@ function Header() {
         //     slug : '/',
         //     active : true
         // },
-        {
-            name : "Contact",
-            slug : '/contact',
-            active : true
-        },
-        {
-            name : "About",
-            slug : '/about',
-            active : true
-        },
+        // {
+        //     name : "Contact",
+        //     slug : '/contact',
+        //     active : true
+        // },
+        // {
+        //     name : "About",
+        //     slug : '/about',
+        //     active : true
+        // },
         
     ]
 
@@ -45,13 +48,13 @@ function Header() {
     return (
         <header className='w-full py-1  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
-                <nav className='flex justify-between py-1 sm:py-0 md:justify-between flex-wrap'>
+                <nav className='relative flex justify-between py-1 sm:py-0 md:justify-between flex-wrap'>
                     <div className=' mx-2'>
                         <Link to='/' >
                             <Logo width='70px'   />
                         </Link>
                     </div>
-                    <div className={`${loginStatus? 'md:pl-[11.1rem]' : 'sm:pl-[9.2rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
+                    <div className={`${loginStatus? 'md:pl-[0.1rem]' : 'sm:pl-[4.1rem]'} text-sm hidden text-black dark:text-white sm:pl-[1.2rem] mt-1 w-auto sm:flex justify-evenly flex-wrap`}>
                         {navItems.map((item) => 
                         item.active ? (
                         <div className='px-4' key={item.name}>
@@ -69,25 +72,79 @@ function Header() {
                         </div>
                         ) : null
                         )}
+
+                        <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
+                            SIMLERN
+                        </div>
                         
                     </div>
+
                     <div className='hidden sm:flex text-sm justify-between h-auto'>
 
                         {loginStatus && (
-                            <div className='w-[7rem]'>
-                                <NavLink 
-                                style={navLinkStyles}
-                                className='mt-[0rem]   sm:pt-[7px] mr-6  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 '
-                                to={'/my-account'}
-                                // onClick={() => navigate('/my-account')}
+
+                            <div className='w-[80px] flex justify-end'>
+                                <div
+                                className='mt-[2px] p-1 h-[2.8rem] w-[2.8rem] cursor-default text-lg flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-600 rounded-full'
+                                onClick={() => setShowAccountOptions(prev => !prev)}
                                 >
-                                    My Account
-                                </NavLink>
+                                    AB
+                                </div>
+                            </div>
+
+                            // <div className='w-[7rem]'>
+                            //     <NavLink 
+                            //     style={navLinkStyles}
+                            //     className='mt-[0rem]   sm:pt-[7px] mr-6  p-1 sm:my-[0.4rem] h-[2.3rem] flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 '
+                            //     to={'/my-account'}
+                            //     // onClick={() => navigate('/my-account')}
+                            //     >
+                            //         My Account
+                            //     </NavLink>
+                            // </div>
+                        )}
+
+                        {showAccountOptions && (
+                            <div className='absolute right-[-1rem] mt-[3rem] w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
+                                <Link
+                                to={"/my-account"}
+                                >
+                                    <div className='p-2'
+                                    onClick={() => {
+                                        setShowAccountOptions(false);
+                                    }}
+                                    >
+                                        Account
+                                    </div>
+                                </Link>
+
+                                <Link
+                                to={"/history"}
+                                >
+                                    <div 
+                                    className='p-2' 
+                                    onClick={() => {
+                                        setShowAccountOptions(false);
+                                    }}>
+                                        History
+                                    </div>
+                                </Link>
+
+                                <div className=''> 
+                                    <div 
+                                    className='p-2 cursor-pointer' 
+                                    onClick={() => {
+                                        dispatch(setLoginStatus(false))
+                                        setShowAccountOptions(false);
+                                    }}>
+                                        Logout
+                                    </div>
+                                </div>
                             </div>
                         )}
 
                         {!loginStatus && (
-                            <div className='w-[3rem]'>
+                            <div className='w-[3rem]'> 
                                 <NavLink to="/login" 
                                 style={navLinkStyles}
                                 >
@@ -114,14 +171,14 @@ function Header() {
                                 </NavLink>
                             </div>
                         )}
-                        {loginStatus && (
+                        {/* {loginStatus && (
                             <div className=''> 
                                 <LogoutBtn />
                             </div>
-                        )}
-                        <div className={`${!loginStatus ? "mx-4 mt-0 sm:mt-[0.1rem]" : ' mx-4 mt-0 sm:mt-[0.1rem]'}`}>
+                        )} */}
+                        {/* <div className={`${!loginStatus ? "mx-4 mt-0 sm:mt-[0.1rem]" : ' mx-4 mt-0 sm:mt-[0.1rem]'}`}>
                             <ThemeButton />
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className='flex sm:hidden'>
@@ -150,7 +207,7 @@ function Header() {
             </Container>
 
             <div className={`${show ? 'flex' : 'hidden'} sm:hidden flex flex-col item-center flex-wrap`}>
-                <div className={` text-black dark:text-white text-sm md:text-md flex justify-center flex-wrap`}>
+                <div className={` text-black dark:text-white text-sm md:text-md flex ${loginStatus ? 'justify-between p-4' : 'justify-center'} flex-wrap`}>
                     {navItems.map((item) => 
                         item.active ? (
                         <div className='px-4' key={item.name}>
@@ -168,20 +225,72 @@ function Header() {
                         </div>
                         ) : null
                     )}
+
+                    <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
+                            SIMLERN
+                    </div>
+
+                    {loginStatus && (
+
+                        <div
+                        className='py-2 text-sm  w-[3rem] cursor-default flex justify-center items-center text-center duration-200  hover:bg-slate-200 dark:hover:bg-slate-600 rounded-full '
+                        onClick={() => setShowAccountOptions(prev => !prev)}
+                        >
+                            AB
+                        </div>
+
+                        // <NavLink 
+                        // style={navLinkStyles}
+                        // className='mt-4 p-1 h-[2.3rem] text-sm pr-6 flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg'
+                        // to={'/my-account'}
+                        // // onClick={() => navigate('/my-account')}
+                        // >
+                        //     My Account
+                        // </NavLink>
+                    )}
+
+                    {showAccountOptions && (
+                        <div className='absolute text-sm right-0 mt-[3rem] w-1/3 md:w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
+                            <Link
+                            to={"/my-account"}
+                            >
+                                <div className='p-2'
+                                onClick={() => {
+                                    setShowAccountOptions(false);
+                                }}
+                                >
+                                    Account
+                                </div>
+                            </Link>
+
+                            <Link
+                            to={"/history"}
+                            >
+                                <div 
+                                className='p-2' 
+                                onClick={() => {
+                                    setShowAccountOptions(false);
+                                }}>
+                                    History
+                                </div>
+                            </Link>
+
+                            <div className=''> 
+                                <div 
+                                className='p-2 cursor-pointer' 
+                                onClick={() => {
+                                    dispatch(setLoginStatus(false))
+                                    setShowAccountOptions(false);
+                                }}>
+                                    Logout
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     
                 </div>
 
-                <div className='flex justify-evenly h-auto'>
-                    {loginStatus && (
-                        <NavLink 
-                        style={navLinkStyles}
-                        className='mt-4 p-1 h-[2.3rem] text-sm pr-6 flex justify-center items-center text-center duration-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg'
-                        to={'/my-account'}
-                        // onClick={() => navigate('/my-account')}
-                        >
-                            My Account
-                        </NavLink>
-                    )}
+                <div className='flex justify-around h-auto'>
 
                     {!loginStatus && (
                         <div className='w-[3rem]'>
@@ -210,14 +319,14 @@ function Header() {
                             </NavLink>
                         </div>
                     )}
-                    {loginStatus && (
+                    {/* {loginStatus && (
                         <div className='text-sm md:text-md pt-4 mr-5'> 
                             <LogoutBtn />
                         </div>
-                    )}
-                    <div className={`${!loginStatus ? "mt-4" : 'pt-[1.1rem] mr-2'}`}>
+                    )} */}
+                    {/* <div className={`${!loginStatus ? "mt-4" : 'pt-[1.1rem] mr-2'}`}>
                         <ThemeButton />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             

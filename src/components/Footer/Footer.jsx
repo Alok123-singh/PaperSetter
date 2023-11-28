@@ -15,7 +15,7 @@ function Footer() {
                             </Link>
                             <div className='mt-2'>
                                 <p className="text-center text-sm text-gray-900 dark:text-slate-400">
-                                    &copy; Copyright 2024. All Rights Reserved by [Company Name].
+                                    &copy; Copyright 2024. All Rights Reserved by SIMLERN.
                                 </p>
                             </div>
                         </div>

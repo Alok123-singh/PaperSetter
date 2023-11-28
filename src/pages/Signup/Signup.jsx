@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
 import {Button, Input, Logo} from '../../components/index'
 import {useForm, Controller} from 'react-hook-form'
+import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
+
 
 function Signup() {
     const [loading, setLoading] = useState(false);
@@ -30,9 +32,10 @@ function Signup() {
             const data = await response.json();
             
             if (!data) {
+                
                 errors.push('Username is not availaible');
                 setUsernameAvailability(false);
-                console.log("Username not availaible");
+                console.log("Username is not availaible");
 
             } else {
                 setError(prev => prev.filter(err => err !== 'Username is not availaible'));
@@ -41,25 +44,32 @@ function Signup() {
             }
         }
         catch (error) {
+            
             setUsernameAvailability(true);
             console.error('Error checking username availability:', error);
         }
 
         if(errors.length > 0){
             error.map(err => errors.push(err));
+            
+            function removeDuplicates(arr) {
+                return Array.from(new Set(arr));
+            }
+
+            errors = removeDuplicates(errors);
             setError(errors);
         }
     };
 
 
-    const create = async(data) => {
+    const create = async (data) => {
         setLoading(true);
         setError("");
 
         const errors = [];
 
         if(usernameAvailability === false){
-            errors.push("Username not availaible");
+            errors.push("Username is not availaible");
         }
         
         // Validation for First Name
@@ -211,19 +221,29 @@ function Signup() {
                                 defaultValue="" // Initialize the value here
                                 
                                 render={({ field, fieldState }) => (
-                                <div>
+                                <div className='relative'>
                                     <Input
                                     // label = "Username"
                                     {...field}
                                     onBlur={(e) => checkUsernameAvailability(e.target.value)}
                                     placeholder="Username"
                                     type="text"
+                                    className={`${usernameAvailability ? 'text-green-600' : 'text-red-500'}`}
                                     
                                     />
                                     {/* {fieldState.error && <p>This username is not available.</p>}
                                     {usernameAvailability === false && (
                                         <p className="text-red-600 mt-2">This username is not available.</p>
                                     )} */}
+                                    {field.value && (
+                                        <span className='absolute top-1/2 right-3 transform -translate-y-1/2'>
+                                            {usernameAvailability ? (
+                                                <FaCheck className='text-green-500' />
+                                            ) : (
+                                                <FaTimes className='text-red-500' />
+                                            )}
+                                        </span>
+                                    )}
                                 </div>
                                 )}
                             />

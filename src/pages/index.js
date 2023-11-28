@@ -6,6 +6,7 @@ import MyAccount from "./MyAccount/MyAccount";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import Result from "./Result/Result";
 import Signup from "./Signup/Signup";
+import History from "./History/History";
 
 export {
     About,
@@ -16,6 +17,7 @@ export {
     ResetPassword,
     Result,
     Signup,
+    History,
     
 
 };
