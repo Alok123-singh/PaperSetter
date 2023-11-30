@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-function Home() {
+function ParticipantHome() {
     return (
         <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>
 
@@ -30,4 +30,4 @@ function Home() {
     )
 }
 
-export default Home
+export default ParticipantHome

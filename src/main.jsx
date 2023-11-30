@@ -2,18 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Contact, Home, MyAccount, Login, Signup, ResetPassword, Result, History } from './pages/index.js'
+import { About, Contact, Login, MyAccount, ResetPassword, Signup } from './pages/Global/index.js'
+import { Result, History } from './pages/Participant/index.js'
 import { AuthLayout } from './components/index.js'
 import { InventoryManagement } from './games/index.js'
 import App from './App.jsx'
 import store from './store/store.js'
+import { Home } from './roles/index.js'
 
 const router = createBrowserRouter(
+
     createRoutesFromElements(
 
         <Route path='/' element={<App />} >
 
-            <Route path='' element={<Home />} />
+            <Route path='' element={<AuthLayout authentication> {""} <Home /> </AuthLayout>} />
 
             <Route path='about' element={<About />} />
 

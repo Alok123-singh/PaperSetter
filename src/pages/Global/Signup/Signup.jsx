@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
-import {Button, Input, Logo} from '../../components/index'
+import {Button, Input, Logo} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
 
@@ -10,7 +10,7 @@ function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState([])
     const {control, register, handleSubmit} = useForm();
-    const [usernameAvailability, setUsernameAvailability] = useState(false);
+    const [usernameAvailability, setUsernameAvailability] = useState(true);
     const [step,setStep] = useState(1);
     const [showPassword, setShowPassword] = useState(false);
 

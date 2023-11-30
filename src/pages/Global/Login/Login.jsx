@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {Button, Input, Logo} from "../../components/index.js"
+import {Button, Input, Logo} from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
-import { setUsername, setLoginStatus } from '../../store/authSlice.js'
+import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
 
 function Login() {
     const [loading, setLoading] = useState(false);

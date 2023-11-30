@@ -482,8 +482,6 @@ function InventoryManagement() {
 
             </div>
 
-
-
         </div>
     )
 }

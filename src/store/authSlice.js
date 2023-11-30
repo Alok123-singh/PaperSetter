@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ROLES } from '../roles/index'
 
 const initialState = {
     loginStatus: false,
-    username: ''
+    username: '',
+    role : ROLES.ADMIN,
 }
 
 const authSlice = createSlice({
@@ -14,11 +16,14 @@ const authSlice = createSlice({
         },
         setLoginStatus: (state,action) => {
             state.loginStatus = action.payload;
-        }
+        },
+        setRole: (state, action) => {
+            state.role = action.payload;
+        },
     }
 
 });
 
-export const { setUsername, setLoginStatus } = authSlice.actions;
+export const { setUsername, setLoginStatus, setRole } = authSlice.actions;
 
 export default authSlice.reducer;

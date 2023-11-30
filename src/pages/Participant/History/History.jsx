@@ -22,7 +22,7 @@ function History() {
             const data = await response.json();
 
             if(data.length !== 0)
-                setHistory(data);
+                setHistory(data.reverse());
 
         }
         catch(err){
@@ -37,9 +37,12 @@ function History() {
 
     }, [])
 
+
+    // Pagination logic starts below
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 5;
+
     // Calculate the indexes of the items to display on the current page.
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -99,9 +102,9 @@ function History() {
     ) : (
 
         <div className='w-full py-10 flex flex-wrap flex-col justify-center'>
-        {/* Display the current page items */}
+        {/* Displaying the current page items */}
             <div className='w-full flex flex-col flex-wrap space-y-7 justify-center items-center'>
-                {currentItems.slice().reverse().map((item,index) => {
+                {currentItems.map((item,index) => {
 
                 return <div 
                     key={index} 
@@ -122,18 +125,18 @@ function History() {
                 })}
             </div>
 
-            {/* Create the pagination buttons */}
+            {/* Creating the pagination buttons */}
             <div className='w-full flex flex-wrap flex-col justify-center items-center mt-[3rem] mb-[1rem]'>
                 <button 
                 onClick={handlePrevious}
                 className='h-[2.5rem] w-[5rem] m-2 p-2 flex justify-center items-center font-bold bg-blue-400 hover:bg-blue-500 rounded-lg'
                 >
-                Previous
+                    Previous
                 </button>
 
                 <div className='flex flex-wrap justify-center items-center'>
                     {pages.map((value,index) => (
-                    <button key={index} onClick={() => paginate(index + 1)} className={`${currentPage == index + 1 && 'bg-gray-300 dark:bg-purple-500'} h-[2.5rem] w-[3rem] m-1 p-1 flex justify-center items-center bg-gray-600 hover:bg-gray-500 dark:bg-gray-800 rounded-lg font-bold text-white dark:text-gray-300`}>
+                    <button key={index} onClick={() => paginate(index + 1)} className={`${currentPage == index + 1 && 'bg-gray-300 dark:bg-purple-500'} h-[2.5rem] w-[3rem] m-1 p-1 flex justify-center items-center bg-gray-400 hover:bg-gray-300 dark:bg-gray-800 rounded-lg font-bold text-white dark:text-gray-300`}>
                         {value}
                     </button>
                     ))}
@@ -142,7 +145,7 @@ function History() {
                 <button 
                 onClick={handleNext} 
                 className='h-[2.5rem] w-[4.5rem] m-2 p-2 flex justify-center items-center font-bold bg-blue-400 hover:bg-blue-500 rounded-lg'>
-                Next
+                    Next
                 </button>
             </div>
         </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './index.css'
 import { Header, Footer } from './components/index.js'
 import { Outlet, useLocation } from 'react-router-dom'
 
