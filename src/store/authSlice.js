@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ROLES } from '../roles/index'
 
 const initialState = {
-    loginStatus: true,
+    loginStatus: false,
     username: '',
     role : ROLES.ADMIN,
 }
