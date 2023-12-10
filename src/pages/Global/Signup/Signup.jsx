@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
-import {Button, Input, Logo} from '../../../components/index'
+import {Button, Input, Logo, Loading} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
 
@@ -137,11 +137,7 @@ function Signup() {
     }
 
     return loading ? (
-        <div className='dark:bg-gray-400  w-full flex justify-center items-center h-[10rem]'>
-            <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'>
-                Loading! 
-            </div>
-        </div>
+        <Loading />
     ) : 
     (
         <div className="flex items-center justify-center dark:bg-gray-400 dark:text-gray-800 py-8">

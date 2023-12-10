@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useRef, useState, useEffect } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import { Logo, Container } from '../index.js'
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,8 @@ function Header() {
     const [showAccountOptions,setShowAccountOptions] = useState(false);
     const [show,setShow] = useState(false);
     const loginStatus = useSelector(state => state.auth.loginStatus);
-
+    const accountRef = useRef(null);
+    
     const navItems = [
         // {
         //     name : "Home",
@@ -45,6 +46,28 @@ function Header() {
         setShow(prev => !prev);
     }
 
+    const handleAccountClick = () => {
+        setShowAccountOptions(true);
+    };
+    
+    const handleOutsideClick = (event) => {
+        if (accountRef.current && !accountRef.current.contains(event.target)) {
+            setShowAccountOptions(false);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        setShowAccountOptions(false);
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
     return (
         <header className='w-full py-1  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
@@ -68,57 +91,65 @@ function Header() {
 
                         <div className='w-1/3 hidden sm:flex text-sm justify-end h-auto'>
 
-                            {loginStatus && (
+                            <div 
+                            onMouseEnter={handleAccountClick}
+                            onMouseLeave={handleMouseLeave}
+                            ref={accountRef}
+                            >
+                                {loginStatus && (
 
-                                <div className='w-[80px] flex justify-end'>
-                                    <div
-                                    className='mt-[2px] p-1 h-[2.8rem] w-[2.8rem] cursor-default text-lg flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-600 rounded-full'
-                                    onClick={() => setShowAccountOptions(prev => !prev)}
-                                    >
-                                        AB
-                                    </div>
-                                </div>
-
-                            )}
-
-                            {showAccountOptions && (
-                                <div className='absolute right-[-1rem] mt-[3rem] w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
-                                    <Link
-                                    to={"/my-account"}
-                                    >
-                                        <div className='p-2'
-                                        onClick={() => {
-                                            setShowAccountOptions(false);
-                                        }}
+                                    <div className='w-[80px] flex justify-end'>
+                                        <div
+                                        className='mt-[2px] p-1 h-[2.8rem] w-[2.8rem] cursor-default text-lg flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-600 rounded-full'
+                                        // onClick={() => setShowAccountOptions(prev => !prev)}
+                                        
                                         >
-                                            Account
-                                        </div>
-                                    </Link>
-
-                                    <Link
-                                    to={"/history"}
-                                    >
-                                        <div 
-                                        className='p-2' 
-                                        onClick={() => {
-                                            setShowAccountOptions(false);
-                                        }}>
-                                            History
-                                        </div>
-                                    </Link>
-
-                                    <div className=''> 
-                                        <div 
-                                        className='p-2 cursor-pointer' 
-                                        onClick={() => {
-                                            dispatch(setLoginStatus(false))
-                                            setShowAccountOptions(false);
-                                        }}>
-                                            Logout
+                                            AB
                                         </div>
                                     </div>
-                                </div>
-                            )}
+
+                                )}
+
+                                {showAccountOptions && (
+                                    <div className='absolute right-[-1rem] mt-[0.1rem] w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
+                                        <Link
+                                        to={"/my-account"}
+                                        >
+                                            <div className='p-2'
+                                            onClick={() => {
+                                                setShowAccountOptions(false);
+                                            }}
+                                            >
+                                                Account
+                                            </div>
+                                        </Link>
+
+                                        <Link
+                                        to={"/history"}
+                                        >
+                                            <div 
+                                            className='p-2' 
+                                            onClick={() => {
+                                                setShowAccountOptions(false);
+                                            }}>
+                                                History
+                                            </div>
+                                        </Link>
+
+                                        <div className=''> 
+                                            <div 
+                                            className='p-2 cursor-pointer' 
+                                            onClick={() => {
+                                                dispatch(setLoginStatus(false))
+                                                setShowAccountOptions(false);
+                                            }}>
+                                                Logout
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                            </div>
 
                             {!loginStatus && (
                                 <div className='w-[3rem] flex justify-center items-center'> 
@@ -223,53 +254,61 @@ function Header() {
                                 
                                 {loginStatus && 
                                 <div className='w-full flex justify-end items-center py-1'>
-                                    {loginStatus && (
-                                        <div
-                                        className=' text-sm w-[3rem] h-[3rem] cursor-default flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-500 rounded-full '
-                                        onClick={() => setShowAccountOptions(prev => !prev)}
-                                        >
-                                            AB
-                                        </div>
-                                    )}
 
-                                    {showAccountOptions && (
-                                        <div className='absolute text-sm right-[-1rem] mt-[10.9rem] w-1/4 md:w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
-                                            <Link
-                                            to={"/my-account"}
+                                    <div onMouseEnter={handleAccountClick} 
+                                    onMouseLeave={handleMouseLeave}
+                                    ref={accountRef}
+                                    >
+                                    
+                                        {loginStatus && (
+                                            <div
+                                            className='AccountClass text-sm w-[3rem] h-[3rem] cursor-default flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-500 rounded-full z-50'
+                                            
                                             >
-                                                <div className='p-2'
-                                                onClick={() => {
-                                                    setShowAccountOptions(false);
-                                                }}
+                                                AB
+                                            </div>
+                                        )}
+
+                                        {showAccountOptions && (
+                                            <div className='absolute text-sm right-[-1rem] mt-[0.4rem] w-1/2 md:w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
+                                                <Link
+                                                to={"/my-account"}
                                                 >
-                                                    Account
-                                                </div>
-                                            </Link>
+                                                    <div className='p-2'
+                                                    onClick={() => {
+                                                        setShowAccountOptions(false);
+                                                    }}
+                                                    >
+                                                        Account
+                                                    </div>
+                                                </Link>
 
-                                            <Link
-                                            to={"/history"}
-                                            >
-                                                <div 
-                                                className='p-2' 
-                                                onClick={() => {
-                                                    setShowAccountOptions(false);
-                                                }}>
-                                                    History
-                                                </div>
-                                            </Link>
+                                                <Link
+                                                to={"/history"}
+                                                >
+                                                    <div 
+                                                    className='p-2' 
+                                                    onClick={() => {
+                                                        setShowAccountOptions(false);
+                                                    }}>
+                                                        History
+                                                    </div>
+                                                </Link>
 
-                                            <div className=''> 
-                                                <div 
-                                                className='p-2 cursor-pointer' 
-                                                onClick={() => {
-                                                    dispatch(setLoginStatus(false))
-                                                    setShowAccountOptions(false);
-                                                }}>
-                                                    Logout
+                                                <div className=''> 
+                                                    <div 
+                                                    className='p-2 cursor-pointer' 
+                                                    onClick={() => {
+                                                        dispatch(setLoginStatus(false))
+                                                        setShowAccountOptions(false);
+                                                    }}>
+                                                        Logout
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
+
+                                    </div>
                                 </div>}
 
                             </div>

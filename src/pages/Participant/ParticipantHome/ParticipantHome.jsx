@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
+import { Loading } from '../../../components/index'
+
 
 function ParticipantHome() {
-    return (
+    const [loading, setLoading] = useState(false);
+
+
+    return loading ? (
+        <Loading />
+    ) : 
+    (
         <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>
 
             <div className="w-[195px] rounded-md border-2 bg-gray-100 dark:bg-gray-200 border-gray-300 dark:border-gray-500 flex flex-col justify-center items-center">

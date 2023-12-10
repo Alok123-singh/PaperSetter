@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Loading } from '../../../components/index'
 
 function About() {
-  return (
+
+    const [loading, setLoading] = useState(false);
+
+
+    return loading ? (
+        <Loading />
+    ) : 
+    (
     <div className="about-us-container dark:bg-gray-400 p-8">
         <section className="about-us-header text-center mb-8">
             <h1 className="text-3xl font-bold">Welcome to Our Story</h1>
@@ -11,7 +19,7 @@ function About() {
         <section className="our-mission mb-8">
             <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
             <p className="text-gray-800">
-            At [Your Company Name], our mission is to [insert mission statement here].
+            At SIMLERN, our mission is to [insert mission statement here].
             We are committed to [describe your commitment or goals].
             </p>
         </section>

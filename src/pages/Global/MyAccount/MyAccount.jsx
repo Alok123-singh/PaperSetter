@@ -1,12 +1,16 @@
-import React, {  } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { ThemeButton } from '../../../components/index';
+import { ThemeButton, Loading } from '../../../components/index';
 
 function MyAccount() {
 
     const userName = useSelector(state => state.auth.username);
+    const [loading, setLoading] = useState(false);
 
-    return (
+    return loading ? (
+        <Loading />
+    ) : 
+    (
         <div
         className='h-[18rem] w-full flex flex-col flex-wrap justify-center items-center dark:bg-slate-600 dark:text-gray-300'
         >

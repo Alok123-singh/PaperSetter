@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header, Footer } from './components/index.js'
+import { Header, Footer, Loading } from './components/index.js'
 import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
@@ -13,12 +13,9 @@ function App() {
     const shouldHideHeaderFooter = excludedUrls.includes(location.pathname);
 
     return loading ? (
-
-        <div className='h-screen w-full flex justify-center items-center'>
-            <div className='bg-blue-400 w-[6rem] h-[3rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
-        </div>
-
-        ) : (
+            <Loading />
+        ) : 
+        (
 
         <div className='min-h-screen w-full content-between'>
             <div className='w-full '>

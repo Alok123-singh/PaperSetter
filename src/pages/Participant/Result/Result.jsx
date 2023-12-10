@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { Loading } from '../../../components/index'
+
 
 function Result() {
+
+    const [loading, setLoading] = useState(false);
 
     const title = useSelector(state => state.result.title);
     const noOfQueries = useSelector(state => state.result.noOfQueries);
@@ -28,7 +32,10 @@ function Result() {
         return formattedWords.join(' ');
     }
 
-    return (
+    return loading ? (
+        <Loading />
+    ) : 
+    (
         <div className='w-full h-screen flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>
             <p className='font-bold text-xl font-serif h-auto'>Result</p>
 

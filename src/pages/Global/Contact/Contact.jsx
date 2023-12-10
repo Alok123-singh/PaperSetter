@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Loading } from '../../../components/index'
+
 
 function Contact() {
-    return (
+
+    const [loading, setLoading] = useState(false);
+
+
+    return loading ? (
+        <Loading />
+    ) : 
+    (
         <div className="contact-us-container dark:bg-gray-400 p-8">
             <section className="contact-us-images text-center">
                 <img

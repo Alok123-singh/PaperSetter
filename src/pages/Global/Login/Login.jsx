@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import {Button, Input, Logo} from "../../../components/index.js"
+import { Link, useNavigate } from 'react-router-dom'
+import { Button, Input, Logo, Loading } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
+import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
+
 
 function Login() {
     const [loading, setLoading] = useState(false);
@@ -51,10 +53,7 @@ function Login() {
     }
 
     return loading ? (
-        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-screen'>
-        <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
-        </div>
-
+        <Loading />
     ) : 
     (
         <div
