@@ -113,7 +113,7 @@ function ErrorBoundary(props) {
                 <animated.div style={errorIconProps}>
                 <IoMdAlert size={70} className="" />
                 </animated.div>
-                <h1 className="mt-4 mb-2 flex justify-center items-center text-xl">Oops something went wrong. Please try again</h1>
+                <h1 className="mt-4 mb-2 flex justify-center items-center text-center text-xl">Oops something went wrong. Please try again</h1>
                 <button onClick={handleGoToComponent} className="bg-rose-600 border-2 border-red-700 hover:bg-blue-500 hover:border-2 hover:border-black text-white font-bold mt-4 py-2 px-4 rounded-md">
                 Go to {getComponentName()}
                 </button>
