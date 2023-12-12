@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header, Footer, Loading } from './components/index.js'
+import { Header, Footer, Loading, ErrorBoundary } from './components/index.js'
 import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
@@ -19,13 +19,15 @@ function App() {
 
         <div className='min-h-screen w-full content-between'>
             <div className='w-full '>
-                {!shouldHideHeaderFooter && <Header />}
+                <ErrorBoundary>
+                    {!shouldHideHeaderFooter && <Header />}
 
-                <main>
-                    <Outlet />
-                </main>
+                    <main>
+                        <Outlet />
+                    </main>
 
-                {!shouldHideHeaderFooter && <Footer />}
+                    {!shouldHideHeaderFooter && <Footer />}
+                </ErrorBoundary>
             </div>
         </div>
     )

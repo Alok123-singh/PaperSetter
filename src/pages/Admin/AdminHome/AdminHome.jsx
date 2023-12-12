@@ -1,6 +1,6 @@
 import React,{ useState } from 'react'
-import { FaPencilAlt, FaTrash } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosAdd } from 'react-icons/io';
+import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
+import { IoIosAdd } from 'react-icons/io';
 import {useForm} from "react-hook-form"
 import { Input, Button, OverlayForm, Loading, Pagination } from '../../../components/index'
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
@@ -13,17 +13,91 @@ function AdminHome() {
     const {register, handleSubmit} = useForm()
     const [showPassword,setShowPassword] = useState(false);
 
-    const [showFormIndex, setShowFormIndex] = useState(null);
+    const [showFormIndex1, setShowFormIndex1] = useState(null);
+    const [showFormIndex2, setShowFormIndex2] = useState(null);
 
-    const addCourse = () => {
+    const [hoveredDetails, setHoveredDetails] = useState([]);
+    let animationTimeout;
 
+    const addInstructor = (data) => {
+        setLoading(true);
+
+        let newItems = [...items];
+
+        newItems = [...newItems,  
+            {
+                instructorName : data.instructorName,
+
+                emailId : data.instructorEmail,
+                
+                password : data.password,
+
+                update : <FaPencilAlt size={14} className=' cursor-pointer' />,
+
+                delete : <FaTrash size={14} className=' cursor-pointer' />,
+
+                courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
+
+                add : <IoIosAdd size={25} className=' cursor-pointer' />,
+
+                courseList: []
+            }
+        ]
+
+        setItems(newItems);
+
+        setLoading(false);
     };
 
-    const formData = {
+    const assignCourse = (data) => {
+        setLoading(true);
+
+        console.log('New Course Assigned');
+
+        let newItems = [...items];
+
+        newItems = newItems.map((item) => item.emailId === data['emailId'] ? {...item, courseList: [...item.courseList , { courseCode: data['courseCode'], courseName: data['courseName'] }]} : item);
+
+        setItems(newItems);
+
+        setLoading(false);
+    };
+
+    const updatePassword = (data) => {
+        setLoading(true);
+
+        let newItems = [...items];
+
+        newItems = newItems.map((item) => item.emailId === data['emailId'] ? {...item, password: data['newPassword']} : item);
+
+        setItems(newItems);
+        
+        setLoading(false);
+    };
+
+    const updateFormData = {
         inputs : [
             // Define your form inputs here
-            { label: '', type: 'text', placeholder: 'Instructor Name', name: 'instructorName', required: true, defaultValue: 'instructorName', },
-            { label: '', type: 'text', placeholder: 'Simulation Name', name: 'simulationName', required: true },
+            { label: '', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: '', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
+            // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
+            // Add more input configurations as needed
+        ],
+        buttons : [
+            // Define your form buttons here
+            // { type: 'text', text: 'Prev', style: 'w-full' },
+            { type: 'submit', text: 'Update', style: 'w-full' },
+            // Add more button configurations as needed
+        ],
+        title : "Update Password",
+        desc : "You can update password of the Instructor"
+    }
+
+    const assignFormData = {
+        inputs : [
+            // Define your form inputs here
+            { label: '', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: '', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true },
             { label: '', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
@@ -38,54 +112,124 @@ function AdminHome() {
         desc : "You can assign your course"
     }
 
-    const AdminColumns = [
+    const form = (parentData,formData,setShowFormIndex,onSubmit) => { 
+
+        // console.log("Clicked from", parentData);
+
+        return <OverlayForm
+                    onClose={() => {
+                        setShowFormIndex(null);
+                    }}
+                    onSubmit={onSubmit}
+                    formData={formData}
+                    parentData={parentData}
+                />
+    };
+
+    const columnsDescription = [
         {
             header : 'Instructor Name',
             dataKey: 'instructorName', 
             label: 'Instructor name', 
-            // render: (name) => {
-            //     return name;
-            // }
+            dataRender: (index,name) => {
+                return  <div className='w-full h-full flex flex-wrap justify-center items-center'>
+                            {name}
+                        </div>;
+            }
         },
         {
             header : 'Email Id',
             dataKey: 'emailId', 
             label: 'Email Id', 
-            // render: (email) => {
-            //     return email;
-            // } 
-        },
-        {
-            header : 'Password',
-            dataKey: 'password', 
-            label: 'Password', 
-            render: (password) => {
-                return <input type='password' value={password} className=' h-[3rem] p-1 flex justify-center items-center text-center' disabled />
+            dataRender: (index,email) => {
+                return  <p className='h-full  flex flex-wrap justify-center items-center'>
+                            {email}
+                        </p>;
             }
         },
         {
-            header : 'Update',
+            header : 'Update Password',
             dataKey: 'update', 
             label: 'Update', 
-            // render: () => {
-            //     return <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <FaPencilAlt size={15} className=' cursor-pointer' /> </p>
-            // } 
+            functionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex2 === null)
+                            setShowFormIndex2(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex2 === index && form(currentItem,updateFormData,setShowFormIndex2,updatePassword)
+                }
+
+            },
+            dataRender: (index, item) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'pencil'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'pencil' ? ' animate-bounce' : ''}`}>
+
+                            {item}
+                        </p>
+            } 
         },
         {
             header : 'Delete',
             dataKey: 'delete', 
             label: 'Delete', 
-            // render: () => {
-            //     return <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <FaTrash size={15} className=' cursor-pointer' /> </p>
-            // } 
+            functionality: {
+                
+                event: {
+                    onClick: (index) => {
+                        // Create a copy of the array
+                        const newData = [...items];
+        
+                        // Use splice to remove the element at the specified index
+                        newData.splice(index, 1);
+        
+                        // Update the state with the modified array
+                        setItems(newData);
+                    },
+                },
+
+            },
+            dataRender: (index, item) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'trash'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'trash' ? ' animate-bounce' : ''}`}>
+
+                            {item}
+                        </p>
+            } 
         },
         {
             header : 'Courses',
             dataKey: 'courses', 
             label: 'Courses', 
-            // render: () => {
-            //     return <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <IoIosArrowDown size={15} className=' cursor-pointer' /> </p>
-            // } 
+            functionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        handleNavigate({
+                            courseList: JSON.stringify(items[index].courseList),
+                            instructorName: items[index].instructorName,
+                        })
+                    },
+                },
+
+            },
+            dataRender: (index, item) => {
+                return  <div 
+                
+                        onMouseEnter={() => handleMouseEnter([index,'info'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+
+                            {item}
+                        </div>
+            } 
         },
         {
             header : 'Assign',
@@ -95,22 +239,28 @@ function AdminHome() {
                 
                 event: {
                     onClick : (index) => {
-                        if(showFormIndex === null)
-                            setShowFormIndex(index);
+                        if(showFormIndex1 === null)
+                            setShowFormIndex1(index);
                     },
                 },
                 action: (currentItem,index) => {
-                    return showFormIndex === index && form(currentItem)
+                    return showFormIndex1 === index && form(currentItem,assignFormData,setShowFormIndex1,assignCourse)
                 }
 
             },
-            // render: () => {
-            //     return <p className='addNewElement w-[5%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> <IoIosAdd size={20} onClick={() => showOverlayForm()} className=' cursor-pointer' /> </p>
-            // } 
+            dataRender: (index, item) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'add'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
+
+                            {item}
+                        </p>
+            } 
         },
     ];
 
-    const items = [
+    const [items,setItems] = useState([
         {
             instructorName : 'Anand Pratap Singh Bais',
 
@@ -122,10 +272,20 @@ function AdminHome() {
 
             delete : <FaTrash size={14} className=' cursor-pointer' />,
 
-            courses : <IoIosArrowDown size={14} className=' cursor-pointer' /> ,
+            courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
 
             add : <IoIosAdd size={25} className=' cursor-pointer' />,
 
+            courseList: [
+                {
+                    courseCode : 'CSE301',
+                    courseName : 'Inventory Management'
+                },
+                {
+                    courseCode : 'CSE307',
+                    courseName : 'Hotel Management'
+                }
+            ]
         },
         {
             instructorName : 'Chotu Don',
@@ -138,30 +298,44 @@ function AdminHome() {
 
             delete : <FaTrash size={14} className=' cursor-pointer' />,
 
-            courses : <IoIosArrowDown size={14} className=' cursor-pointer' /> ,
+            courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
 
             add : <IoIosAdd size={25} className=' cursor-pointer' />,
 
+            courseList: [
+                {
+                    courseCode : 'CSE307',
+                    courseName : 'Hotel Management'
+                }
+            ]
+
         }
-    ];
+    ]);
 
-    const form = (parentData) => { 
+    const handleNavigate = (props) => {
+        const queryString = Object.keys(props)
+            .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+            .join('&');
+    
+        // Open the URL in a new tab or window with query parameters
+        window.open(`/admin/instructor/courses?${queryString}`, '_blank');
+    };
 
-        // console.log("Clicked from", parentData);
+    const handleMouseEnter = (details) => {
+        clearTimeout(animationTimeout);
 
-        return <OverlayForm
-                    onClose={() => {
-                        setShowFormIndex(null);
-                    }}
-                    onSubmit={(data) => {
-                        // Handle form submission
-
-                    }}
-                    formData={formData}
-                    parentData={parentData}
-                />
+        animationTimeout = setTimeout(() => {
+            setHoveredDetails(details);
+        }, 400);
+        // setHoveredDetails(details);
     };
     
+    const handleMouseLeave = () => {
+        clearTimeout(animationTimeout);
+
+        setHoveredDetails([]);
+    };
+
     return loading ? (
         <Loading />
     ) : 
@@ -220,11 +394,11 @@ function AdminHome() {
 
             </div> */}
 
-            <Pagination columns={AdminColumns} items={items} />
+            <Pagination columns={columnsDescription} items={items} />
 
             <div className='w-full flex flex-col justify-center items-center'>
                 <div className='flex flex-col justify-center items-center text-xl'>
-                    <p className='mb-1'>Create Course</p>
+                    <p className='mb-1 text-sm font-bold md:text-md'> Hire New Instructor </p>
 
                     <button
                     className="relative group"
@@ -232,7 +406,7 @@ function AdminHome() {
                         setShowAddCourse(prev => !prev);
                     }}
                     >
-                        <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-400 dark:bg-slate-800 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
+                        <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-pink-600 hover:bg-pink-500 dark:bg-slate-800 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
                             <div className={`transform transition-all duration-150 overflow-hidden ${showAddCourse ? 'translate-y-1 group-focus:-translate-y-0' : ''}`}>
                                 {showAddCourse ? (
                                     <FiChevronUp className="h-6 w-6 animate-bounce text-white" />
@@ -246,14 +420,14 @@ function AdminHome() {
                 </div>
 
                 {showAddCourse && (
-                    <form onSubmit={handleSubmit(addCourse)} className='w-full h-[18rem] flex flex-col justify-center items-center pb-[2rem]'>
+                    <form onSubmit={handleSubmit(addInstructor)} className='w-full h-[18rem] flex flex-col justify-center items-center pb-[2rem]'>
                         <div className='w-2/3 flex justify-center items-center p-1 space-x-1'>
                             <div className='w-1/2 flex justify-start items-center flex-col'>
                                 <Input
                                 // label = "Username"
                                 type="text"
-                                placeholder="Instructor Email Id"
-                                {...register("instructorEmailId", {
+                                placeholder="Name"
+                                {...register("instructorName", {
                                     required: true,
                                 })}
                                 />
@@ -278,18 +452,28 @@ function AdminHome() {
                                     </div>
                                 </div>
 
-                                <Input
+                                {/* <Input
                                 // label = "Username"
                                 type="text"
                                 placeholder="Course Name"
                                 {...register("courseName", {
                                     required: true,
                                 })}
-                                />
+                                /> */}
                             </div>
 
                             <div className='w-1/2 h-full flex justify-start flex-col items-start'>
+
                                 <Input
+                                // label = "Username"
+                                type="text"
+                                placeholder="Email"
+                                {...register("instructorEmail", {
+                                    required: true,
+                                })}
+                                />
+
+                                {/* <Input
                                 // label = "Username"
                                 type="text"
                                 placeholder="Instructor Name"
@@ -307,16 +491,16 @@ function AdminHome() {
                                 })}
                                 />
 
-                                {/* <Input
+                                <Input
                                 // label = "Username"
                                 type="text"
                                 placeholder="No. of Licenses"
                                 {...register("username", {
                                     required: true,
                                 })}
-                                /> */}
+                                />  */}
                             </div>
-                        </div>
+                        </div> 
 
                         <div className='w-[7rem] flex justify-center items-center mt-2'>
                             <Button

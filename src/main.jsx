@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import { About, Contact, Login, MyAccount, ResetPassword, Signup } from './pages/Global/index.js'
 import { Result, History } from './pages/Participant/index.js'
+import { Courses } from './pages/Admin/index.js'
 import { AuthLayout } from './components/index.js'
 import { InventoryManagement } from './games/index.js'
 import App from './App.jsx'
@@ -17,6 +18,8 @@ const router = createBrowserRouter(
         <Route path='/' element={<App />} >
 
             <Route path='' element={<AuthLayout authentication> {""} <Home /> </AuthLayout>} />
+
+            <Route path='admin/instructor/courses/*' element={<Courses />} />
 
             <Route path='about' element={<About />} />
 

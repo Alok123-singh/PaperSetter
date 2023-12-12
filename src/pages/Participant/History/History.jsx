@@ -8,9 +8,13 @@ function History() {
     const [history,setHistory] = useState([]);
     const username = useSelector(state => state.auth.username);
     const [loading,setLoading] = useState(false);
+    const [error,setError] = useState([]);
 
     const fetchHistory = async (username) => {
         setLoading(true);
+        setError('');
+
+        let errors = [];
 
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
@@ -28,7 +32,12 @@ function History() {
 
         }
         catch(err){
-            console.log("Fetch history error :",err);
+            errors.push(err);
+            console.log("History error :",err);
+        }
+
+        if(errors.length > 0){
+            setError(errors);
         }
 
         setLoading(false);
@@ -44,7 +53,7 @@ function History() {
             header : 'Exam Type',
             dataKey: 'examType', 
             label: 'Exam Type', 
-            render: (title) => {
+            dataRender: (index,title) => {
                 const words = title.toLowerCase().split('_');
                 const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
                 return formattedWords.join(' ');
@@ -54,7 +63,7 @@ function History() {
             header : 'Score',
             dataKey: 'score', 
             label: 'Score', 
-            render: (score) => {
+            dataRender: (index,score) => {
                 return parseFloat(score).toFixed(2).toString() + '';
             } 
         },
@@ -62,7 +71,7 @@ function History() {
             header : 'Time',
             dataKey: 'time', 
             label: 'Timestamp', 
-            render: (timestamp) => {
+            dataRender: (index,timestamp) => {
                 const options = { 
                   year: 'numeric', 
                   month: 'short', 
@@ -83,8 +92,15 @@ function History() {
         <Loading />
 
     ) : (
-
-        <Pagination columns={historyColumns} items={history} />
+        <div className='w-full justify-center items-center'>
+            {(error && error.length > 0) && <div className='flex flex-col'>
+                {
+                    error.map((err,index) => 
+                    (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+                }
+            </div>}
+            <Pagination columns={historyColumns} items={history} />
+        </div>
     );
 }
 

@@ -12,8 +12,6 @@ function Signup() {
     const {control, register, handleSubmit} = useForm();
     const [usernameAvailability, setUsernameAvailability] = useState(true);
     const [step,setStep] = useState(1);
-    const [showPassword, setShowPassword] = useState(false);
-
 
     const checkUsernameAvailability = async (username) => {
         if(username === '') return;
@@ -259,23 +257,13 @@ function Signup() {
 
                             <div className='relative'>
                                 <Input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type='password'
                                     placeholder='Password'
                                     {...register('password', {
                                         required: true,
                                     })}
                                 />
                                 
-                                <div
-                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
-                                onClick={() => setShowPassword(prev => !prev)}
-                                >
-                                    {showPassword ? (
-                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
-                                    ) : (
-                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
-                                    )}
-                                </div>
                             </div>
 
                             <div className='flex justify-between'>

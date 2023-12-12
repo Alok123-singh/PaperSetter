@@ -37,6 +37,7 @@ function OverlayForm({ onClose, onSubmit, formData, parentData }) {
                                                 key={index}
                                                 label={input.label}
                                                 type={input.type}
+                                                
                                                 defaultValue={parentData[input.defaultValue]}
                                                 placeholder={input.placeholder}
                                                 {...register(input.name, { required: input.required })}

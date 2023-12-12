@@ -10,6 +10,7 @@ import ThemeButton from './ThemeButton/ThemeButton'
 import OverlayForm from './OverlayForm/OverlayForm'
 import Loading from './Loading/Loading'
 import Pagination from './Pagination/Pagination'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 export {
     Button,
@@ -24,7 +25,7 @@ export {
     OverlayForm,
     Loading,
     Pagination,
-    
+    ErrorBoundary,
     
 
 };

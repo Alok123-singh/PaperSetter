@@ -4,7 +4,8 @@ import { Button, Input, Logo, Loading } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
-import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
+import { MdAutorenew } from 'react-icons/md';
+// import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
 
 
 function Login() {
@@ -12,7 +13,6 @@ function Login() {
     const navigate = useNavigate()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
-    const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
 
     const login = async(data) => {
@@ -47,15 +47,23 @@ function Login() {
         }
         catch(error){
             console.log("Login Error :",error);
-            setError(error);
+            // setError(error);
+
+            const fakeError = new Error('Fetch API was not able to connect to the requested resource');
+
+            // Create an error event
+            const errorEvent = new Event('error');
+            errorEvent.error = fakeError;
+
+            // Dispatch the error event
+            window.dispatchEvent(errorEvent);
+
+            // throw new Error('Fetch API was not able to connect to the requested resource');
         }
         setLoading(false);
     }
 
-    return loading ? (
-        <Loading />
-    ) : 
-    (
+    return (
         <div
         className='flex items-center justify-center w-full py-8 dark:bg-gray-400 dark:text-gray-800'
         >
@@ -96,28 +104,35 @@ function Login() {
 
                         <div className='relative'>
                             <Input
-                                type={showPassword ? 'text' : 'password'}
+                                type='password'
                                 placeholder='Password'
                                 {...register('password', {
                                 required: true,
                                 })}
                             />
-                            <div
-                            className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
-                            onClick={() => setShowPassword(prev => !prev)}
-                            >
-                                {showPassword ? (
-                                <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
-                                ) : (
-                                <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
-                                )}
-                            </div>
+                            
                         </div>
 
-                        <Button
+                        {/* <Button
                         type="submit"
                         className="w-full"
-                        >Sign in</Button>
+                        >Sign in</Button> */}
+
+                        {loading === false ? (
+                            <Button
+                            type="submit"
+                            className="w-full"
+                            >Sign in</Button>
+                        ) : (
+                            <div className='w-full justify-center items-center'>
+                                <button disabled type="button" className="w-full justify-center text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">
+                                <MdAutorenew size={20} className='animate-spin' />
+                                Loading...
+                                </button>
+                            </div>
+                        )}
+                    
+
                     </div>
                 </form>
 

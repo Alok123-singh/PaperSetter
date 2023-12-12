@@ -8,15 +8,14 @@ function ResetPassword() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     const {register, handleSubmit} = useForm()
-    const [error, setError] = useState('');
-    const [showOldPassword,setShowOldPassword] = useState(false);
-    const [showNewPassword,setShowNewPassword] = useState(false);
-
+    const [error, setError] = useState([]);
 
     const reset = async (data) => {
         setLoading(true);
         console.log(data);
         setError('');
+
+        let errors = [];
 
         if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
             setError("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
@@ -44,13 +43,18 @@ function ResetPassword() {
                 navigate('/login');
             }
             else{
-                setError('Invalid username or password');
+                errors.push('Invalid username or password');
                 console.log("Reset Failed");
             }
 
         }
         catch(error){
             console.log("Reset Password Error :",error);
+            errors.push(error);
+        }
+
+        if (errors.length > 0) {
+            setError(errors);
         }
 
         setLoading(false);
@@ -75,11 +79,16 @@ function ResetPassword() {
                             </Link>
                         </span>
                     </div>
-                    <h2 className="text-center text-2xl font-bold leading-tight">
+                    <h2 className="text-center text-2xl font-sans leading-tight">
                         Reset Password
                     </h2>
-                    {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                    <form onSubmit={handleSubmit(reset)} className='mt-8'>
+                    {(error && error.length > 0) && <div className='flex flex-col'>
+                        {
+                            error.map((err,index) => 
+                            (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+                        }
+                    </div>}
+                    <form onSubmit={handleSubmit(reset)} className='mt-4'>
                         <div className='space-y-7'>
                             <Input
                             // label = "Username"
@@ -93,44 +102,23 @@ function ResetPassword() {
 
                             <div className='relative'>
                                 <Input
-                                    type={showOldPassword ? 'text' : 'password'}
+                                    type='password'
                                     placeholder='Old password'
                                     {...register('oldPassword', {
                                         required: true,
                                     })}
                                 />
 
-                                <div
-                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
-                                onClick={() => setShowOldPassword(prev => !prev)}
-                                >
-                                    {showOldPassword ? (
-                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
-                                    ) : (
-                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
-                                    )}
-                                </div>
                             </div>
 
                             <div className='relative'>
                                 <Input
-                                    type={showNewPassword ? 'text' : 'password'}
+                                    type='password'
                                     placeholder='New password'
                                     {...register('newPassword', {
                                         required: true,
                                     })}
                                 />
-
-                                <div
-                                className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
-                                onClick={() => setShowNewPassword(prev => !prev)}
-                                >
-                                    {showNewPassword ? (
-                                    <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
-                                    ) : (
-                                    <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
-                                    )}
-                                </div>
                             </div>
     
                             <Button
