@@ -3,6 +3,7 @@ import {Link, NavLink} from 'react-router-dom'
 import { Logo, Container } from '../index.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStatus } from '../../store/authSlice'
+import { ROLES } from '../../roles/index.js';
 
 
 function Header() {
@@ -11,6 +12,7 @@ function Header() {
     const [showAccountOptions,setShowAccountOptions] = useState(false);
     const [show,setShow] = useState(false);
     const loginStatus = useSelector(state => state.auth.loginStatus);
+    const role = useSelector(state => state.auth.role);
     const accountRef = useRef(null);
     
     const navItems = [
@@ -125,16 +127,31 @@ function Header() {
                                         </Link>
 
                                         <Link
-                                        to={"/history"}
+                                        to={"/theme"}
                                         >
                                             <div 
                                             className='p-2' 
                                             onClick={() => {
                                                 setShowAccountOptions(false);
                                             }}>
-                                                History
+                                                Theme
                                             </div>
                                         </Link>
+                                        
+                                        { role === ROLES.PARTICIPANT &&
+                                            <Link
+                                            to={"/history"}
+                                            >
+                                                <div 
+                                                className='p-2' 
+                                                onClick={() => {
+                                                    setShowAccountOptions(false);
+                                                }}>
+                                                    History
+                                                </div>
+                                            </Link>
+                                        }
+                                        
 
                                         <div className=''> 
                                             <div 
@@ -280,6 +297,18 @@ function Header() {
                                                     }}
                                                     >
                                                         Account
+                                                    </div>
+                                                </Link>
+
+                                                <Link
+                                                to={"/theme"}
+                                                >
+                                                    <div 
+                                                    className='p-2' 
+                                                    onClick={() => {
+                                                        setShowAccountOptions(false);
+                                                    }}>
+                                                        Theme
                                                     </div>
                                                 </Link>
 

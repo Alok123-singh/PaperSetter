@@ -14,9 +14,9 @@ function MyAccount() {
         <div
         className='h-[18rem] w-full flex flex-col flex-wrap justify-center items-center dark:bg-slate-600 dark:text-gray-300'
         >
-            <div className='w-full flex justify-center pb-8'>
+            {/* <div className='w-full flex justify-center pb-8'>
                 <ThemeButton />
-            </div>
+            </div> */}
 
             <div className='w-auto flex flex-col font-semibold space-y-5 items-center'>
 

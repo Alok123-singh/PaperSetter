@@ -7,7 +7,13 @@ function Pagination({
         defaultItemsPerPage = 5, 
         itemsPerPageOptions = [5, 10, 15, 20, 30],
         paginationEnable = true,
+        showRowNumbers = false,
     }) {
+
+    const updatedColumns = showRowNumbers
+    ? [{ header: '#', dataKey: 'rowNumber' }, ...columns]
+    : columns;
+
     // Pagination logic starts below
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
@@ -77,7 +83,7 @@ function Pagination({
                 <table className="min-w-full  bg-white border border-gray-300 rounded-md">
                     <thead>
                         <tr>
-                            {columns.map((column, columnIndex) => (
+                            {updatedColumns.map((column, columnIndex) => (
                                 <th
                                     key={columnIndex}
                                     className="p-2 border-b border-gray-300 text-center"
@@ -90,6 +96,12 @@ function Pagination({
                     <tbody>
                         {currentItems.map((item, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+                                {showRowNumbers && (
+                                <td className="py-3 px-3 border-b border-gray-300 text-center">
+                                    {index + 1 + (currentPage - 1) * itemsPerPage}
+                                </td>
+                                )}
+
                                 {columns.map((column, columnIndex) => (
                                     <td
                                         key={columnIndex}

@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import {useForm} from "react-hook-form"
@@ -15,6 +15,9 @@ function AdminHome() {
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
+
+    const [searchEmail, setSearchEmail] = useState('');
+    const [filteredItems, setFilteredItems] = useState([]);
 
     const [hoveredDetails, setHoveredDetails] = useState([]);
     let animationTimeout;
@@ -336,6 +339,18 @@ function AdminHome() {
         setHoveredDetails([]);
     };
 
+    useEffect(() => {
+        // Update the filtered list when the searchEmail changes
+        const filtered =
+            searchEmail.trim() === ''
+                ? items // Show all items if search field is empty
+                : items.filter((item) =>
+                      item.emailId.toLowerCase().includes(searchEmail.toLowerCase())
+                  );
+        setFilteredItems(filtered);
+    }, [searchEmail, items]);
+
+
     return loading ? (
         <Loading />
     ) : 
@@ -344,6 +359,18 @@ function AdminHome() {
             <div className='w-full flex justify-center items-center '>
                 <div>
                     <h1 className="text-4xl font-bold">Admin Home</h1>
+                </div>
+            </div>
+
+            <div className="w-full flex flex-col justify-center items-center mt-5">
+                <div className="flex w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center">
+                    <Input
+                        type="text"
+                        placeholder="Search by Email"
+                        value={searchEmail}
+                        onChange={(e) => setSearchEmail(e.target.value)}
+                        className="pr-2"
+                    />
                 </div>
             </div>
 
@@ -394,7 +421,7 @@ function AdminHome() {
 
             </div> */}
 
-            <Pagination columns={columnsDescription} items={items} />
+            <Pagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} />
 
             <div className='w-full flex flex-col justify-center items-center'>
                 <div className='flex flex-col justify-center items-center text-xl'>
@@ -440,16 +467,6 @@ function AdminHome() {
                                         required: true,
                                         })}
                                     />
-                                    <div
-                                    className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
-                                    onClick={() => setShowPassword(prev => !prev)}
-                                    >
-                                        {showPassword ? (
-                                        <span role="img" aria-label="Hide Password" className='text-gray-600'>👁️</span>
-                                        ) : (
-                                        <span role="img" aria-label="Show Password" className='text-gray-600'>👁️‍🗨️</span>
-                                        )}
-                                    </div>
                                 </div>
 
                                 {/* <Input
@@ -473,32 +490,6 @@ function AdminHome() {
                                 })}
                                 />
 
-                                {/* <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="Instructor Name"
-                                {...register("instructorName", {
-                                    required: true,
-                                })}
-                                />
-
-                                <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="E Learning"
-                                {...register("eLearning", {
-                                    required: true,
-                                })}
-                                />
-
-                                <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="No. of Licenses"
-                                {...register("username", {
-                                    required: true,
-                                })}
-                                />  */}
                             </div>
                         </div> 
 

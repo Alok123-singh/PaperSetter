@@ -9,7 +9,7 @@ const Input = React.forwardRef( function Input({
     const [showPassword,setShowPassword] = useState(false);
     const id = useId()
     return (
-        <div className='w-full'>
+        <div className='relative w-full'>
             {label && <label 
             className='inline-block mb-1 pl-1 font-semibold' 
             htmlFor={id}>
@@ -26,7 +26,7 @@ const Input = React.forwardRef( function Input({
 
             {type === 'password' && 
             <div
-            className='absolute top-1/2 right-7 transform -translate-y-1/2 cursor-pointer'
+            className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
             onClick={() => setShowPassword(prev => !prev)}
             >
                 {showPassword ? (

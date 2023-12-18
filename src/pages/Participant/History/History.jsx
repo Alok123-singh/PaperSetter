@@ -99,7 +99,7 @@ function History() {
                     (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
                 }
             </div>}
-            <Pagination columns={historyColumns} items={history} />
+            <Pagination columns={historyColumns} items={history} showRowNumbers={true} />
         </div>
     );
 }

@@ -18,7 +18,7 @@ function OverlayForm({ onClose, onSubmit, formData, parentData }) {
     };
 
     return (
-        <div className=" fixed top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
+        <div className=" fixed top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay bg-black bg-opacity-50 z-50" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
             <div className=" relative w-1/2 bg-white p-[20px] rounded-md z-1001">
                 <div className='space-y-1 mb-4 text-sm'>
                     <p className='pl-1 font-bold'>{formData.title}</p>

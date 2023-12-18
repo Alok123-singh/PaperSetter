@@ -54,7 +54,7 @@ function Courses() {
                 <strong>Instructor Name</strong> : {instructorName}
             </p>
 
-            <Pagination columns={columnsDescription} items={courseList} />
+            <Pagination columns={columnsDescription} items={courseList} showRowNumbers={true} />
         </div>
     )
 }

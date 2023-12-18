@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Contact, Login, MyAccount, ResetPassword, Signup } from './pages/Global/index.js'
+import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from './pages/Global/index.js'
 import { Result, History } from './pages/Participant/index.js'
 import { Courses } from './pages/Admin/index.js'
 import { AuthLayout } from './components/index.js'
@@ -34,6 +34,8 @@ const router = createBrowserRouter(
                 <Route path='result' element={<AuthLayout authentication> {""} <Result /> </AuthLayout>} />
 
             </Route>
+
+            <Route path='theme' element={<AuthLayout authentication> {""} <Theme /> </AuthLayout>} />
 
             <Route path='history' element={<AuthLayout authentication> {""} <History /> </AuthLayout>} />
 

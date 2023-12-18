@@ -4,6 +4,7 @@ import Login from './Login/Login'
 import MyAccount from './MyAccount/MyAccount'
 import ResetPassword from './ResetPassword/ResetPassword'
 import Signup from './Signup/Signup'
+import Theme from './Theme/Theme'
 
 export {
     About,
@@ -12,6 +13,7 @@ export {
     MyAccount,
     ResetPassword,
     Signup,
-    
+    Theme,
+
 
 };

@@ -40,7 +40,8 @@ function Login() {
                 navigate('/');
             }
             else{
-                setError('Invalid username or password');
+                // console.log('Login Error -: ',data2);
+                setError(data2.message);
                 console.log("Login Failed");
             }
 
