@@ -7,10 +7,11 @@ function App() {
     const [loading, setLoading] = useState(false);
     const location = useLocation();
 
-    const excludedUrls = ['/inventory-management', '/inventory-management/result'];
+    const excludedPatterns = ['/inventory-management', '/inventory-management/result', '/admin/instructor/course'];
 
-    // Check if the current location pathname is in the excludedUrls array
-    const shouldHideHeaderFooter = excludedUrls.includes(location.pathname);
+    // Check if the current location pathname starts with any pattern in the excludedPatterns array
+    const shouldHideHeaderFooter = excludedPatterns.some(pattern => location.pathname.startsWith(pattern));
+
 
     return loading ? (
             <Loading />

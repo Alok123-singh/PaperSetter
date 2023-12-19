@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Loading, Pagination } from '../../../components/index'
+import { FaInfoCircle } from 'react-icons/fa';
 
 
 function History() {
@@ -9,6 +10,9 @@ function History() {
     const username = useSelector(state => state.auth.username);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState([]);
+
+    const [hoveredDetails, setHoveredDetails] = useState([]);
+
 
     const fetchHistory = async (username) => {
         setLoading(true);
@@ -53,8 +57,46 @@ function History() {
             header : 'Exam Type',
             dataKey: 'examType', 
             label: 'Exam Type', 
-            dataRender: (index,title) => {
-                const words = title.toLowerCase().split('_');
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Name of exam','examType']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'examType'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'examType' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                const words = value.toLowerCase().split('_');
                 const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
                 return formattedWords.join(' ');
             }
@@ -63,15 +105,96 @@ function History() {
             header : 'Score',
             dataKey: 'score', 
             label: 'Score', 
-            dataRender: (index,score) => {
-                return parseFloat(score).toFixed(2).toString() + '';
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Score in percentage','score']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'score'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'score' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center`}
+                        >
+                            {parseFloat(value).toFixed(2).toString() + ''}
+
+                        </div>;
             } 
         },
         {
             header : 'Time',
             dataKey: 'time', 
             label: 'Timestamp', 
-            dataRender: (index,timestamp) => {
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Time when the exam was given','time']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'time'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'time' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
                 const options = { 
                   year: 'numeric', 
                   month: 'short', 
@@ -82,7 +205,7 @@ function History() {
                   hour12: true,
                 };
                 
-                const formattedDate = new Date(timestamp).toLocaleString('en-US', options);
+                const formattedDate = new Date(value).toLocaleString('en-US', options);
                 return formattedDate;
             }
         },
@@ -99,7 +222,7 @@ function History() {
                     (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
                 }
             </div>}
-            <Pagination columns={historyColumns} items={history} showRowNumbers={true} />
+            <Pagination columns={historyColumns} items={history} showRowNumbers={true}columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
         </div>
     );
 }

@@ -18,8 +18,8 @@ function OverlayForm({ onClose, onSubmit, formData, parentData }) {
     };
 
     return (
-        <div className=" fixed top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay bg-black bg-opacity-50 z-50" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
-            <div className=" relative w-1/2 bg-white p-[20px] rounded-md z-1001">
+        <div className=" fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay bg-black bg-opacity-50 z-50" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
+            <div className=" relative w-[95%] md:w-1/2 bg-white p-[20px] rounded-md z-1001">
                 <div className='space-y-1 mb-4 text-sm'>
                     <p className='pl-1 font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>
@@ -30,14 +30,14 @@ function OverlayForm({ onClose, onSubmit, formData, parentData }) {
                 onSubmit={handleSubmit(addCourse)}
                 className="w-full flex flex-col justify-center items-center "
                 >
-                    <div className="grid grid-cols-2 gap-4 w-full">
+                    <div className="grid md:grid-cols-2 gap-4 w-full">
                         {formData.inputs.map((input, index) => {
                                 if(input.defaultValue !== undefined)
                                     return <Input
                                                 key={index}
                                                 label={input.label}
                                                 type={input.type}
-                                                
+                                                className='cursor-pointer'
                                                 defaultValue={parentData[input.defaultValue]}
                                                 placeholder={input.placeholder}
                                                 {...register(input.name, { required: input.required })}
@@ -47,6 +47,7 @@ function OverlayForm({ onClose, onSubmit, formData, parentData }) {
                                     key={index}
                                     label={input.label}
                                     type={input.type}
+                                    className='cursor-pointer'
                                     placeholder={input.placeholder}
                                     {...register(input.name, { required: input.required })}
                                 />

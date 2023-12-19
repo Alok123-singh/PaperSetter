@@ -134,9 +134,52 @@ function AdminHome() {
             header : 'Instructor Name',
             dataKey: 'instructorName', 
             label: 'Instructor name', 
-            dataRender: (index,name) => {
-                return  <div className='w-full h-full flex flex-wrap justify-center items-center'>
-                            {name}
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Name of the Instructor','instructorName']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index, value) => {
+                return (
+                  <div
+                    className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                      hoveredDetails.length > 0 &&
+                      hoveredDetails[0] === index &&
+                      hoveredDetails[2] === 'instructorName'
+                        ? 'z-10'
+                        : 'z-1'
+                    }`}
+                  >
+                    {hoveredDetails.length > 0 &&
+                      hoveredDetails[0] === index &&
+                      hoveredDetails[2] === 'instructorName' && (
+                        <div
+                          className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                        >
+                          <div className='flex flex-col justify-center items-center'>
+                            <FaInfoCircle size={16} className="text-blue-500" />
+                            {hoveredDetails[1]}
+                          </div>
+                        </div>
+                    )}
+                    {value}
+                  </div>
+                );
+              },
+              
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center`}
+                        >
+                            {value}
+                            
                         </div>;
             }
         },
@@ -144,17 +187,95 @@ function AdminHome() {
             header : 'Email Id',
             dataKey: 'emailId', 
             label: 'Email Id', 
-            dataRender: (index,email) => {
-                return  <p className='h-full  flex flex-wrap justify-center items-center'>
-                            {email}
-                        </p>;
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Email Id of Instructor','email']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'email'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'email' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center`}
+                        >
+                            {value}
+                        </div>;
             }
         },
         {
             header : 'Update Password',
             dataKey: 'update', 
             label: 'Update', 
-            functionality: {
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Update password of Instructor','update']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'update'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'update' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            rowFunctionality: {
                 
                 event: {
                     onClick : (index) => {
@@ -167,13 +288,13 @@ function AdminHome() {
                 }
 
             },
-            dataRender: (index, item) => {
+            dataRender: (index, value, currentItem) => {
                 return <p 
                         onMouseEnter={() => handleMouseEnter([index,'pencil'])}
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'pencil' ? ' animate-bounce' : ''}`}>
 
-                            {item}
+                            {value}
                         </p>
             } 
         },
@@ -181,29 +302,73 @@ function AdminHome() {
             header : 'Delete',
             dataKey: 'delete', 
             label: 'Delete', 
-            functionality: {
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Remove Instructor from the organization','delete']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'delete'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'delete' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            rowFunctionality: {
                 
                 event: {
                     onClick: (index) => {
-                        // Create a copy of the array
-                        const newData = [...items];
-        
-                        // Use splice to remove the element at the specified index
-                        newData.splice(index, 1);
-        
-                        // Update the state with the modified array
-                        setItems(newData);
+                        // Display a confirmation dialog
+                        const confirmDelete = window.confirm('Are you sure you want to remove this instructor from organization?');
+
+                        // Check if the user clicked "OK"
+                        if (confirmDelete) {
+                            // Create a copy of the array
+                            const newData = [...items];
+
+                            // Use splice to remove the element at the specified index
+                            newData.splice(index, 1);
+
+                            // Update the state with the modified array
+                            setItems(newData);
+                        }
                     },
                 },
 
             },
-            dataRender: (index, item) => {
+            dataRender: (index, value, currentItem) => {
                 return <p 
                         onMouseEnter={() => handleMouseEnter([index,'trash'])}
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'trash' ? ' animate-bounce' : ''}`}>
 
-                            {item}
+                            {value}
                         </p>
             } 
         },
@@ -211,34 +376,109 @@ function AdminHome() {
             header : 'Courses',
             dataKey: 'courses', 
             label: 'Courses', 
-            functionality: {
-                
+            columnFunctionality : {
                 event: {
-                    onClick : (index) => {
-                        handleNavigate({
-                            courseList: JSON.stringify(items[index].courseList),
-                            instructorName: items[index].instructorName,
-                        })
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Show all the courses that Instructor has.','courses']);
                     },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
                 },
-
+    
             },
-            dataRender: (index, item) => {
-                return  <div 
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'courses'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'courses' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+
+                const props = {
+                    courseList: JSON.stringify(currentItem.courseList),
+                    instructorName: currentItem.instructorName,
+                }
+
+                const queryString = Object.keys(props)
+                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                    .join('&');
                 
+                return  <a 
                         onMouseEnter={() => handleMouseEnter([index,'info'])}
                         onMouseLeave={handleMouseLeave} 
+                        href={`/admin/instructor/courses?${queryString}`}
+                        target='_blank'
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
 
-                            {item}
-                        </div>
+                            {value}
+                        </a>
             } 
         },
         {
             header : 'Assign',
             dataKey: 'add', 
             label: 'Add', 
-            functionality: {
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Assign a new course to the Instructor','add']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'add'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'add' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            rowFunctionality: {
                 
                 event: {
                     onClick : (index) => {
@@ -251,13 +491,13 @@ function AdminHome() {
                 }
 
             },
-            dataRender: (index, item) => {
+            dataRender: (index, value, currentItem) => {
                 return <p 
                         onMouseEnter={() => handleMouseEnter([index,'add'])}
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
 
-                            {item}
+                            {value}
                         </p>
             } 
         },
@@ -315,15 +555,6 @@ function AdminHome() {
         }
     ]);
 
-    const handleNavigate = (props) => {
-        const queryString = Object.keys(props)
-            .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-            .join('&');
-    
-        // Open the URL in a new tab or window with query parameters
-        window.open(`/admin/instructor/courses?${queryString}`, '_blank');
-    };
-
     const handleMouseEnter = (details) => {
         clearTimeout(animationTimeout);
 
@@ -358,9 +589,10 @@ function AdminHome() {
         <div className='w-full  h-auto py-10 px-2 flex flex-wrap flex-col justify-center items-center'>
             <div className='w-full flex justify-center items-center '>
                 <div>
-                    <h1 className="text-4xl font-bold">Admin Home</h1>
+                    <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Admin Home</h1>
                 </div>
             </div>
+
 
             <div className="w-full flex flex-col justify-center items-center mt-5">
                 <div className="flex w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center">
@@ -374,54 +606,7 @@ function AdminHome() {
                 </div>
             </div>
 
-            {/* <div className='w-full mb-7 flex flex-col justify-center items-center border border-blue-300 '>
-                <div className='w-full flex justify-center text-center bg-blue-500 text-white items-center'>
-                    <p className='w-[25%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Instructor Name </p>
-
-                    <p className='w-[30%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Email Id </p>
-
-                    <p className='w-[20%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Password </p>
-
-                    <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Update </p>
-
-                    <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Delete </p>
-
-                    <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Courses </p>
-
-                    <p className='w-[7%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> Assign </p>
-                </div>
-
-                {items.map((item,index) => (
-
-                    <div key={index} className='w-full flex justify-center text-center items-center'>
-                        <p className='w-[25%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> {item.instructorName} </p>
-
-                        <p className='w-[30%] h-[3rem] p-1 border flex justify-center items-center border-blue-300'> {item.emailId} </p>
-
-                        <input type='password' value={item.password} className='w-[20%] h-[3rem] p-1 border flex justify-center items-center text-center border-blue-300' disabled />
-
-                        <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <FaPencilAlt size={15} className=' cursor-pointer' /> </p>
-
-                        <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <FaTrash size={15} className=' cursor-pointer' /> </p>
-
-                        <p className='w-[10%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 '> <IoIosArrowDown size={15} className=' cursor-pointer' /> </p>
-
-                        <p
-                        onClick={() => {
-                            setShowFormIndex(index);
-                        }}
-                        className='addNewElement w-[7%] h-[3rem] p-1 border flex justify-center items-center border-blue-300 cursor-pointer'>
-
-                            <IoIosAdd size={25} className=' cursor-pointer' />
-                        </p>
-
-                        {showFormIndex === index && form(item)}
-                    </div>
-                ))}
-
-            </div> */}
-
-            <Pagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} />
+            <Pagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default'  />
 
             <div className='w-full flex flex-col justify-center items-center'>
                 <div className='flex flex-col justify-center items-center text-xl'>

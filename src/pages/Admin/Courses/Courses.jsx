@@ -18,14 +18,14 @@ function Courses() {
             header : 'Course Code',
             dataKey: 'courseCode', 
             label: 'Course Code', 
-            columnRender: (index,item) => {
+            columnRender: (index,value) => {
                 return  <div className='w-full flex justify-center items-center text-center'>
-                            {item}
+                            {value}
                         </div>;
             },
-            dataRender: (index,item) => {
+            dataRender: (index, value, currentItem) => {
                 return  <div className='w-full flex justify-center items-center text-center'>
-                            {item}
+                            {value}
                         </div>;
             },
 
@@ -34,14 +34,14 @@ function Courses() {
             header : 'Course Name',
             dataKey: 'courseName', 
             label: 'Course Code', 
-            columnRender: (index,item) => {
+            columnRender: (index,value) => {
                 return  <div className='w-full flex justify-center items-center text-center'>
-                            {item}
+                            {value}
                         </div>;
             },
-            dataRender: (index,item) => {
+            dataRender: (index, value, currentItem) => {
                 return  <div className='w-full flex justify-center items-center text-center'>
-                            {item}
+                            {value}
                         </div>;
             },
         },
@@ -54,7 +54,7 @@ function Courses() {
                 <strong>Instructor Name</strong> : {instructorName}
             </p>
 
-            <Pagination columns={columnsDescription} items={courseList} showRowNumbers={true} />
+            <Pagination columns={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
         </div>
     )
 }

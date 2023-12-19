@@ -8,11 +8,17 @@ function Pagination({
         itemsPerPageOptions = [5, 10, 15, 20, 30],
         paginationEnable = true,
         showRowNumbers = false,
+        widthDesign='w-full',
+        roundedDesign='',
+        columnsDesign='',
+        rowsDesign='',
     }) {
 
     const updatedColumns = showRowNumbers
     ? [{ header: '#', dataKey: 'rowNumber' }, ...columns]
     : columns;
+
+    itemsPerPageOptions = [...itemsPerPageOptions, defaultItemsPerPage].sort((a, b) => a - b);
 
     // Pagination logic starts below
     const [currentPage, setCurrentPage] = useState(1);
@@ -74,19 +80,26 @@ function Pagination({
         paginate(currentPage + 1);
         }
     };
-
+    
     return (
         currentItems && currentItems.length > 0 ? 
 
-        <div className="w-full py-10 flex flex-wrap flex-col justify-center">
-            <div className="w-[95%] mx-auto overflow-x-auto shadow-lg shadow-slate-300">
-                <table className="min-w-full  bg-white border border-gray-300 rounded-md">
+        <div className={`py-10 flex flex-wrap flex-col justify-center ${widthDesign} `}>
+            <div className={`w-[95%] mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
+                <table className=" min-w-full  bg-white ">
                     <thead>
                         <tr>
                             {updatedColumns.map((column, columnIndex) => (
                                 <th
                                     key={columnIndex}
-                                    className="p-2 border-b border-gray-300 text-center"
+
+                                    onClick={() => (column.columnFunctionality && column.columnFunctionality.event.onClick) && column.columnFunctionality.event.onClick(columnIndex,column)}
+
+                                    onMouseEnter={() => (column.columnFunctionality && column.columnFunctionality.event.onMouseEnter) && column.columnFunctionality.event.onMouseEnter(columnIndex,column)}
+
+                                    onMouseLeave={() => (column.columnFunctionality && column.columnFunctionality.event.onMouseLeave) && column.columnFunctionality.event.onMouseLeave(columnIndex,column)}
+
+                                    className={`${(column.columnFunctionality && column.columnFunctionality.event.onClick) ? 'cursor-pointer' : 'cursor-default'} p-2 border-b border-gray-300 text-center ${columnsDesign} `}
                                 >
                                     {column.columnRender ? column.columnRender(columnIndex,column.header) : column.header}
                                 </th>
@@ -97,7 +110,7 @@ function Pagination({
                         {currentItems.map((item, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
                                 {showRowNumbers && (
-                                <td className="py-3 px-3 border-b border-gray-300 text-center">
+                                <td className={`py-3  px-3 border-b border-gray-300 text-center ${rowsDesign} `}>
                                     {index + 1 + (currentPage - 1) * itemsPerPage}
                                 </td>
                                 )}
@@ -105,18 +118,23 @@ function Pagination({
                                 {columns.map((column, columnIndex) => (
                                     <td
                                         key={columnIndex}
-                                        className="py-3 px-3 border-b border-gray-300 text-center"
+                                        className={`py-3 px-3 border-b border-gray-300 text-center ${rowsDesign} `}
                                     >
-                                        {column.functionality ? (
+                                        {column.rowFunctionality ? (
                                             <div
-                                                onClick={() => column.functionality.event.onClick(index)}
-                                                className="cursor-pointer"
+                                                onClick={() => (column.rowFunctionality && column.rowFunctionality.event.onClick) && column.rowFunctionality.event.onClick(index,item)}
+
+                                                onMouseEnter={() => (column.rowFunctionality && column.rowFunctionality.event.onMouseEnter) && column.rowFunctionality.event.onMouseEnter(index,item)}
+
+                                                onMouseLeave={() => (column.rowFunctionality && column.rowFunctionality.event.onMouseLeave) && column.rowFunctionality.event.onMouseLeave(index,item)}
+
+                                                className={`${(column.rowFunctionality && column.rowFunctionality.event.onClick) ? 'cursor-pointer' : 'cursor-default'}`}
                                             >
-                                                {column.functionality.action && column.functionality.action(item,index)}
-                                                {column.dataRender ? column.dataRender(index,item[column.dataKey]) : item[column.dataKey]}
+                                                {(column.rowFunctionality && column.rowFunctionality.action) && column.rowFunctionality.action(item,index)}
+                                                {column.dataRender ? column.dataRender(index,item[column.dataKey],item) : item[column.dataKey]}
                                             </div>
                                         ) : (
-                                            column.dataRender ? column.dataRender(index,item[column.dataKey]) : item[column.dataKey]
+                                            column.dataRender ? column.dataRender(index,item[column.dataKey],item) : item[column.dataKey]
                                         )}
                                     </td>
                                 ))}

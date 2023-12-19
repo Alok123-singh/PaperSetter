@@ -101,7 +101,7 @@ function ErrorBoundary(props) {
         const columns = [
         { header: 'Error Time', dataKey: 'errorTime' },
         { header: 'Error Title', dataKey: 'errorTitle' },
-        { header: 'Error Message', dataKey: 'errorMessage', dataRender: (index, errorMessage) => <div>{errorMessage.toString()}</div> },
+        { header: 'Error Message', dataKey: 'errorMessage', dataRender: (index, value, currentItem) => <div>{value.toString()}</div> },
         { header: 'Error Cause', dataKey: 'errorCause' },
         { header: 'Error Function', dataKey: 'componentName' },
         ];
@@ -118,7 +118,7 @@ function ErrorBoundary(props) {
                 Go to {getComponentName()}
                 </button>
             </div>
-            {/* <Pagination columns={columns} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} /> */}
+            <Pagination columns={columns} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} />
             </div>
         </div>
         );

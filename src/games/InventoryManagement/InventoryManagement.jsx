@@ -3,6 +3,7 @@ import data from '../../JSON/queries.json'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { setResult } from '../../store/resultSlice';
+import { Loading } from '../../components/index'
 
 function InventoryManagement() {
 
@@ -382,9 +383,7 @@ function InventoryManagement() {
     }, []);
     
     return loading ? (
-        <div className='dark:bg-gray-400 w-full flex justify-center items-center h-screen'>
-        <div className='bg-blue-400 w-[6rem] flex justify-center items-center p-2 m-2 rounded-md'> Loading! </div>
-        </div>
+        <Loading />
 
     ) : (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center'>

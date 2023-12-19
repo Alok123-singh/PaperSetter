@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
+import { Loading } from '../index'
 
 export default function AuthLayout({ children, authentication = true, allowedRole }) {
     const navigate = useNavigate();
@@ -21,5 +22,5 @@ export default function AuthLayout({ children, authentication = true, allowedRol
       setLoader(false);
     }, [loginStatus, navigate, authentication, allowedRole, role]);
   
-    return loader ? <h1>Loading...</h1> : <>{children}</>;
+    return loader ? <Loading /> : <>{children}</>;
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/index'
+import { Loading, Pagination } from '../../../components/index'
+import { FaInfoCircle } from 'react-icons/fa';
 
 
 function Result() {
@@ -11,6 +12,9 @@ function Result() {
     const title = useSelector(state => state.result.title);
     const noOfQueries = useSelector(state => state.result.noOfQueries);
     const score = useSelector(state => state.result.score);
+
+    const [hoveredDetails, setHoveredDetails] = useState([]);
+
 
     const getCurrentDate = (separator='') => {
 
@@ -32,13 +36,74 @@ function Result() {
         return formattedWords.join(' ');
     }
 
+    const columnsDescription = [
+        {
+            header : 'Occupancy',
+            dataKey: 'occupancy', 
+            label: 'Occupancy', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Total number of rooms occupied in the exam','occupancy']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value) => {
+                return <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                                hoveredDetails.length > 0 &&
+                                hoveredDetails[0] === index &&
+                                hoveredDetails[2] === 'occupancy'
+                                    ? 'z-10'
+                                    : 'z-1'
+                            }`}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index &&
+                            hoveredDetails[2] === 'occupancy' && (
+                                <div
+                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[1]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-full h-full flex flex-wrap justify-center items-center`}
+                        >
+                            {showScore()}
+                            
+                        </div>;
+            }
+        },
+        
+    ];
+
+    const [items,setItems] = useState([
+        {
+            occupancy : 0.00,
+        },
+    ]);
+
     return loading ? (
         <Loading />
     ) : 
     (
         <div className='w-full h-screen flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>
             <p className='font-bold text-xl font-serif h-auto'>Result</p>
-
+            
             <div className='flex flex-col w-1/3 p-2 mt-7 '>
                 <div className=' w-full flex '>
                     <p className='w-1/3'>Title: </p>
@@ -54,51 +119,17 @@ function Result() {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col mt-5 items-center'>
-                <h2 className='underline '> KPI </h2>
-
-                <div className='flex h-[6rem] w-1/3 justify-center items-center '>
-                    <div className='flex flex-col justify-center items-center border w-1/3 h-[4rem] border-black '>
-                        <p className='font-bold font-sans'>
-                            ARR
-                        </p>
-
-                        <p>
-                            3612.13
-                        </p>
-                    </div>
-
-                    <div className='flex flex-col justify-center items-center border w-1/3 h-[4rem] border-black'>
-                        <p className='font-bold font-sans'>
-                            RevPAR
-                        </p>
-
-                        <p>
-                            2373.68
-                        </p>
-                    </div>
-
-                    <div className='flex flex-col justify-center items-center border w-1/3 h-[4rem] border-black'>
-                        <p className='font-bold font-sans'>
-                            OCCUPANCY
-                        </p>
-
-                        <p>
-                            {showScore()}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <Pagination columns={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
 
             <div className='flex w-[10rem] flex-col items-center'>
 
-                <Link 
+                {/* <Link 
                 to={"/inventory-management"}
                 >
                     <div className='w-[6rem] mt-6 h-[2.2rem] p-[6px] cursor-pointer  flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
                         Play Again
                     </div>
-                </Link>
+                </Link> */}
 
                 <Link 
                 to={"/"} 
