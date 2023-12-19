@@ -312,17 +312,19 @@ function Header() {
                                                     </div>
                                                 </Link>
 
-                                                <Link
-                                                to={"/history"}
-                                                >
-                                                    <div 
-                                                    className='p-2' 
-                                                    onClick={() => {
-                                                        setShowAccountOptions(false);
-                                                    }}>
-                                                        History
-                                                    </div>
-                                                </Link>
+                                                { role === ROLES.PARTICIPANT &&
+                                                    <Link
+                                                    to={"/history"}
+                                                    >
+                                                        <div 
+                                                        className='p-2' 
+                                                        onClick={() => {
+                                                            setShowAccountOptions(false);
+                                                        }}>
+                                                            History
+                                                        </div>
+                                                    </Link>
+                                                }
 
                                                 <div className=''> 
                                                     <div 
