@@ -161,7 +161,7 @@ function AdminHome() {
                       hoveredDetails[0] === index &&
                       hoveredDetails[2] === 'instructorName' && (
                         <div
-                          className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                          className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
                           <div className='flex flex-col justify-center items-center'>
                             <FaInfoCircle size={16} className="text-blue-500" />
@@ -213,7 +213,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'email' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -263,7 +263,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'update' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -328,7 +328,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'delete' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -402,7 +402,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'courses' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -466,7 +466,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'add' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />

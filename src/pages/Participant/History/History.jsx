@@ -83,7 +83,7 @@ function History() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'examType' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -131,7 +131,7 @@ function History() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'score' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -182,7 +182,7 @@ function History() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'time' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />

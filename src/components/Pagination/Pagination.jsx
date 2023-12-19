@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 function Pagination({ 
@@ -80,12 +80,61 @@ function Pagination({
         paginate(currentPage + 1);
         }
     };
+
+    // logic for showing descriptions of columns if any for only large screens
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [needsOverflow, setNeedsOverflow] = useState(false);
+
+    const calculateTotalColumnWidth = (columns, defaultWidth) => {
+        return columns.reduce((total, column) => total + (column.width || defaultWidth), 0);
+    }
+    
+    // Function to calculate the total width of item content
+    const calculateTotalItemContentWidth = (items, defaultWidth) => {
+        // Replace this logic with your own calculation based on the item content
+        return items.reduce((total, item) => total + defaultWidth, 0);
+    }
+
+    useEffect(() => {
+        const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        const calculateSpaceNeeded = () => {
+        // Assumptions for default column width and item content width
+        const defaultColumnWidth = 100; // Replace with your default width
+        const defaultItemContentWidth = 100; // Replace with your estimated content width
+
+        // Calculate the total width needed for columns
+        const totalColumnWidth = calculateTotalColumnWidth(columns, defaultColumnWidth);
+
+        // Calculate the total width needed for item content
+        const totalItemContentWidth = calculateTotalItemContentWidth(items, defaultItemContentWidth);
+
+        // Calculate the total space needed
+        const totalSpaceNeeded = totalColumnWidth + totalItemContentWidth;
+
+        // Check if overflow is needed
+        setNeedsOverflow(totalSpaceNeeded > windowWidth);
+        };
+
+        calculateSpaceNeeded();
+    }, [columns, items, windowWidth]);
+
     
     return (
         currentItems && currentItems.length > 0 ? 
 
         <div className={`py-10 flex flex-wrap flex-col justify-center ${widthDesign} `}>
-            <div className={`w-[95%] mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
+            <div className={`w-[95%] ${needsOverflow && 'overflow-x-auto'} mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
                 <table className=" min-w-full  bg-white ">
                     <thead>
                         <tr>

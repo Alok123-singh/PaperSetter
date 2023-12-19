@@ -67,7 +67,7 @@ function Result() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'occupancy' && (
                                 <div
-                                className={`w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -122,14 +122,6 @@ function Result() {
             <Pagination columns={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
 
             <div className='flex w-[10rem] flex-col items-center'>
-
-                {/* <Link 
-                to={"/inventory-management"}
-                >
-                    <div className='w-[6rem] mt-6 h-[2.2rem] p-[6px] cursor-pointer  flex justify-center items-center bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold border-b-4 border-rose-700 hover:border-rose-500 rounded'>
-                        Play Again
-                    </div>
-                </Link> */}
 
                 <Link 
                 to={"/"} 
