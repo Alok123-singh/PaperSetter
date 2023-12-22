@@ -1,4 +1,4 @@
-import React,{ useId } from 'react';
+import React,{ useId, useRef, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Input, Button } from '../index';
 import Datetime from 'react-datetime';
@@ -24,6 +24,32 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
           onClose();
         }
     };
+
+    // Flatpickr outside click funcitonality starts
+    
+    // Ref to store Flatpickr instance
+    const flatpickrRef = useRef(null);
+
+    // Event handler to close Flatpickr when clicking outside
+    const handleOutsideClickFlatpickr = (event) => {
+        const flatpickrElement = flatpickrRef.current?.flatpickr.element;
+
+        if (flatpickrElement && !flatpickrElement.contains(event.target)) {
+            flatpickrRef.current.flatpickr.close();
+        }
+    };
+
+    // Attach event listener when the component mounts
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClickFlatpickr);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+        document.removeEventListener('click', handleOutsideClickFlatpickr);
+        };
+    }, []);
+
+     // Flatpickr outside click funcitonality ends
 
     const renderInput = (props, openCalendar, closeCalendar) => {
         return (
@@ -88,6 +114,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                         render={({ field }) => (
                                                             <Flatpickr
                                                                 {...field}
+                                                                ref={flatpickrRef} // Assign the ref
                                                                 options={{
                                                                     dateFormat: input.dateFormat != undefined ? input.dateFormat : 'Y-m-d h:i K',
                                                                     enableTime: input.enableTime !== undefined ? input.enableTime : true,

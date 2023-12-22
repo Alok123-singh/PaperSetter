@@ -1,4 +1,4 @@
-import React,{ useId } from 'react';
+import React,{ useId, useRef, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Input, Button } from '../index';
 import Datetime from 'react-datetime';
@@ -25,6 +25,32 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
           onClose();
         }
     };
+
+    // Flatpickr outside click funcitonality starts
+
+    // Ref to store Flatpickr instance
+    const flatpickrRef = useRef(null);
+
+    // Event handler to close Flatpickr when clicking outside
+    const handleOutsideClickFlatpickr = (event) => {
+        const flatpickrElement = flatpickrRef.current?.flatpickr.element;
+
+        if (flatpickrElement && !flatpickrElement.contains(event.target)) {
+            flatpickrRef.current.flatpickr.close();
+        }
+    };
+
+    // Attach event listener when the component mounts
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClickFlatpickr);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+        document.removeEventListener('click', handleOutsideClickFlatpickr);
+        };
+    }, []);
+
+     // Flatpickr outside click funcitonality ends
 
     const renderInput = (props, openCalendar, closeCalendar) => {
         return (
@@ -89,6 +115,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                         render={({ field }) => (
                                                             <Flatpickr
                                                                 {...field}
+                                                                ref={flatpickrRef} // Assign the ref
                                                                 options={{
                                                                     dateFormat: 'Y-m-d h:i K',
                                                                     enableTime: true,
@@ -114,7 +141,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                                 timeFormat="HH:mm"
                                                                 timeIntervals={15}
                                                                 dateFormat="MMMM d, yyyy h:mm aa"
-                                                                className='w-[18rem] px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
+                                                                className='w-[18rem] overflow-y-auto px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
                                                             />
                                                         )}
                                                         id={id}

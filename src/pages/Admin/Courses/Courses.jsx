@@ -54,7 +54,7 @@ function Courses() {
                 <strong>Instructor Name</strong> : {instructorName}
             </p>
 
-            <TablePagination columns={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+            <TablePagination columnsDescription={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
         </div>
     )
 }

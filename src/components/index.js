@@ -12,6 +12,7 @@ import OverlayForm1 from './OverlayForm1/OverlayForm1'
 import OverlayForm2 from './OverlayForm2/OverlayForm2'
 import Loading from './Loading/Loading'
 import TablePagination from './TablePagination/TablePagination'
+import CardPagination from './CardPagination/CardPagination'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 export {
@@ -29,6 +30,7 @@ export {
     OverlayForm2,
     Loading,
     TablePagination,
+    CardPagination,
     ErrorBoundary,
     
 

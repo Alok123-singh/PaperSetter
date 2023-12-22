@@ -4,7 +4,7 @@ import { MdError } from 'react-icons/md';
 
 
 function TablePagination({ 
-        columns, 
+        columnsDescription, 
         items, 
         defaultItemsPerPage = 5, 
         itemsPerPageOptions = [5, 10, 15, 20, 30],
@@ -17,8 +17,8 @@ function TablePagination({
     }) {
 
     const updatedColumns = showRowNumbers
-    ? [{ header: '#', dataKey: 'rowNumber' }, ...columns]
-    : columns;
+    ? [{ header: '#', dataKey: 'rowNumber' }, ...columnsDescription]
+    : columnsDescription;
 
     // Use a Set to filter out duplicates
     let uniqueOptionsSet = new Set(itemsPerPageOptions);
@@ -161,7 +161,7 @@ function TablePagination({
                                 </td>
                                 )}
 
-                                {columns.map((column, columnIndex) => (
+                                {columnsDescription.map((column, columnIndex) => (
                                     <td
                                         key={columnIndex}
                                         className={`py-3 px-3 border-b  border-gray-300 text-center ${rowsDesign} `}

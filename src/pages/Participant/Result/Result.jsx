@@ -119,7 +119,7 @@ function Result() {
                 </div>
             </div>
 
-            <TablePagination columns={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+            <TablePagination columnsDescription={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
 
             <div className='flex w-[10rem] flex-col items-center'>
 

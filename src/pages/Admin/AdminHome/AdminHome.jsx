@@ -644,9 +644,9 @@ function AdminHome() {
     (
         <div className='w-full  h-auto py-10 px-2 flex flex-wrap flex-col justify-center items-center'>
 
-            {/* Heading Section */}
-            
             <div className='w-full flex flex-col lg:flex-row justify-between items-center '>
+
+                {/* Heading Section */}
                 <div className='w-full lg:w-[90%] flex justify-center items-center lg:ml-[7rem] '>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Admin Home</h1>
                 </div>
@@ -693,7 +693,7 @@ function AdminHome() {
                 </div>
             </div>
 
-            <TablePagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+            <TablePagination columnsDescription={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
             
             
         </div>
