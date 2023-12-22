@@ -81,8 +81,8 @@ function AdminHome() {
     const updateFormData = {
         inputs : [
             // Define your form inputs here
-            { label: '', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
-            { label: '', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
+            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: 'New Password', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
         ],
@@ -101,9 +101,9 @@ function AdminHome() {
     const assignFormData = {
         inputs : [
             // Define your form inputs here
-            { label: '', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
-            { label: '', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true },
-            { label: '', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true },
+            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true },
+            { label: 'Course Name', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
         ],
@@ -115,7 +115,7 @@ function AdminHome() {
         ],
         title : "Course Assign",
         desc : "You can assign your course",
-        formHeight : "md:h-[60%]",
+        formHeight : "md:h-[75%]",
         // formWidth : "md:h-[90%]",
     }
 

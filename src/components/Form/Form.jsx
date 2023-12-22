@@ -55,8 +55,16 @@ function Form({ onSubmit, formData }) {
                                 if(input.type.includes('dateAndTime')){
                                     return  <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                                 {input.label && (
-                                                    <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                                                        {input.label}
+                                                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                        <div className=''>
+                                                            {input.label}
+                            
+                                                        </div>
+                                                        {input.required && 
+                                                            <p className='text-red-400 mb-3 ml-1'>
+                                                                *
+                                                            </p>
+                                                        }
                                                     </label>
                                                 )}
                                                 {input.type === 'dateAndTime1' && // Datetime calender
@@ -126,8 +134,16 @@ function Form({ onSubmit, formData }) {
                                 if(input.type === 'select'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                                 {input.label && (
-                                                    <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                                                        {input.label}
+                                                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                        <div className=''>
+                                                            {input.label}
+                            
+                                                        </div>
+                                                        {input.required && 
+                                                            <p className='text-red-400 mb-3 ml-1'>
+                                                                *
+                                                            </p>
+                                                        }
                                                     </label>
                                                 )}
                                                 <Controller
@@ -155,8 +171,16 @@ function Form({ onSubmit, formData }) {
                                 if(input.type === 'checkbox'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                         {input.label && (
-                                            <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                                                {input.label}
+                                            <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                <div className=''>
+                                                    {input.label}
+                    
+                                                </div>
+                                                {input.required && 
+                                                    <p className='text-red-400 mb-3 ml-1'>
+                                                        *
+                                                    </p>
+                                                }
                                             </label>
                                         )}
                                         <Controller
@@ -193,8 +217,16 @@ function Form({ onSubmit, formData }) {
                                 if(input.type === 'radio'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                         {input.label && (
-                                            <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                                                {input.label}
+                                            <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                <div className=''>
+                                                    {input.label}
+                    
+                                                </div>
+                                                {input.required && 
+                                                    <p className='text-red-400 mb-3 ml-1'>
+                                                        *
+                                                    </p>
+                                                }
                                             </label>
                                         )}
                                         <Controller
@@ -233,8 +265,16 @@ function Form({ onSubmit, formData }) {
                                     return (
                                         <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                             {input.label && (
-                                                <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                                                    {input.label}
+                                                <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                    <div className=''>
+                                                        {input.label}
+                        
+                                                    </div>
+                                                    {input.required && 
+                                                        <p className='text-red-400 mb-3 ml-1'>
+                                                            *
+                                                        </p>
+                                                    }
                                                 </label>
                                             )}
                                             <Controller

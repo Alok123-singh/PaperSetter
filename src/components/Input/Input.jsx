@@ -13,13 +13,27 @@ const Input = React.forwardRef(function Input(
     ) {
     const [showPassword, setShowPassword] = useState(false);
     const [selectedDate, setSelectedDate] = useState(props.defaultValue !== undefined ? props.defaultValue : null);
+    console.log("Input Props", props);
 
     const id = useId();
 
     const renderInput = () => {
         if (type === 'password') {
             return (
-                <div>
+                <div className='relative'>
+                    {label && (
+                        <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                            <div className=''>
+                                {label}
+
+                            </div>
+                            {props.required && 
+                                <p className='text-red-400 mb-3 ml-1'>
+                                    *
+                                </p>
+                            }
+                        </label>
+                    )}
                     <input
                         type={showPassword ? 'text' : 'password'}
                         className={`px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-300 w-full placeholder:text-gray-500 ${className}`}
@@ -29,7 +43,7 @@ const Input = React.forwardRef(function Input(
                     />
 
                     <div
-                        className='absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer'
+                        className={`absolute ${label && 'translate-y-1/4 '} top-1/2 right-2 transform -translate-y-1/2 cursor-pointer`}
                         onClick={() => setShowPassword((prev) => !prev)}
                     >
                         {showPassword ? (
@@ -49,9 +63,17 @@ const Input = React.forwardRef(function Input(
         return (
             <div className='flex flex-col justify-start items-start'>
                 {label && (
-                <label className='inline-block mb-1 pl-1 font-semibold' htmlFor={id}>
-                    {label}
-                </label>
+                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                        <div className=''>
+                            {label}
+
+                        </div>
+                        {props.required && 
+                            <p className='text-red-400 mb-3 ml-1'>
+                                *
+                            </p>
+                        }
+                    </label>
                 )}
                 <input
                 type={type}
@@ -64,7 +86,7 @@ const Input = React.forwardRef(function Input(
         );
     };
 
-    return <div className='relative w-full'>{renderInput()}</div>;
+    return <div className=' w-full'>{renderInput()}</div>;
 });
 
 export default Input;
