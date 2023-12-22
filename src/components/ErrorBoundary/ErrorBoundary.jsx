@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pagination } from '../index';
+import { TablePagination } from '../index';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoMdAlert } from 'react-icons/io';
 import { useSpring, animated } from 'react-spring';
@@ -118,7 +118,7 @@ function ErrorBoundary(props) {
                 Go to {getComponentName()}
                 </button>
             </div>
-            <Pagination columns={columns} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} />
+            {/* <TablePagination columns={columns} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} /> */}
             </div>
         </div>
         );

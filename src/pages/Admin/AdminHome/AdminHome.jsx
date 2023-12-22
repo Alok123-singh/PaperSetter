@@ -2,8 +2,7 @@ import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import {useForm} from "react-hook-form"
-import { Input, Button, OverlayForm, Loading, Pagination } from '../../../components/index'
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { Input, OverlayForm1, OverlayForm2, Loading, TablePagination, Button } from '../../../components/index'
 
 
 function AdminHome() {
@@ -15,6 +14,7 @@ function AdminHome() {
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
+
 
     const [searchEmail, setSearchEmail] = useState('');
     const [filteredItems, setFilteredItems] = useState([]);
@@ -89,11 +89,13 @@ function AdminHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Update', style: 'w-full' },
+            { type: 'submit', text: 'Update', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
             // Add more button configurations as needed
         ],
         title : "Update Password",
-        desc : "You can update password of the Instructor"
+        desc : "You can update password of the Instructor",
+        formHeight : "md:h-[55%]",
+        // formWidth : "md:h-[90%]",
     }
 
     const assignFormData = {
@@ -108,18 +110,20 @@ function AdminHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Create', style: 'w-full' },
+            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-md hover:bg-white hover:border-2  hover:text-black' },
             // Add more button configurations as needed
         ],
         title : "Course Assign",
-        desc : "You can assign your course"
+        desc : "You can assign your course",
+        formHeight : "md:h-[60%]",
+        // formWidth : "md:h-[90%]",
     }
 
-    const form = (parentData,formData,setShowFormIndex,onSubmit) => { 
+    const overlayForm1 = (parentData,formData,setShowFormIndex,onSubmit) => { 
 
         // console.log("Clicked from", parentData);
 
-        return <OverlayForm
+        return <OverlayForm1
                     onClose={() => {
                         setShowFormIndex(null);
                     }}
@@ -130,7 +134,7 @@ function AdminHome() {
     };
 
     const columnsDescription = [
-        {
+        { // Instructor Name
             header : 'Instructor Name',
             dataKey: 'instructorName', 
             label: 'Instructor name', 
@@ -149,7 +153,7 @@ function AdminHome() {
             columnRender: (index, value) => {
                 return (
                   <div
-                    className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                    className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                       hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
                       hoveredDetails[2] === 'instructorName'
@@ -161,7 +165,7 @@ function AdminHome() {
                       hoveredDetails[0] === index &&
                       hoveredDetails[2] === 'instructorName' && (
                         <div
-                          className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                          className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
                           <div className='flex flex-col justify-center items-center'>
                             <FaInfoCircle size={16} className="text-blue-500" />
@@ -176,14 +180,14 @@ function AdminHome() {
               
             dataRender: (index, value, currentItem) => {
                 return  <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center`}
+                            className={`w-full text-blue-600 font-bold h-full flex flex-wrap justify-center items-center`}
                         >
                             {value}
                             
                         </div>;
             }
         },
-        {
+        { // Email Id
             header : 'Email Id',
             dataKey: 'emailId', 
             label: 'Email Id', 
@@ -201,7 +205,7 @@ function AdminHome() {
             },
             columnRender: (index,value) => {
                 return <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                                 hoveredDetails.length > 0 &&
                                 hoveredDetails[0] === index &&
                                 hoveredDetails[2] === 'email'
@@ -213,7 +217,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'email' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -233,7 +237,7 @@ function AdminHome() {
                         </div>;
             }
         },
-        {
+        { // Update Password
             header : 'Update Password',
             dataKey: 'update', 
             label: 'Update', 
@@ -251,7 +255,7 @@ function AdminHome() {
             },
             columnRender: (index,value) => {
                 return <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                                 hoveredDetails.length > 0 &&
                                 hoveredDetails[0] === index &&
                                 hoveredDetails[2] === 'update'
@@ -263,7 +267,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'update' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -284,7 +288,7 @@ function AdminHome() {
                     },
                 },
                 action: (currentItem,index) => {
-                    return showFormIndex2 === index && form(currentItem,updateFormData,setShowFormIndex2,updatePassword)
+                    return showFormIndex2 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex2,updatePassword)
                 }
 
             },
@@ -298,7 +302,7 @@ function AdminHome() {
                         </p>
             } 
         },
-        {
+        { // Delete
             header : 'Delete',
             dataKey: 'delete', 
             label: 'Delete', 
@@ -316,7 +320,7 @@ function AdminHome() {
             },
             columnRender: (index,value) => {
                 return <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                                 hoveredDetails.length > 0 &&
                                 hoveredDetails[0] === index &&
                                 hoveredDetails[2] === 'delete'
@@ -328,7 +332,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'delete' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -372,7 +376,7 @@ function AdminHome() {
                         </p>
             } 
         },
-        {
+        { // Courses
             header : 'Courses',
             dataKey: 'courses', 
             label: 'Courses', 
@@ -390,7 +394,7 @@ function AdminHome() {
             },
             columnRender: (index,value) => {
                 return <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                                 hoveredDetails.length > 0 &&
                                 hoveredDetails[0] === index &&
                                 hoveredDetails[2] === 'courses'
@@ -402,7 +406,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'courses' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -436,7 +440,7 @@ function AdminHome() {
                         </a>
             } 
         },
-        {
+        { // Assign
             header : 'Assign',
             dataKey: 'add', 
             label: 'Add', 
@@ -454,7 +458,7 @@ function AdminHome() {
             },
             columnRender: (index,value) => {
                 return <div
-                            className={`w-full h-full flex flex-wrap justify-center items-center relative ${
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                                 hoveredDetails.length > 0 &&
                                 hoveredDetails[0] === index &&
                                 hoveredDetails[2] === 'add'
@@ -466,7 +470,7 @@ function AdminHome() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'add' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -487,7 +491,7 @@ function AdminHome() {
                     },
                 },
                 action: (currentItem,index) => {
-                    return showFormIndex1 === index && form(currentItem,assignFormData,setShowFormIndex1,assignCourse)
+                    return showFormIndex1 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex1,assignCourse)
                 }
 
             },
@@ -555,6 +559,56 @@ function AdminHome() {
         }
     ]);
 
+    // add new course section starts
+
+    const [showForm, setShowForm] = useState(null);
+
+    const onSubmit = (data) => {
+        console.log("Form Submitted",data);
+
+
+    }
+
+    const createNewCourseFormData = {
+        inputs : [
+            // Define your form inputs here
+            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true,  },
+            { label: 'Course Name', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true,  },
+            // { label: '', type: 'text', placeholder: 'Your phone number', name: 'phoneNumber', required: true,  },
+            // { label: 'Message', type: 'textarea', placeholder: 'Your message', name: 'message', required: true, defaultValue: 'Send message to us' },
+            // { label: 'Start Time', type: 'dateAndTime2', placeholder: 'Start Time', name: 'startTime', required: true, defaultValue: new Date('2024-01-26'), enableTime : false, dateFormat : 'Y-m-d', },
+            // { label: 'End Time', type: 'dateAndTime3', placeholder: 'End Time', name: 'endTime', required: true, defaultValue: new Date('2024-01-26'), enableTime : false, dateFormat : 'MMMM d, yyyy', },
+            // Add more input configurations as needed
+        ],
+        buttons : [
+            // Define your form buttons here
+            // { type: 'text', text: 'Prev', style: 'w-full' },
+            { type: 'submit', text: 'Submit', style: 'w-[6rem]' },
+            // Add more button configurations as needed
+        ],
+        title : 'Add New Course',
+        desc : "Enter details of the course to be created",
+        formHeight : "",
+        formWidth : "lg:w-3/4", // total width of the form
+        formDesign : {
+            start: 'justify-center', // define whether the form should appear in the start 
+            cols: 2, // define how many fields should be in 1 row
+        }
+    }
+
+    const overlayForm2 = (formData,setShowForm,onSubmit) => { 
+
+        // console.log("Clicked from", parentData);
+
+        return <OverlayForm2
+                    onClose={() => {
+                        setShowForm(null);
+                    }}
+                    onSubmit={onSubmit}
+                    formData={formData}
+                />
+    };
+
     const handleMouseEnter = (details) => {
         clearTimeout(animationTimeout);
 
@@ -570,6 +624,9 @@ function AdminHome() {
         setHoveredDetails([]);
     };
 
+    // add new course section ends
+
+    // Searh by email code section
     useEffect(() => {
         // Update the filtered list when the searchEmail changes
         const filtered =
@@ -581,19 +638,49 @@ function AdminHome() {
         setFilteredItems(filtered);
     }, [searchEmail, items]);
 
-
     return loading ? (
         <Loading />
     ) : 
     (
         <div className='w-full  h-auto py-10 px-2 flex flex-wrap flex-col justify-center items-center'>
-            <div className='w-full flex justify-center items-center '>
-                <div>
+
+            {/* Heading Section */}
+            
+            <div className='w-full flex flex-col lg:flex-row justify-between items-center '>
+                <div className='w-full lg:w-[90%] flex justify-center items-center lg:ml-[7rem] '>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Admin Home</h1>
+                </div>
+
+                {/* Add new course form */}
+                <div className='w-full mt-4 mb-2 lg:mt-0 lg:w-[10%] flex justify-center lg:justify-end lg:mr-7 items-center'>
+                    {/* Create new course button section */}
+                    <div className='flex flex-col justify-center items-center text-xl'>
+                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Add New Course </p>
+
+                        <Button
+                        className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
+                        onClick={() => {
+                            setShowAddCourse(prev => !prev);
+                            if(showForm === null)
+                                setShowForm(true);
+                        }}
+                        >
+                            Add
+                        </Button>
+                        
+                    </div>
+
+                    {showForm === true && ( 
+                        overlayForm2(createNewCourseFormData,setShowForm,onSubmit)
+                    
+                    )}
+                    
+
                 </div>
             </div>
 
 
+            {/* Search Email Section */}
             <div className="w-full flex flex-col justify-center items-center mt-5">
                 <div className="flex w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center">
                     <Input
@@ -606,91 +693,8 @@ function AdminHome() {
                 </div>
             </div>
 
-            <Pagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default'  />
-
-            <div className='w-full flex flex-col justify-center items-center'>
-                <div className='flex flex-col justify-center items-center text-xl'>
-                    <p className='mb-1 text-sm font-bold md:text-md'> Hire New Instructor </p>
-
-                    <button
-                    className="relative group"
-                    onClick={() => {
-                        setShowAddCourse(prev => !prev);
-                    }}
-                    >
-                        <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-pink-600 hover:bg-pink-500 dark:bg-slate-800 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
-                            <div className={`transform transition-all duration-150 overflow-hidden ${showAddCourse ? 'translate-y-1 group-focus:-translate-y-0' : ''}`}>
-                                {showAddCourse ? (
-                                    <FiChevronUp className="h-6 w-6 animate-bounce text-white" />
-                                ) : (
-                                    <FiChevronDown className="h-6 w-6 animate-bounce text-white" />
-                                )}
-                            </div>
-                        </div>
-                    </button>
-                    
-                </div>
-
-                {showAddCourse && (
-                    <form onSubmit={handleSubmit(addInstructor)} className='w-full h-[18rem] flex flex-col justify-center items-center pb-[2rem]'>
-                        <div className='w-2/3 flex justify-center items-center p-1 space-x-1'>
-                            <div className='w-1/2 flex justify-start items-center flex-col'>
-                                <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="Name"
-                                {...register("instructorName", {
-                                    required: true,
-                                })}
-                                />
-
-                                <div className='w-full relative'>
-                                    <Input
-                                        type={showPassword ? 'text' : 'password'}
-                                        placeholder='Password'
-                                        {...register('password', {
-                                        required: true,
-                                        })}
-                                    />
-                                </div>
-
-                                {/* <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="Course Name"
-                                {...register("courseName", {
-                                    required: true,
-                                })}
-                                /> */}
-                            </div>
-
-                            <div className='w-1/2 h-full flex justify-start flex-col items-start'>
-
-                                <Input
-                                // label = "Username"
-                                type="text"
-                                placeholder="Email"
-                                {...register("instructorEmail", {
-                                    required: true,
-                                })}
-                                />
-
-                            </div>
-                        </div> 
-
-                        <div className='w-[7rem] flex justify-center items-center mt-2'>
-                            <Button
-                            type="submit"
-                            className="w-full "
-                            >
-                                Create
-                            </Button>
-                        </div>
-                        
-                    </form>
-                )}
-
-            </div>
+            <TablePagination columns={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+            
             
         </div>
     )

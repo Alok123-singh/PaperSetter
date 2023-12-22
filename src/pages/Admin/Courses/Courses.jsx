@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
-import { Pagination } from '../../../components/index';
+import { TablePagination } from '../../../components/index';
 
 
 function Courses() {
@@ -14,7 +14,7 @@ function Courses() {
 
 
     const columnsDescription = [
-        {
+        { // Course Code
             header : 'Course Code',
             dataKey: 'courseCode', 
             label: 'Course Code', 
@@ -30,7 +30,7 @@ function Courses() {
             },
 
         },
-        {
+        { // Course Name
             header : 'Course Name',
             dataKey: 'courseName', 
             label: 'Course Code', 
@@ -54,7 +54,7 @@ function Courses() {
                 <strong>Instructor Name</strong> : {instructorName}
             </p>
 
-            <Pagination columns={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+            <TablePagination columns={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
         </div>
     )
 }

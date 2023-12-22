@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { Loading, Pagination } from '../../../components/index'
+import { Loading, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
 
 
@@ -67,7 +67,7 @@ function Result() {
                             hoveredDetails[0] === index &&
                             hoveredDetails[2] === 'occupancy' && (
                                 <div
-                                className={`hidden lg:flex w-[10rem] text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
                                 <div className='flex flex-col justify-center items-center'>
                                     <FaInfoCircle size={16} className="text-blue-500" />
@@ -119,7 +119,7 @@ function Result() {
                 </div>
             </div>
 
-            <Pagination columns={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+            <TablePagination columns={columnsDescription} items={items} paginationEnable={false} widthDesign='w-[20%] 'roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
 
             <div className='flex w-[10rem] flex-col items-center'>
 

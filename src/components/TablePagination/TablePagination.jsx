@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useSpring, animated } from 'react-spring';
+import { MdError } from 'react-icons/md';
 
-function Pagination({ 
+
+function TablePagination({ 
         columns, 
         items, 
         defaultItemsPerPage = 5, 
@@ -18,7 +20,17 @@ function Pagination({
     ? [{ header: '#', dataKey: 'rowNumber' }, ...columns]
     : columns;
 
-    itemsPerPageOptions = [...itemsPerPageOptions, defaultItemsPerPage].sort((a, b) => a - b);
+    // Use a Set to filter out duplicates
+    let uniqueOptionsSet = new Set(itemsPerPageOptions);
+
+    // Check if defaultItemsPerPage is not already in the set
+    if (!uniqueOptionsSet.has(defaultItemsPerPage)) {
+        // If not, add it to the set
+        uniqueOptionsSet.add(defaultItemsPerPage);
+    }
+
+    // Convert the set back to an array, sort it, and assign it to itemsPerPageOptions
+    itemsPerPageOptions = [...uniqueOptionsSet].sort((a, b) => a - b);
 
     // Pagination logic starts below
     const [currentPage, setCurrentPage] = useState(1);
@@ -81,63 +93,48 @@ function Pagination({
         }
     };
 
+    // styling for no records found section starts
+
+    const [showNoRecords, setShowNoRecords] = useState(false);
+
+    const iconAnimation = useSpring({
+        opacity: showNoRecords ? 1 : 0,
+        transform: `scale(${showNoRecords ? 1 : 0.8})`,
+        config: { tension: 300, friction: 7 },
+    });
+
+    useEffect(() => {
+        setShowNoRecords(items.length === 0);
+    }, [items]);
+
+    // styling for no records found section ends
+
     // logic for showing descriptions of columns if any for only large screens
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [needsOverflow, setNeedsOverflow] = useState(false);
-
-    const calculateTotalColumnWidth = (columns, defaultWidth) => {
-        return columns.reduce((total, column) => total + (column.width || defaultWidth), 0);
-    }
-    
-    // Function to calculate the total width of item content
-    const calculateTotalItemContentWidth = (items, defaultWidth) => {
-        // Replace this logic with your own calculation based on the item content
-        return items.reduce((total, item) => total + defaultWidth, 0);
-    }
 
     useEffect(() => {
         const handleResize = () => {
         setWindowWidth(window.innerWidth);
         };
 
+        // Attach the event listener
         window.addEventListener('resize', handleResize);
 
+        // Remove the event listener on component unmount
         return () => {
         window.removeEventListener('resize', handleResize);
         };
-    }, []);
-
-    useEffect(() => {
-        const calculateSpaceNeeded = () => {
-        // Assumptions for default column width and item content width
-        const defaultColumnWidth = 100; // Replace with your default width
-        const defaultItemContentWidth = 100; // Replace with your estimated content width
-
-        // Calculate the total width needed for columns
-        const totalColumnWidth = calculateTotalColumnWidth(columns, defaultColumnWidth);
-
-        // Calculate the total width needed for item content
-        const totalItemContentWidth = calculateTotalItemContentWidth(items, defaultItemContentWidth);
-
-        // Calculate the total space needed
-        const totalSpaceNeeded = totalColumnWidth + totalItemContentWidth;
-
-        // Check if overflow is needed
-        setNeedsOverflow(totalSpaceNeeded > windowWidth);
-        };
-
-        calculateSpaceNeeded();
-    }, [columns, items, windowWidth]);
+    }, []); // Empty dependency array ensures that this effect runs once after the initial render
 
     
     return (
         currentItems && currentItems.length > 0 ? 
 
         <div className={`py-10 flex flex-wrap flex-col justify-center ${widthDesign} `}>
-            <div className={`w-[95%] ${needsOverflow && 'overflow-x-auto'} mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
+            <div className={`w-[95%] ${windowWidth < 1200 && 'overflow-x-auto'} mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
                 <table className=" min-w-full  bg-white ">
                     <thead>
-                        <tr>
+                        <tr className=''>
                             {updatedColumns.map((column, columnIndex) => (
                                 <th
                                     key={columnIndex}
@@ -159,7 +156,7 @@ function Pagination({
                         {currentItems.map((item, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
                                 {showRowNumbers && (
-                                <td className={`py-3  px-3 border-b border-gray-300 text-center ${rowsDesign} `}>
+                                <td className={` py-3  px-3 border-gray-300 text-center ${rowsDesign} `}>
                                     {index + 1 + (currentPage - 1) * itemsPerPage}
                                 </td>
                                 )}
@@ -167,7 +164,7 @@ function Pagination({
                                 {columns.map((column, columnIndex) => (
                                     <td
                                         key={columnIndex}
-                                        className={`py-3 px-3 border-b border-gray-300 text-center ${rowsDesign} `}
+                                        className={`py-3 px-3 border-b  border-gray-300 text-center ${rowsDesign} `}
                                     >
                                         {column.rowFunctionality ? (
                                             <div
@@ -204,8 +201,8 @@ function Pagination({
                                 onChange={(e) => handleItemsPerPageChange(parseInt(e.target.value, 10))}
                                 className="appearance-none bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
                             >
-                                {itemsPerPageOptions.map((option) => (
-                                    <option key={option} value={option}>
+                                {itemsPerPageOptions.map((option,index) => (
+                                    <option key={index} value={option}>
                                         {option}
                                     </option>
                                 ))}
@@ -292,10 +289,17 @@ function Pagination({
             
 
         </div> : 
-        <div className='flex justify-center items-center h-[15rem]'>
-            No Records Found !
+        <div className='flex flex-col justify-center items-center h-[15rem] space-y-5'>
+
+            <animated.div style={iconAnimation}>
+                <div className="flex flex-col items-center justify-center">
+                    <MdError style={{ fontSize: '3rem', marginRight: '0.5rem' }} />
+                    <span className="font-bold text-lg">No Records Found!</span>
+                </div>
+            </animated.div>
+
         </div>
     );
 }
 
-export default Pagination;
+export default TablePagination;

@@ -7,9 +7,11 @@ import AuthLayout from './AuthLayout/AuthLayout'
 import Logo from './Logo/Logo'
 import LogoutBtn from './LogoutBtn/LogoutBtn'
 import ThemeButton from './ThemeButton/ThemeButton'
-import OverlayForm from './OverlayForm/OverlayForm'
+import Form from './Form/Form'
+import OverlayForm1 from './OverlayForm1/OverlayForm1'
+import OverlayForm2 from './OverlayForm2/OverlayForm2'
 import Loading from './Loading/Loading'
-import Pagination from './Pagination/Pagination'
+import TablePagination from './TablePagination/TablePagination'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 export {
@@ -22,9 +24,11 @@ export {
     Logo,
     LogoutBtn,
     ThemeButton,
-    OverlayForm,
+    Form,
+    OverlayForm1,
+    OverlayForm2,
     Loading,
-    Pagination,
+    TablePagination,
     ErrorBoundary,
     
 
