@@ -1159,7 +1159,7 @@ function InstructorHome() {
 
             {/* search email section */}
             <div className="w-full flex flex-col justify-center items-center mt-5">
-                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={true} searchProperty="name" />
+                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" />
             </div>
 
             <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
