@@ -105,12 +105,26 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
         
         if(enableContinuousSearching === false){
             if(startSearching === true || searchTerm === ''){
+                const filtered =
+                searchTerm.trim() === ''
+                    ? items // Show all items if search field is empty
+                    : items.filter((item) =>
+                        item[searchProperty].toLowerCase() === searchTerm.toLowerCase()
+                    );
+
                 setSuggestions([]);
                 setStartSearching(false);
                 setFilteredItems(filtered);
             }
         }
         else{
+            const filtered =
+            searchTerm.trim() === ''
+                ? items // Show all items if search field is empty
+                : items.filter((item) =>
+                    item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
+                );
+
             setFilteredItems(filtered);
         }
 
