@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Input } from '../index';
+import { Button, Input } from '../index';
 
-const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = false }) => {
+const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = false, enableContinuousSearching = true }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const [searchLimit, setSearchLimit] = useState(5);
     const [showMoreOptions,setShowMoreOptions] = useState(false);
+    const [startSearching, setStartSearching] = useState(false);
 
     const searchRef = useRef(null);
 
@@ -72,6 +73,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
         else setShowMoreOptions(false);
         
         setSearchLimit(5);
+
     }, [searchTerm]);
 
 
@@ -98,10 +100,21 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
             searchTerm.trim() === ''
                 ? items // Show all items if search field is empty
                 : items.filter((item) =>
-                      item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
-                  );
-        setFilteredItems(filtered);
-    }, [searchTerm, items]);
+                    item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
+                );
+        
+        if(enableContinuousSearching === false){
+            if(startSearching === true || searchTerm === ''){
+                setSuggestions([]);
+                setStartSearching(false);
+                setFilteredItems(filtered);
+            }
+        }
+        else{
+            setFilteredItems(filtered);
+        }
+
+    }, [searchTerm, items, startSearching]);
 
     const handleKeyDown = event => {
         if (event.key === 'ArrowDown' && highlightedIndex < suggestions.length - 1) {
@@ -114,7 +127,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
     };
 
     return (
-        <div className='w-full relative flex flex-col justify-center items-center mt-5' >
+        <div className='w-[98%] relative flex justify-center items-center mt-5' >
             <div ref={searchRef} className="flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ">
                 <Input
                     type="text"
@@ -127,10 +140,10 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
                 {enableSuggestion && 
                     <div className='w-full relative flex flex-col justify-start items-start'>
                         {suggestions.length > 0 && (
-                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col w-[23.7rem] justify-center items-center'>
+                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col sm:w-[23.3rem] justify-center items-center'>
                                 {suggestions.map((item, index) => (
                                     <li
-                                        className={`w-full flex justify-start items-center p-3 border-b border-gray-300 ${
+                                        className={`w-full text-gray-600 flex justify-start items-center p-3 border-b border-gray-300 ${
                                             selectedSuggestion === item || highlightedIndex === index ? 'bg-gray-200' : ''
                                         }`}
                                         key={index}
@@ -140,7 +153,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
                                     </li>
                                 ))}
                                 {showMoreOptions &&
-                                    <div onClick={() => setSearchLimit(prev => prev+5)} className='cursor-pointer text-sm p-2'>
+                                    <div onClick={() => setSearchLimit(prev => prev+5)} className='cursor-pointer text-sm text-gray-400 p-2'>
                                         Show more suggestions...
                                     </div>
                                 }
@@ -150,6 +163,16 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
                     </div>
                 }
             </div>
+            {enableContinuousSearching === false && 
+                <Button
+                    className="w-[5rem] ml-2 h-[2.5rem] flex justify-center hover:bg-blue-400hover:text-slate-600 items-center"
+                    onClick={() => {
+                        setStartSearching(true);
+                    }}
+                >
+                    Search
+                </Button>
+            }
         </div>
     );
 };
