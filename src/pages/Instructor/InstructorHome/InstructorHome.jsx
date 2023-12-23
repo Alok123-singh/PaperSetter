@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { Loading, TablePagination, CardPagination, OverlayForm1, Input } from '../../../components/index'
+import React, { useState } from 'react'
+import { Loading, Search, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 
 
 function InstructorHome() {
     const [loading, setLoading] = useState(false);
-    // const {register, handleSubmit} = useForm();
+    
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
     const [showFormIndex3, setShowFormIndex3] = useState(null);
 
-    const [searchName, setSearchName] = useState('');
     const [filteredItems, setFilteredItems] = useState([]);
 
     let animationTimeout;
@@ -219,6 +218,69 @@ function InstructorHome() {
             // startTime : parseDateAndTime('28/01/2024 04:00 AM'),
 
             // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
+        },
+        {
+            courseCode : 'iSldaR173718',
+
+            name : 'Logistics Practice2',
+            
+            studentRegistered : '0',
+
+            studentAttempts : '3',
+
+            archive : 'No',
+
+            licenseLeft : '15',
+
+            startTime : new Date('2024-01-24T13:00:00'),
+
+            endTime : new Date('2024-01-30T14:00:00'),
+
+            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+
+            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        },
+        {
+            courseCode : 'iSldaR173718',
+
+            name : 'Logistics Practice3',
+            
+            studentRegistered : '0',
+
+            studentAttempts : '3',
+
+            archive : 'No',
+
+            licenseLeft : '15',
+
+            startTime : new Date('2024-01-21T13:00:00'),
+
+            endTime : new Date('2024-01-21T14:00:00'),
+
+            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+
+            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        },
+        {
+            courseCode : 'iSldaR173718',
+
+            name : 'Logistics Practice4',
+            
+            studentRegistered : '0',
+
+            studentAttempts : '3',
+
+            archive : 'No',
+
+            licenseLeft : '15',
+
+            startTime : new Date('2024-01-22T13:00:00'),
+
+            endTime : new Date('2024-01-22T14:00:00'),
+
+            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+
+            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
     ]);
 
@@ -1084,18 +1146,6 @@ function InstructorHome() {
         setHoveredDetails([]);
     };
 
-    // search functionality section
-    useEffect(() => {
-        // Update the filtered list when the searchEmail changes
-        const filtered =
-            searchName.trim() === ''
-                ? items // Show all items if search field is empty
-                : items.filter((item) =>
-                      item.name.toLowerCase().includes(searchName.toLowerCase())
-                  );
-        setFilteredItems(filtered);
-    }, [searchName, items]);
-
     return loading ? (
         <Loading />
     ) : 
@@ -1109,15 +1159,7 @@ function InstructorHome() {
 
             {/* search email section */}
             <div className="w-full flex flex-col justify-center items-center mt-5">
-                <div className="flex w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center">
-                    <Input
-                        type="text"
-                        placeholder="Search by Name"
-                        value={searchName}
-                        onChange={(e) => setSearchName(e.target.value)}
-                        className="pr-2"
-                    />
-                </div>
+                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="name" />
             </div>
 
             <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />

@@ -1,22 +1,18 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
-import {useForm} from "react-hook-form"
-import { Input, OverlayForm1, OverlayForm2, Loading, TablePagination, Button } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading, Search, TablePagination, Button } from '../../../components/index'
 
 
 function AdminHome() {
 
     const [loading, setLoading] = useState(false);
     const [showAddCourse, setShowAddCourse] = useState(false);
-    const {register, handleSubmit} = useForm()
-    const [showPassword,setShowPassword] = useState(false);
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
 
 
-    const [searchEmail, setSearchEmail] = useState('');
     const [filteredItems, setFilteredItems] = useState([]);
 
     const [hoveredDetails, setHoveredDetails] = useState([]);
@@ -613,23 +609,11 @@ function AdminHome() {
 
     // add new course section ends
 
-    // Searh by email code section
-    useEffect(() => {
-        // Update the filtered list when the searchEmail changes
-        const filtered =
-            searchEmail.trim() === ''
-                ? items // Show all items if search field is empty
-                : items.filter((item) =>
-                      item.emailId.toLowerCase().includes(searchEmail.toLowerCase())
-                  );
-        setFilteredItems(filtered);
-    }, [searchEmail, items]);
-
     return loading ? (
         <Loading />
     ) : 
     (
-        <div className='w-full  h-auto py-10 px-2 flex flex-wrap flex-col justify-center items-center'>
+        <div className='w-full  h-auto py-10 flex flex-wrap flex-col justify-center items-center'>
 
             <div className='w-full flex flex-col lg:flex-row justify-between items-center '>
 
@@ -668,16 +652,8 @@ function AdminHome() {
 
 
             {/* Search Email Section */}
-            <div className="w-full flex flex-col justify-center items-center mt-5">
-                <div className="flex w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center">
-                    <Input
-                        type="text"
-                        placeholder="Search by Email"
-                        value={searchEmail}
-                        onChange={(e) => setSearchEmail(e.target.value)}
-                        className="pr-2"
-                    />
-                </div>
+            <div className="w-full flex  justify-center items-center mt-5">
+                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="email" />
             </div>
 
             <TablePagination columnsDescription={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
