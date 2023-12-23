@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input } from '../index';
 
-const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = false, enableContinuousSearching = true }) => {
+const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
@@ -129,6 +129,22 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
         }
 
     }, [searchTerm, items, startSearching]);
+
+    // useEffect for use cases like if searchTerm is not empty and user changes any item of items variable then the filteredItems should be changed to show updated state of items in UI
+    useEffect(() => {
+        // setSearchTerm('');
+        const filtered =
+                searchTerm.trim() === ''
+                    ? items // Show all items if search field is empty
+                    : items.filter((item) =>
+                        item[searchProperty].toLowerCase() === searchTerm.toLowerCase()
+                    );
+
+                setSuggestions([]);
+                setStartSearching(false);
+                setFilteredItems(filtered);
+        
+    },[items]);
 
     const handleKeyDown = event => {
         if (event.key === 'ArrowDown' && highlightedIndex < suggestions.length - 1) {
