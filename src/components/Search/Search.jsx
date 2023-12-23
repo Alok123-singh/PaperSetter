@@ -56,7 +56,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
                 ? [selectedSuggestion, ...sortedSuggestions.filter(s => s !== selectedSuggestion)]
                 : sortedSuggestions;
 
-            if(searchLimit >= filteredItems.length || searchLimit >= 20) setShowMoreOptions(false);
+            if(searchLimit >= filteredItems.length || searchLimit > 20) setShowMoreOptions(false);
             // Update the suggestions based on the filtered and sorted items, limit to top 5
             setSuggestions(updatedSuggestions.slice(0, searchLimit));
         }
@@ -149,7 +149,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
                     value={searchTerm}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    className="pr-2"
+                    className="pr-2 h-[2.6rem]"
                 />
                 {enableSuggestion && 
                     <div className='w-full relative flex flex-col justify-start items-start'>
@@ -179,7 +179,7 @@ const Search = ({ items, setFilteredItems, searchProperty, enableSuggestion = fa
             </div>
             {enableContinuousSearching === false && 
                 <Button
-                    className="w-[5rem] ml-2 h-[2.5rem] flex justify-center hover:bg-blue-400hover:text-slate-600 items-center"
+                    className="w-[4.3rem] ml-1 sm:ml-2 my-1 h-[2.3rem] flex justify-center hover:bg-blue-500  items-center rounded-md"
                     onClick={() => {
                         setStartSearching(true);
                     }}

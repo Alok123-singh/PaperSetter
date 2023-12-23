@@ -652,7 +652,7 @@ function AdminHome() {
 
 
             {/* Search Email Section */}
-            <div className="w-full flex  justify-center items-center mt-5">
+            <div className="w-full flex  justify-center items-center">
                 <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="email" />
             </div>
 

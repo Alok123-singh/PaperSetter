@@ -1158,7 +1158,7 @@ function InstructorHome() {
             </div>
 
             {/* search email section */}
-            <div className="w-full flex flex-col justify-center items-center mt-5">
+            <div className="w-full flex flex-col justify-center items-center mt-2">
                 <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" />
             </div>
 
