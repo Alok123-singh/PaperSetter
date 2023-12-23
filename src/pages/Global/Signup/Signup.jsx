@@ -149,7 +149,7 @@ function Signup() {
                         </Link>
                     </span>
                 </div>
-                <h2 className="text-center text-2xl leading-tight font-serif">
+                <h2 className="text-center text-2xl leading-tight font-sans">
                     Create a New Account 
                 </h2>
                 <p className="mt-2 text-center text-base text-black/60 font-bold">
