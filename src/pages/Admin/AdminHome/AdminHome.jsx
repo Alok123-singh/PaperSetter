@@ -81,7 +81,7 @@ function AdminHome() {
     const updateFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'email', required: true, defaultValue: 'email', },
             { label: 'New Password', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
@@ -101,7 +101,7 @@ function AdminHome() {
     const assignFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'emailId', required: true, defaultValue: 'emailId', },
+            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'email', required: true, defaultValue: 'email', },
             { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true },
             { label: 'Course Name', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
@@ -189,7 +189,7 @@ function AdminHome() {
         },
         { // Email Id
             header : 'Email Id',
-            dataKey: 'emailId', 
+            dataKey: 'email', 
             label: 'Email Id', 
             columnFunctionality : {
                 event: {
@@ -276,6 +276,7 @@ function AdminHome() {
                                 </div>
                             )}
                             {value}
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
                         </div>;
             },
@@ -298,7 +299,7 @@ function AdminHome() {
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'pencil' ? ' animate-bounce' : ''}`}>
 
-                            {value}
+                            {<FaPencilAlt size={14} className=' cursor-pointer' />}
                         </p>
             } 
         },
@@ -341,6 +342,7 @@ function AdminHome() {
                                 </div>
                             )}
                             {value}
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
                         </div>;
             },
@@ -372,7 +374,7 @@ function AdminHome() {
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'trash' ? ' animate-bounce' : ''}`}>
 
-                            {value}
+                            {<FaTrash size={14} className=' cursor-pointer' />}
                         </p>
             } 
         },
@@ -436,7 +438,7 @@ function AdminHome() {
                         target='_blank'
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
 
-                            {value}
+                            {<FaInfoCircle size={14} className=' cursor-pointer' /> }
                         </a>
             } 
         },
@@ -479,6 +481,7 @@ function AdminHome() {
                                 </div>
                             )}
                             {value}
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
                         </div>;
             },
@@ -501,7 +504,7 @@ function AdminHome() {
                         onMouseLeave={handleMouseLeave} 
                         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
 
-                            {value}
+                            {<IoIosAdd size={25} className=' cursor-pointer' />}
                         </p>
             } 
         },
@@ -511,17 +514,9 @@ function AdminHome() {
         {
             instructorName : 'Anand Pratap Singh Bais',
 
-            emailId : 'anandpsingh7@gmail.com',
+            email : 'anandpsingh7@gmail.com',
             
             password : '1234',
-
-            update : <FaPencilAlt size={14} className=' cursor-pointer' />,
-
-            delete : <FaTrash size={14} className=' cursor-pointer' />,
-
-            courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
-
-            add : <IoIosAdd size={25} className=' cursor-pointer' />,
 
             courseList: [
                 {
@@ -537,17 +532,9 @@ function AdminHome() {
         {
             instructorName : 'Chotu Don',
 
-            emailId : 'chotudon@gmail.com',
+            email : 'chotudon@gmail.com',
             
             password : 'chotu@don',
-
-            update : <FaPencilAlt size={14} className=' cursor-pointer' />,
-
-            delete : <FaTrash size={14} className=' cursor-pointer' />,
-
-            courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
-
-            add : <IoIosAdd size={25} className=' cursor-pointer' />,
 
             courseList: [
                 {
@@ -647,7 +634,7 @@ function AdminHome() {
             <div className='w-full flex flex-col lg:flex-row justify-between items-center '>
 
                 {/* Heading Section */}
-                <div className='w-full lg:w-[90%] flex justify-center items-center lg:ml-[7rem] '>
+                <div className='w-full lg:w-[90%] flex justify-center items-center lg:ml-[8.4rem] '>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Admin Home</h1>
                 </div>
 
@@ -655,7 +642,7 @@ function AdminHome() {
                 <div className='w-full mt-4 mb-2 lg:mt-0 lg:w-[10%] flex justify-center lg:justify-end lg:mr-7 items-center'>
                     {/* Create new course button section */}
                     <div className='flex flex-col justify-center items-center text-xl'>
-                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Add New Course </p>
+                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Course </p>
 
                         <Button
                         className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"

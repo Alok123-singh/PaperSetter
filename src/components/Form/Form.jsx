@@ -302,6 +302,7 @@ function Form({ onSubmit, formData }) {
                                                 label={input.label}
                                                 type={input.type}
                                                 className='cursor-pointer'
+                                                required={input.required}
                                                 defaultValue={input.defaultValue || null}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
@@ -313,6 +314,7 @@ function Form({ onSubmit, formData }) {
                                     label={input.label}
                                     type={input.type}
                                     className='cursor-pointer'
+                                    required={input.required}
                                     placeholder={input.placeholder}
                                     name={input.name}
                                     {...register(input.name, { required: input.required })}

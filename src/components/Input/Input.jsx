@@ -13,7 +13,7 @@ const Input = React.forwardRef(function Input(
     ) {
     const [showPassword, setShowPassword] = useState(false);
     const [selectedDate, setSelectedDate] = useState(props.defaultValue !== undefined ? props.defaultValue : null);
-    console.log("Input Props", props);
+    // console.log("Input Props", props);
 
     const id = useId();
 

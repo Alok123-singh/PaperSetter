@@ -4,7 +4,7 @@ import { ThemeButton, Loading } from '../../../components/index';
 
 function MyAccount() {
 
-    const userName = useSelector(state => state.auth.username);
+    const username = useSelector(state => state.auth.username);
     const [loading, setLoading] = useState(false);
 
     return loading ? (
@@ -23,19 +23,19 @@ function MyAccount() {
                 <div className='w-full flex'>
                     <p className='w-[5rem] sm:w-[7rem] py-2'> Username </p>
                     <p className='w-[1.6rem] sm:w-[2.6rem] py-2'> : </p>
-                    <input contentEditable={false} onChange={() => {}} value={`${userName}`} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-xl' />
+                    <input contentEditable={false} onChange={() => {}} value={`${username}`} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-md' />
                 </div>
 
                 <div className='w-full flex'>
                     <p className='w-[5rem] sm:w-[7rem] py-2'> Full Name </p>
                     <p className='w-[1.6rem] sm:w-[2.6rem] py-2'> : </p>
-                    <input contentEditable={false} onChange={() => {}} value={'Alok Singh Bais'} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-xl' />
+                    <input contentEditable={false} onChange={() => {}} value={'Alok Singh Bais'} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-md' />
                 </div>
 
                 <div className='w-full flex'>
                     <p className='w-[5rem] sm:w-[7rem] py-2'> Email </p>
                     <p className='w-[1.6rem] sm:w-[2.6rem] py-2'> : </p>
-                    <input contentEditable={false} onChange={() => {}} value={'aloksinghbais02@gmail.com'} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-xl' />
+                    <input contentEditable={false} onChange={() => {}} value={'aloksinghbais02@gmail.com'} className='outline-none w-[12rem] sm:w-[15rem] p-2 bg-gray-200 text-center text-blue-600 rounded-md' />
                 </div>
 
             </div>

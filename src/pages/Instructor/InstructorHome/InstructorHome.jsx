@@ -588,7 +588,7 @@ function InstructorHome() {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Edit schedule to attempt the course','editSchedule']);
+                        setHoveredDetails([index,'Edit attempt schedule of the course','editSchedule']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -637,425 +637,435 @@ function InstructorHome() {
 
             },
             dataRender: (index, value, currentItem) => {
-                return <p 
-                        onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}
-                        onMouseLeave={handleMouseLeave} 
-                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'editSchedule' ? ' animate-bounce' : ''}`}>
+                return  <div className='w-full flex flex-col justify-center items-center'>
+                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} onChange={() => {}} className='bg-[#f5f467]  pl-1 cursor-pointer outline-none flex w-[12rem] text-center h-[2rem] justify-center items-center rounded-lg' />
 
-                            <FaBell size={15} className=' text-slate-700 cursor-pointer' />
-                        </p>
+                            <p className='text-xs  '>
+                                to
+                            </p>
+
+                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} onChange={() => {}} className='bg-emerald-200 pl-1 cursor-pointer outline-none flex w-[12rem] text-center h-[2rem] justify-center items-center rounded-lg' />
+
+                            <p 
+                            onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`w-full h-[1rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'editSchedule' ? ' animate-bounce' : ''}`}>
+
+                                <FaBell size={15} className=' text-slate-700 cursor-pointer' />
+                            </p>
+                        </div>
             } 
         },
     ];
 
     // cardColumnsDescription starts here
 
-    // const cardColumnsDescription = [
-    //     { // Course Code
-    //         header : 'Course Code',
-    //         dataKey: 'courseCode', 
-    //         label: 'Course Code', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Course Code','courseCode']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+    const cardColumnsDescription = [
+        { // Course Code
+            header : 'Course Code',
+            dataKey: 'courseCode', 
+            label: 'Course Code', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Course Code','courseCode']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'courseCode' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2  rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'courseCode' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2  rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                     </div>;
-    //         },
-    //         dataRender: (index, value, currentItem) => {
-    //             return  <div
-    //                         className={`w-1/2 h-full text-slate-500 font-bold flex flex-wrap justify-end items-center`}
-    //                     >
-    //                         {value}
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-1/2 h-full text-slate-500 font-bold flex flex-wrap justify-end items-center`}
+                        >
+                            {value}
                             
-    //                     </div>;
-    //         }
-    //     },
-    //     { // Name
-    //         header : 'Name',
-    //         dataKey: 'name', 
-    //         label: 'Name', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Name of the course','name']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+                        </div>;
+            }
+        },
+        { // Name
+            header : 'Name',
+            dataKey: 'name', 
+            label: 'Name', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Name of the course','name']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'name' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'name' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                     </div>;
-    //         },
-    //         dataRender: (index, value, currentItem) => {
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
 
-    //             const props = {
-    //                 courseList: JSON.stringify(currentItem.courseList),
-    //                 instructorName: currentItem.instructorName,
-    //             }
+                const props = {
+                    courseList: JSON.stringify(currentItem.courseList),
+                    instructorName: currentItem.instructorName,
+                }
 
-    //             const queryString = Object.keys(props)
-    //                 .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-    //                 .join('&');
+                const queryString = Object.keys(props)
+                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                    .join('&');
                 
-    //             return  <div className='flex flex-col w-full justify-end items-end'>
-    //                         <textarea value={value} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
+                return  <div className='flex flex-col w-full justify-end items-end'>
+                            <textarea value={value} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
 
-    //                         <a 
-    //                         href={``}
-    //                         target='_blank'
-    //                         className={`cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
+                            <a 
+                            href={``}
+                            target='_blank'
+                            className={`cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
 
-    //                             <IoMdOpen />
-    //                         </a>
+                                <IoMdOpen />
+                            </a>
                             
-    //                     </div>
-    //         } 
-    //     },
-    //     { // Users
-    //         header : 'Users',
-    //         dataKey: 'studentRegistered', 
-    //         label: 'Student Registered', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Number of students registered in the course','studentRegistered']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+                        </div>
+            } 
+        },
+        { // Users
+            header : 'Users',
+            dataKey: 'studentRegistered', 
+            label: 'Student Registered', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Number of students registered in the course','studentRegistered']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'studentRegistered' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'studentRegistered' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                     </div>;
-    //         },
-    //         dataRender: (index, value, currentItem) => {
-    //             return  <div
-    //                         className={` w-full h-full text-lg font-bold flex text-slate-500 flex-wrap justify-end items-center`}
-    //                     >
-    //                         {value}
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={` w-full h-full text-lg font-bold flex text-slate-500 flex-wrap justify-end items-center`}
+                        >
+                            {value}
                             
-    //                     </div>;
-    //         }
-    //     },
-    //     { // Attempts
-    //         header : 'Attempts',
-    //         dataKey: 'studentAttempts', 
-    //         label: 'Student Attempts', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Total number of times a student can attempt the course','studentAttempts']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+                        </div>;
+            }
+        },
+        { // Attempts
+            header : 'Attempts',
+            dataKey: 'studentAttempts', 
+            label: 'Student Attempts', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Total number of times a student can attempt the course','studentAttempts']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'studentAttempts' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'studentAttempts' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                         <FaPencilAlt size={9} className='mb-3 ml-1' />
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
-    //                     </div>;
-    //         },
-    //         rowFunctionality: {
+                        </div>;
+            },
+            rowFunctionality: {
                 
-    //             event: {
-    //                 onClick : (index) => {
-    //                     if(showFormIndex1 === null)
-    //                         setShowFormIndex1(index);
-    //                 },
-    //             },
-    //             action: (currentItem,index) => {
-    //                 return showFormIndex1 === index && form(currentItem,editAttemptsFormData,setShowFormIndex1,editAttempts)
-    //             }
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex1 === null)
+                            setShowFormIndex1(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex1 === index && form(currentItem,editAttemptsFormData,setShowFormIndex1,editAttempts)
+                }
 
-    //         },
-    //         dataRender: (index, value, currentItem) => {
-    //             return <p 
-    //                     className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
-    //                         {value}
-    //                     </p>
-    //         } 
-    //     },
-    //     { // Archive
-    //         header : 'Archive',
-    //         dataKey: 'archive', 
-    //         label: 'Archive', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Archive this course','archive']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+            },
+            dataRender: (index, value, currentItem) => {
+                return <p 
+                        className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
+                            {value}
+                        </p>
+            } 
+        },
+        { // Archive
+            header : 'Archive',
+            dataKey: 'archive', 
+            label: 'Archive', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Archive this course','archive']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'archive' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'archive' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                         <FaPencilAlt size={9} className='mb-3 ml-1' />
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
-    //                     </div>;
-    //         },
-    //         rowFunctionality: {
+                        </div>;
+            },
+            rowFunctionality: {
                 
-    //             event: {
-    //                 onClick : (index) => {
-    //                     if(showFormIndex2 === null)
-    //                         setShowFormIndex2(index);
-    //                 },
-    //             },
-    //             action: (currentItem,index) => {
-    //                 return showFormIndex2 === index && form(currentItem,editArchiveFormData,setShowFormIndex2,editArchive)
-    //             }
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex2 === null)
+                            setShowFormIndex2(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex2 === index && form(currentItem,editArchiveFormData,setShowFormIndex2,editArchive)
+                }
 
-    //         },
-    //         dataRender: (index, value, currentItem) => {
-    //             return <p 
-    //                     className={`w-full h-[3rem] bg-blue-400 rounded-md flex font-bold justify-center items-center`}>
+            },
+            dataRender: (index, value, currentItem) => {
+                return <p 
+                        className={`w-full h-[3rem] bg-blue-400 rounded-md flex font-bold justify-center items-center`}>
 
-    //                         {value}
-    //                     </p>
-    //         } 
-    //     },
-    //     { // License Left
-    //         header : 'License Left',
-    //         dataKey: 'licenseLeft', 
-    //         label: 'License Left', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Total number of licenses left for this course','licenseLeft']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+                            {value}
+                        </p>
+            } 
+        },
+        { // License Left
+            header : 'License Left',
+            dataKey: 'licenseLeft', 
+            label: 'License Left', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Total number of licenses left for this course','licenseLeft']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'licenseLeft' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'licenseLeft' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                     </div>;
-    //         },
+                        </div>;
+            },
             
               
-    //         dataRender: (index, value, currentItem) => {
-    //             return  <div
-    //                         className={`w-1/2 h-full text-start text-slate-500 font-bold flex flex-wrap justify-end items-center`}
-    //                     >
-    //                         {value}
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={`w-1/2 h-full text-start text-slate-500 font-bold flex flex-wrap justify-end items-center`}
+                        >
+                            {value}
                             
-    //                     </div>;
-    //         }
-    //     },
-    //     { // Schedule
-    //         header : 'Schedule',
-    //         dataKey: 'editSchedule', 
-    //         label: 'Edit Schedule', 
-    //         columnFunctionality : {
-    //             event: {
-    //                 onMouseEnter: (index,value,currentItem) => {
-    //                     // alert('Entered')
-    //                     setHoveredDetails([index,currentItem.courseCode,'Edit schedule to attempt the course','editSchedulecolumn']);
-    //                 },
-    //                 onMouseLeave: (index,value,currentItem) => {
-    //                     setHoveredDetails([]);
-    //                 }
-    //             },
+                        </div>;
+            }
+        },
+        { // Schedule
+            header : 'Schedule',
+            dataKey: 'editSchedule', 
+            label: 'Edit Schedule', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Edit schedule to attempt the course','editSchedulecolumn']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
     
-    //         },
-    //         columnRender: (index,value,currentItem) => {
-    //             return <div
-    //                         // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-    //                     >
-    //                         {hoveredDetails.length > 0 &&
-    //                         hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-    //                         hoveredDetails[3] === 'editSchedulecolumn' && (
-    //                             <div
-    //                             className={`hidden lg:flex w-[10rem] text-center justify-center  items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-    //                             >
-    //                             <div className='flex flex-col justify-center items-center'>
-    //                                 <FaInfoCircle size={16} className="text-blue-500" />
-    //                                 {hoveredDetails[2]}
-    //                             </div>
-    //                             </div>
-    //                         )}
-    //                         {value}
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'editSchedulecolumn' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center  items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
                             
-    //                         <FaPencilAlt size={9} className='mb-3 ml-1' />
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
-    //                     </div>;
-    //         },
-    //         rowFunctionality: {
+                        </div>;
+            },
+            rowFunctionality: {
                 
-    //             event: {
-    //                 onClick : (index) => {
-    //                     if(showFormIndex3 === null)
-    //                         setShowFormIndex3(index);
-    //                 },
-    //             },
-    //             action: (currentItem,index) => {
-    //                 return showFormIndex3 === index && form(currentItem,editScheduleFormData,setShowFormIndex3,editSchedule)
-    //             }
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex3 === null)
+                            setShowFormIndex3(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex3 === index && form(currentItem,editScheduleFormData,setShowFormIndex3,editSchedule)
+                }
 
-    //         },
-    //         dataRender: (index, value, currentItem) => {
-    //             console.log("Date Render Start time",currentItem.startTime);
+            },
+            dataRender: (index, value, currentItem) => {
+                console.log("Date Render Start time",currentItem.startTime);
 
-    //             console.log("CurrentItem",currentItem);
-    //             return  <div className='w-[11.2rem] ml-[-1.55rem] bg-[#f5f467] py-2 rounded-md  flex flex-col justify-center items-center'>
+                console.log("CurrentItem",currentItem);
+                return  <div className='w-[11.2rem] ml-[-1.55rem] bg-[#f5f467] py-2 rounded-md  flex flex-col justify-center items-center'>
                             
-    //                         <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
 
-    //                         <p className='text-xs bg-[#f5f467] '>
-    //                             to
-    //                         </p>
+                            <p className='text-xs bg-[#f5f467] '>
+                                to
+                            </p>
 
-    //                         <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
 
-    //                         <p 
-    //                         onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}
-    //                         onMouseLeave={handleMouseLeave} 
-    //                         className={`w-full h-[1rem] flex  justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'editSchedule' ? ' animate-bounce' : ''}`}>
+                            <p 
+                            onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`w-full h-[1rem] flex  justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'editSchedule' ? ' animate-bounce' : ''}`}>
 
-    //                             <FaBell size={15} className='text-slate-700 cursor-pointer' />
-    //                         </p>
-    //                     </div>
-    //         } 
-    //     },
-    // ];
+                                <FaBell size={15} className='text-slate-700 cursor-pointer' />
+                            </p>
+                        </div>
+            } 
+        },
+    ];
 
     // cardColumnsDescription ends here 
 
