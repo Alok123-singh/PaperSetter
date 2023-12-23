@@ -25,7 +25,7 @@ function AdminHome() {
 
         newItems = [...newItems,  
             {
-                instructorName : data.instructorName,
+                name : data.name,
 
                 emailId : data.instructorEmail,
                 
@@ -55,7 +55,7 @@ function AdminHome() {
 
         let newItems = [...items];
 
-        newItems = newItems.map((item) => item.emailId === data['emailId'] ? {...item, courseList: [...item.courseList , { courseCode: data['courseCode'], courseName: data['courseName'] }]} : item);
+        newItems = newItems.map((item) => item.email === data['email'] ? {...item, courseList: [...item.courseList , { courseCode: data['courseCode'], courseName: data['courseName'] }]} : item);
 
         setItems(newItems);
 
@@ -67,7 +67,7 @@ function AdminHome() {
 
         let newItems = [...items];
 
-        newItems = newItems.map((item) => item.emailId === data['emailId'] ? {...item, password: data['newPassword']} : item);
+        newItems = newItems.map((item) => item.email === data['email'] ? {...item, password: data['newPassword']} : item);
 
         setItems(newItems);
         
@@ -132,7 +132,7 @@ function AdminHome() {
     const columnsDescription = [
         { // Instructor Name
             header : 'Instructor Name',
-            dataKey: 'instructorName', 
+            dataKey: 'name', 
             label: 'Instructor name', 
             columnFunctionality : {
                 event: {
@@ -508,7 +508,7 @@ function AdminHome() {
 
     const [items,setItems] = useState([
         {
-            instructorName : 'Anand Pratap Singh Bais',
+            name : 'Anand Pratap Singh Bais',
 
             email : 'anandpsingh7@gmail.com',
             
@@ -526,7 +526,7 @@ function AdminHome() {
             ]
         },
         {
-            instructorName : 'Chotu Don',
+            name : 'Chotu Don',
 
             email : 'chotudon@gmail.com',
             
