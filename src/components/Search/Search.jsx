@@ -14,10 +14,6 @@ const Search = (
 
     }) => {
 
-    // const [minSuggestionsLimit,setMinSuggestionsLimit] = useState(5); // min minSuggestionsLimit suggestions will be shown
-
-    // const [maxSuggestionsLimit,setMaxSuggestionsLimit] = useState(100); // after maxSuggestionsLimit the Show more suggestions options would not appear
-
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
