@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button1, Input1 } from '../index';
+import { MdPrivateConnectivity } from 'react-icons/md';
 
-const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true }) => {
+const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true, enableSmartSearch = !enableContinuousSearching }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
+    const [selectedSuggestions,setSelectedSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const [searchLimit, setSearchLimit] = useState(5);
     const [showMoreOptions,setShowMoreOptions] = useState(false);
     const [startSearching, setStartSearching] = useState(false);
 
     const searchRef = useRef(null);
+
+    if(enableContinuousSearching === true){
+        enableSmartSearch = false;
+    }
 
     useEffect(() => {
 
@@ -33,7 +39,6 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     }, []);
 
 
-    // useEffect1
     useEffect(() => {
         // If the search term is empty, set suggestions to an empty array
         if (searchTerm === '') {
@@ -41,10 +46,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             setSearchLimit(5);
             setShowMoreOptions(false);
         } else {
-
-            // can store selected suggestion in a array in cache and when the next time same search field is show in suggestions then it should be in the top
-            console.log("Selected suggestion",selectedSuggestion);
-
+            
             // Filter the items based on the search term
             const filteredItems = items.filter(item =>
                 item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
@@ -57,9 +59,54 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             });
 
             // If a suggestion is selected, move it to the top of the list
-            let updatedSuggestions = selectedSuggestion
-                ? [selectedSuggestion, ...sortedSuggestions.filter(s => s !== selectedSuggestion)]
-                : sortedSuggestions;
+            let updatedSuggestions = sortedSuggestions;
+
+            if(enableSmartSearch === true){
+
+                let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
+
+                if(previousSuggestions !== null && previousSuggestions.length > 0){
+                    let presentInPreviousSuggestions = updatedSuggestions;
+                    presentInPreviousSuggestions = presentInPreviousSuggestions.filter(item => {
+
+                        let isPresent = false;
+                        previousSuggestions.map((currentItem) => {
+
+                            if(currentItem[searchProperty] === item[searchProperty]) isPresent = true;
+                            return (currentItem);
+                        });
+
+                        return isPresent;
+                    }).reverse();
+
+                    presentInPreviousSuggestions = presentInPreviousSuggestions.filter(item => item[searchProperty] !== previousSuggestions[0][searchProperty]);
+
+                    presentInPreviousSuggestions.unshift(previousSuggestions[0]);
+
+                    let notPresentInPreviousSuggestions = updatedSuggestions;
+                    notPresentInPreviousSuggestions = notPresentInPreviousSuggestions.filter(item => {
+
+                        let isNotPresent = true;
+                        previousSuggestions.map((currentItem) => {
+
+                            if(currentItem[searchProperty] === item[searchProperty]) isNotPresent = false;
+                            return (currentItem);
+                        });
+
+                        return isNotPresent;
+                    }).sort();
+
+
+                    // console.log('previousSuggestions', previousSuggestions);
+                    // console.log('updatedSuggestions', updatedSuggestions);
+                    // console.log('presentInPreviousSuggestions', presentInPreviousSuggestions);
+                    // console.log('notPresentInPreviousSuggestions',notPresentInPreviousSuggestions);
+
+                    const modifiedSuggestions = [... presentInPreviousSuggestions, ...notPresentInPreviousSuggestions];
+
+                    updatedSuggestions = modifiedSuggestions;
+                }
+            }
 
             if(searchLimit >= filteredItems.length || searchLimit > 20) setShowMoreOptions(false);
             // Update the suggestions based on the filtered and sorted items, limit to top 5
@@ -116,7 +163,26 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                     : items.filter((item) =>
                         item[searchProperty].toLowerCase() === searchTerm.toLowerCase()
                     );
+                
+                // can store selected suggestion in a array in cache and when the next time same search field is show in suggestions then it should be in the top
+                if(enableSmartSearch === true && selectedSuggestion !== null){
+                    console.log("Selected suggestion saved in local storage",selectedSuggestion);
 
+                    selectedSuggestions.unshift(selectedSuggestion);
+                    console.log('Selected Suggestions in saving useEffect', selectedSuggestions);
+                    localStorage.setItem('selectedSuggestions', JSON.stringify(selectedSuggestions));
+
+                    
+
+                    const temp = JSON.parse(localStorage.getItem('selectedSuggestions'));
+                    
+                    console.log('Local Storage Data starts');
+                    temp.map((item) => {
+                        console.log(item.name);
+                        return item;
+                    })
+                    console.log('Local Storage Data ends');
+                }
                 setSuggestions([]);
                 setStartSearching(false);
                 setFilteredItems(filtered);
@@ -161,6 +227,27 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         }
     };
 
+    // for clearing local storage on window refresh
+    useEffect(() => {
+        // Clear local storage when the component is mounted
+        localStorage.clear();
+    
+        // Attach an event listener to the beforeunload event
+        const handleBeforeUnload = () => {
+          // Clear local storage when the page is about to unload (refresh or close)
+          localStorage.clear();
+        };
+
+        if(localStorage.length === 0) console.log('Local Storage has been reset');
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        // Clean up the event listener when the component is unmounted
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+
     return (
         <div className='w-[98%] relative flex justify-center items-center mt-5' >
             <div ref={searchRef} className="flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ">
@@ -175,7 +262,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 {enableSuggestion && 
                     <div className='w-full relative flex flex-col justify-start items-start'>
                         {suggestions.length > 0 && (
-                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col sm:w-[23.3rem] justify-center items-center'>
+                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col sm:w-[23.2rem] justify-center items-center'>
                                 {suggestions.map((item, index) => (
                                     <li
                                         className={`w-full text-gray-600 flex justify-start items-center p-3 border-b border-gray-300 ${
