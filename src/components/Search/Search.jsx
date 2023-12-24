@@ -1,7 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button1, Input1 } from '../index';
 
-const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true, enableSmartSearch = !enableContinuousSearching }) => {
+const Search = (
+    { 
+        items, 
+        setFilteredItems, 
+        searchProperty = 'name', 
+        enableSuggestion = false, 
+        enableContinuousSearching = true, 
+        enableSmartSearch = !enableContinuousSearching,
+
+    }) => {
 
     const [minSuggestionsLimit,setMinSuggestionsLimit] = useState(5);
     const [maxSuggestionsLimit,setMaxSuggestionsLimit] = useState(100);
@@ -34,6 +43,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 setSearchLimit(minSuggestionsLimit);
                 setShowMoreOptions(true);
                 setClicked(false);
+
             }
         };
 
@@ -165,6 +175,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             // Update the suggestions based on the filtered and sorted items, limit to top 5
             setSuggestions(updatedSuggestions.slice(0, searchLimit));
         }
+
     }, [searchTerm, searchProperty, selectedSuggestion, searchLimit]);
 
     useEffect(() => {
@@ -185,6 +196,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         setSearchTerm(event.target.value);
         setSelectedSuggestion(null); // Reset selected suggestion when input changes
         setHighlightedIndex(-1); // Reset highlighted index when input changes
+
     };
 
     const handleSuggestionClick = (suggestion) => {
@@ -269,9 +281,9 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         // console.log('Start searching',startSearching);
         if(suggestions.length > 0)
             setSuggestions([]);
-
-        setFilteredItems(filtered);
         
+        setFilteredItems(filtered);
+
     },[items]);
 
     const handleKeyDown = event => {
@@ -285,8 +297,9 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             if(highlightedIndex !== -1)
                 handleSuggestionClick(suggestions[highlightedIndex]);
             
-            if(highlightedIndex === -1)
+            if(highlightedIndex === -1){
                 setStartSearching(true);
+            }
         }
     };
 
@@ -334,6 +347,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         if(searchLimit >= filteredItems.length || searchLimit > maxSuggestionsLimit) setShowMoreOptions(false);
         // Update the suggestions based on the filtered and sorted items, limit to top 5
         setSuggestions(updatedSuggestions.slice(0, searchLimit));
+
     };
 
     // for clearing local storage on window refresh
@@ -350,7 +364,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         // if(localStorage.length === 0) console.log('Local Storage has been reset');
     
         window.addEventListener('beforeunload', handleBeforeUnload);
-    
+
         // Clean up the event listener when the component is unmounted
         return () => {
           window.removeEventListener('beforeunload', handleBeforeUnload);
