@@ -1167,6 +1167,6 @@ function InstructorHome() {
             {/* <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  /> */}
         </div>
     )
-}
+};
 
 export default InstructorHome

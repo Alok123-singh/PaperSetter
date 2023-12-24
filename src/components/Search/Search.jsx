@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button1, Input1 } from '../index';
-import { MdPrivateConnectivity } from 'react-icons/md';
 
 const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true, enableSmartSearch = !enableContinuousSearching }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -11,6 +10,8 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     const [searchLimit, setSearchLimit] = useState(5);
     const [showMoreOptions,setShowMoreOptions] = useState(false);
     const [startSearching, setStartSearching] = useState(false);
+
+    const[lastSearchedTerm, setLastSearchedTerm] = useState(searchTerm);
 
     const searchRef = useRef(null);
 
@@ -112,7 +113,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             // Update the suggestions based on the filtered and sorted items, limit to top 5
             setSuggestions(updatedSuggestions.slice(0, searchLimit));
         }
-    }, [searchTerm, items, searchProperty, selectedSuggestion, searchLimit]);
+    }, [searchTerm, searchProperty, selectedSuggestion, searchLimit]);
 
     useEffect(() => {
         if(searchTerm !== ''){
@@ -184,6 +185,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                     console.log('Local Storage Data ends');
                 }
                 setSuggestions([]);
+                setLastSearchedTerm(searchTerm);
                 setStartSearching(false);
                 setFilteredItems(filtered);
             }
@@ -199,7 +201,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             setFilteredItems(filtered);
         }
 
-    }, [searchTerm, items, startSearching]);
+    }, [searchTerm, startSearching]);
 
     // useEffect for use cases like if searchTerm is not empty and user changes any item of items variable then the filteredItems should be changed to show updated state of items in UI
     useEffect(() => {
@@ -207,13 +209,20 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         const filtered =
                 searchTerm.trim() === ''
                     ? items // Show all items if search field is empty
-                    : items.filter((item) =>
-                        item[searchProperty].toLowerCase() === searchTerm.toLowerCase()
+                    : items.filter((item) =>{
+                            if(enableContinuousSearching === true){
+                                return item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase());
+                            }
+                        
+                            return (startSearching === true ) ? false : item[searchProperty].toLowerCase() === lastSearchedTerm.toLowerCase();
+                        }
                     );
+        
+        // console.log('Start searching',startSearching);
+        if(suggestions.length > 0)
+            setSuggestions([]);
 
-                setSuggestions([]);
-                setStartSearching(false);
-                setFilteredItems(filtered);
+        setFilteredItems(filtered);
         
     },[items]);
 
