@@ -11,6 +11,7 @@ import Form from './Forms/Form/Form'
 import OverlayForm1 from './Forms/OverlayForm1/OverlayForm1'
 import OverlayForm2 from './Forms/OverlayForm2/OverlayForm2'
 import Loading1 from './LoadingFormats/Loading1/Loading1'
+import Loading2 from './LoadingFormats/Loading2/Loading2'
 import Search from './Search/Search'
 import TablePagination from './Pagination/TablePagination/TablePagination'
 import CardPagination from './Pagination/CardPagination/CardPagination'
@@ -30,6 +31,7 @@ export  {
     OverlayForm1,
     OverlayForm2,
     Loading1,
+    Loading2,
     Search,
     TablePagination,
     CardPagination,

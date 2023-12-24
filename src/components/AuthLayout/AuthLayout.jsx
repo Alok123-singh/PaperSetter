@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import { Loading1 } from '../index'
+import { Loading1, Loading2 } from '../index'
 
 export default function AuthLayout({ children, authentication = true, allowedRole }) {
     const navigate = useNavigate();

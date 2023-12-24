@@ -118,7 +118,7 @@ function ErrorBoundary(props) {
                 Go to {getComponentName()}
                 </button>
             </div>
-            <TablePagination columnsDescription={columnsDescription} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} />
+            {/* <TablePagination columnsDescription={columnsDescription} items={errors} defaultItemsPerPage={5} itemsPerPageOptions={[5, 10]} paginationEnable={false} /> */}
             </div>
         </div>
         );

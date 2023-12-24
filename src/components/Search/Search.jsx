@@ -2,16 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button1, Input1 } from '../index';
 
 const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true, enableSmartSearch = !enableContinuousSearching }) => {
+
+    const [minSuggestionsLimit,setMinSuggestionsLimit] = useState(5);
+    const [maxSuggestionsLimit,setMaxSuggestionsLimit] = useState(100);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
     const [selectedSuggestions,setSelectedSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
-    const [searchLimit, setSearchLimit] = useState(5);
+    const [searchLimit, setSearchLimit] = useState(minSuggestionsLimit);
     const [showMoreOptions,setShowMoreOptions] = useState(false);
     const [startSearching, setStartSearching] = useState(false);
 
-    const[lastSearchedTerm, setLastSearchedTerm] = useState(searchTerm);
+    const [lastSearchedTerm, setLastSearchedTerm] = useState(searchTerm);
     
     const [clicked,setClicked] = useState(false);
 
@@ -27,7 +31,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             // Close suggestions if clicked outside the Search component
             if (searchRef.current && !searchRef.current.contains(event.target)) {
                 setSuggestions([]);
-                setSearchLimit(5);
+                setSearchLimit(minSuggestionsLimit);
                 setShowMoreOptions(true);
                 setClicked(false);
             }
@@ -42,14 +46,28 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         };
     }, []);
 
+
     useEffect(() => {
         // console.log('Clicked',clicked);
-        if(!enableContinuousSearching && enableSmartSearch && searchTerm === ''){
+        if(!enableContinuousSearching && enableSmartSearch && searchTerm === '' && clicked === true){
             let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
             if(previousSuggestions){
                 setShowMoreOptions(true);
-                setSuggestions(previousSuggestions);
-                if(searchLimit >= previousSuggestions.length || searchLimit > 20) setShowMoreOptions(false);
+                let filteredSuggestions = [];
+                previousSuggestions = previousSuggestions.map((suggestion) => {
+                    let isPresent = false;
+                    filteredSuggestions.map((item) => {
+                        if(item[searchProperty] === suggestion[searchProperty])
+                            isPresent = true;
+
+                        return (item);
+                    });
+
+                    if(isPresent === false) filteredSuggestions.push(suggestion);
+                    return (suggestion);
+                });
+                setSuggestions(filteredSuggestions);
+                if(searchLimit >= filteredSuggestions.length || searchLimit >= maxSuggestionsLimit) setShowMoreOptions(false);
             }
         }
 
@@ -60,15 +78,9 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         // If the search term is empty, set suggestions to an empty array
         if (searchTerm === '') {
             setSuggestions([]);
-            setSearchLimit(5);
+            setSearchLimit(minSuggestionsLimit);
             setShowMoreOptions(false);
             
-            let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
-            if(previousSuggestions){
-                setShowMoreOptions(true);
-                setSuggestions(previousSuggestions);
-                if(searchLimit >= previousSuggestions.length || searchLimit > 20) setShowMoreOptions(false);
-            }
         } else {
             
             // Filter the items based on the search term
@@ -78,9 +90,26 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
 
             // Sort the suggestions by the most recent selections
             const sortedSuggestions = filteredItems.sort((a, b) => {
-                // You can replace 'timestamp' with the actual property representing the time of selection
-                return b.timestamp - a.timestamp;
+                const valueA = a[searchTerm];
+                const valueB = b[searchTerm];
+            
+                // Handle different data types
+                if (typeof valueA === 'string' && typeof valueB === 'string') {
+                    // Case-insensitive string comparison
+                    return valueA.localeCompare(valueB);
+                } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+                    // Numeric comparison
+                    return valueA - valueB;
+                } else if (valueA instanceof Date && valueB instanceof Date) {
+                    // Date comparison
+                    return valueA.getTime() - valueB.getTime();
+                } else {
+                    // Default: string comparison
+                    return String(valueA).localeCompare(String(valueB));
+                }
             });
+            // sortedSuggestions now contains the items sorted based on their data types and in increasing order
+            
 
             // If a suggestion is selected, move it to the top of the list
             let updatedSuggestions = sortedSuggestions;
@@ -132,7 +161,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 }
             }
 
-            if(searchLimit >= filteredItems.length || searchLimit > 20) setShowMoreOptions(false);
+            if(searchLimit >= filteredItems.length || searchLimit > maxSuggestionsLimit) setShowMoreOptions(false);
             // Update the suggestions based on the filtered and sorted items, limit to top 5
             setSuggestions(updatedSuggestions.slice(0, searchLimit));
         }
@@ -143,15 +172,14 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             const filteredItems = items.filter(item =>
                 item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
             );
-            if(searchLimit >= filteredItems.length || searchLimit >= 20) setShowMoreOptions(false);
+            if(searchLimit >= filteredItems.length || searchLimit > maxSuggestionsLimit) setShowMoreOptions(false);
             else setShowMoreOptions(true);
         }
         else setShowMoreOptions(false);
         
-        setSearchLimit(5);
+        setSearchLimit(minSuggestionsLimit);
 
     }, [searchTerm]);
-
 
     const handleInputChange = event => {
         setSearchTerm(event.target.value);
@@ -163,7 +191,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         setSearchTerm(suggestion[searchProperty]);
         setSelectedSuggestion(suggestion);
         setShowMoreOptions(true);
-        setSearchLimit(5);
+        setSearchLimit(minSuggestionsLimit);
         setHighlightedIndex(-1);
 
         // Reset suggestions after a short delay to allow for re-render
@@ -173,12 +201,6 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     };
 
     useEffect(() => {
-        const filtered =
-            searchTerm.trim() === ''
-                ? items // Show all items if search field is empty
-                : items.filter((item) =>
-                    item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
-                );
         
         if(enableContinuousSearching === false){
             if(startSearching === true || searchTerm === ''){
@@ -196,8 +218,6 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                     selectedSuggestions.unshift(selectedSuggestion);
                     // console.log('Selected Suggestions in saving useEffect', selectedSuggestions);
                     localStorage.setItem('selectedSuggestions', JSON.stringify(selectedSuggestions));
-
-                    
 
                     const temp = JSON.parse(localStorage.getItem('selectedSuggestions'));
                     
@@ -239,6 +259,8 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                             if(enableContinuousSearching === true){
                                 return item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase());
                             }
+
+                            if(lastSearchedTerm === '') return (true);
                         
                             return (startSearching === true ) ? false : item[searchProperty].toLowerCase() === lastSearchedTerm.toLowerCase();
                         }
@@ -266,6 +288,52 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             if(highlightedIndex === -1)
                 setStartSearching(true);
         }
+    };
+
+    const resetSuggestions = () => {
+        // clear local storage
+        localStorage.clear();
+        if(localStorage.length === 0) console.log('Empty');
+
+        if(searchTerm === ''){
+            setSuggestions([]);
+            return;
+        }
+
+        // Filter the items based on the search term
+        const filteredItems = items.filter(item =>
+            item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        // Sort the suggestions by the most recent selections
+        const sortedSuggestions = filteredItems.sort((a, b) => {
+            const valueA = a[searchTerm];
+            const valueB = b[searchTerm];
+        
+            // Handle different data types
+            if (typeof valueA === 'string' && typeof valueB === 'string') {
+                // Case-insensitive string comparison
+                return valueA.localeCompare(valueB);
+            } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+                // Numeric comparison
+                return valueA - valueB;
+            } else if (valueA instanceof Date && valueB instanceof Date) {
+                // Date comparison
+                return valueA.getTime() - valueB.getTime();
+            } else {
+                // Default: string comparison
+                return String(valueA).localeCompare(String(valueB));
+            }
+        });
+        // sortedSuggestions now contains the items sorted based on their data types and in increasing order
+        
+
+        // If a suggestion is selected, move it to the top of the list
+        let updatedSuggestions = sortedSuggestions;
+
+        if(searchLimit >= filteredItems.length || searchLimit > maxSuggestionsLimit) setShowMoreOptions(false);
+        // Update the suggestions based on the filtered and sorted items, limit to top 5
+        setSuggestions(updatedSuggestions.slice(0, searchLimit));
     };
 
     // for clearing local storage on window refresh
@@ -297,8 +365,8 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                     placeholder={`Search by ${searchProperty}`}
                     value={searchTerm}
                     onClick={() => !enableContinuousSearching && setClicked(true)}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
+                    onChange={(event) => handleInputChange(event)}
+                    onKeyDown={(event) => handleKeyDown(event)}
                     className="pr-2 h-[2.6rem]"
                 />
                 {enableSuggestion && 
@@ -307,7 +375,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                             <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col sm:w-[23.2rem] justify-center items-center'>
                                 {suggestions.map((item, index) => (
                                     <li
-                                        className={`w-full text-gray-600 flex justify-start items-center p-3 border-b border-gray-300 ${
+                                        className={`w-full text-gray-600 hover:bg-gray-200 flex justify-start items-center p-3 border-b border-gray-300 ${
                                             selectedSuggestion === item || highlightedIndex === index ? 'bg-gray-200' : ''
                                         }`}
                                         key={index}
@@ -316,9 +384,16 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                                         {item[searchProperty]}
                                     </li>
                                 ))}
+                                <div onClick={() => resetSuggestions()} className=' w-full text-xs flex justify-end pr-2 py-2 border-gray-300 items-center text-gray-400 hover:text-gray-300 '>
+                                    <p className='cursor-pointer md:text-gray-500 md:hover:text-gray-400'>
+                                        Reset Suggestions
+                                    </p>
+                                </div>
                                 {showMoreOptions &&
-                                    <div onClick={() => setSearchLimit(prev => prev+5)} className='cursor-pointer text-sm text-gray-400 p-2'>
-                                        Show more suggestions...
+                                    <div onClick={() => setSearchLimit(prev => prev+minSuggestionsLimit)} className='text-sm text-gray-400 pb-2'>
+                                        <p className='cursor-pointer hover:text-gray-300'>
+                                            Show more suggestions...
+                                        </p>
                                     </div>
                                 }
                             </ul>

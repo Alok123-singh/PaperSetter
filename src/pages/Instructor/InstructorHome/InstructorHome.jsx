@@ -220,7 +220,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
         },
         {
-            courseCode : 'iSldaR173718',
+            courseCode : 'oSldaR173218',
 
             name : 'Logistics Practice2',
             
@@ -241,7 +241,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
         {
-            courseCode : 'iSldaR173718',
+            courseCode : 'kSldaR173418',
 
             name : 'Logistics Practice3',
             
@@ -262,7 +262,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
         {
-            courseCode : 'iSldaR173718',
+            courseCode : 'QSldaR173618',
 
             name : 'Logistics Practice4',
             

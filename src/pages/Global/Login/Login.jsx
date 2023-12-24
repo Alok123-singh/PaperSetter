@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button1, Input1, Logo, Loading1 } from "../../../components/index.js"
+import { Button1, Input1, Logo, Loading2 } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
@@ -66,7 +66,7 @@ function Login() {
 
     return (
         <div
-        className={`${loading === true && 'cursor-wait'} flex items-center justify-center w-full py-8 dark:bg-gray-400 dark:text-gray-800`}
+        className={`${loading === true && 'cursor-wait'} flex items-center justify-center w-full dark:bg-gray-400 dark:text-gray-800`}
         >
             <div className={`mx-auto w-full max-w-lg bg-gray-100 dark:bg-gray-300 rounded-xl p-7 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
@@ -114,23 +114,16 @@ function Login() {
                             
                         </div>
 
-                        {/* <Button
+                        <button
                         type="submit"
-                        className="w-full"
-                        >Sign in</Button> */}
+                        className="w-full rounded-none py-3 bg-[#ed8d2d] border-b-2 border-b-orange-700 hover:bg-[#faa148]"
+                        >
+                            Log in
 
-                        {loading === false ? (
-                            <Button1
-                            type="submit"
-                            className="w-full"
-                            >Sign in</Button1>
-                        ) : (
-                            <div className='w-full justify-center items-center'>
-                                <button disabled type="button" className="w-full justify-center text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">
-                                <MdAutorenew size={20} className='animate-spin' />
-                                Loading...
-                                </button>
-                            </div>
+                        </button>
+
+                        {loading === true && (
+                            <Loading2 />
                         )}
                     
 
