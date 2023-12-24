@@ -12,6 +12,8 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     const [startSearching, setStartSearching] = useState(false);
 
     const[lastSearchedTerm, setLastSearchedTerm] = useState(searchTerm);
+    
+    const [clicked,setClicked] = useState(false);
 
     const searchRef = useRef(null);
 
@@ -27,6 +29,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 setSuggestions([]);
                 setSearchLimit(5);
                 setShowMoreOptions(true);
+                setClicked(false);
             }
         };
 
@@ -39,6 +42,19 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         };
     }, []);
 
+    useEffect(() => {
+        // console.log('Clicked',clicked);
+        if(!enableContinuousSearching && enableSmartSearch && searchTerm === ''){
+            let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
+            if(previousSuggestions){
+                setShowMoreOptions(true);
+                setSuggestions(previousSuggestions);
+                if(searchLimit >= previousSuggestions.length || searchLimit > 20) setShowMoreOptions(false);
+            }
+        }
+
+    }, [clicked]);
+
 
     useEffect(() => {
         // If the search term is empty, set suggestions to an empty array
@@ -46,6 +62,13 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             setSuggestions([]);
             setSearchLimit(5);
             setShowMoreOptions(false);
+            
+            let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
+            if(previousSuggestions){
+                setShowMoreOptions(true);
+                setSuggestions(previousSuggestions);
+                if(searchLimit >= previousSuggestions.length || searchLimit > 20) setShowMoreOptions(false);
+            }
         } else {
             
             // Filter the items based on the search term
@@ -141,6 +164,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
         setSelectedSuggestion(suggestion);
         setShowMoreOptions(true);
         setSearchLimit(5);
+        setHighlightedIndex(-1);
 
         // Reset suggestions after a short delay to allow for re-render
         setTimeout(() => {
@@ -167,23 +191,25 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 
                 // can store selected suggestion in a array in cache and when the next time same search field is show in suggestions then it should be in the top
                 if(enableSmartSearch === true && selectedSuggestion !== null){
-                    console.log("Selected suggestion saved in local storage",selectedSuggestion);
+                    // console.log("Selected suggestion saved in local storage",selectedSuggestion);
 
                     selectedSuggestions.unshift(selectedSuggestion);
-                    console.log('Selected Suggestions in saving useEffect', selectedSuggestions);
+                    // console.log('Selected Suggestions in saving useEffect', selectedSuggestions);
                     localStorage.setItem('selectedSuggestions', JSON.stringify(selectedSuggestions));
 
                     
 
                     const temp = JSON.parse(localStorage.getItem('selectedSuggestions'));
                     
-                    console.log('Local Storage Data starts');
-                    temp.map((item) => {
-                        console.log(item.name);
-                        return item;
-                    })
-                    console.log('Local Storage Data ends');
+                    // console.log('Local Storage Data starts');
+                    // temp.map((item) => {
+                    //     console.log(item[searchProperty]);
+                    //     return item;
+                    // })
+                    // console.log('Local Storage Data ends');
                 }
+
+                setClicked(false);
                 setSuggestions([]);
                 setLastSearchedTerm(searchTerm);
                 setStartSearching(false);
@@ -228,11 +254,17 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
 
     const handleKeyDown = event => {
         if (event.key === 'ArrowDown' && highlightedIndex < suggestions.length - 1) {
+            // handleSuggestionClick(suggestions);
             setHighlightedIndex(prevIndex => prevIndex + 1);
         } else if (event.key === 'ArrowUp' && highlightedIndex > 0) {
+            // handleSuggestionClick(suggestions[highlightedIndex]);
             setHighlightedIndex(prevIndex => prevIndex - 1);
-        } else if (event.key === 'Enter' && highlightedIndex !== -1) {
-            handleSuggestionClick(suggestions[highlightedIndex]);
+        } else if (event.key === 'Enter') {
+            if(highlightedIndex !== -1)
+                handleSuggestionClick(suggestions[highlightedIndex]);
+            
+            if(highlightedIndex === -1)
+                setStartSearching(true);
         }
     };
 
@@ -247,7 +279,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
           localStorage.clear();
         };
 
-        if(localStorage.length === 0) console.log('Local Storage has been reset');
+        // if(localStorage.length === 0) console.log('Local Storage has been reset');
     
         window.addEventListener('beforeunload', handleBeforeUnload);
     
@@ -264,6 +296,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                     type="text"
                     placeholder={`Search by ${searchProperty}`}
                     value={searchTerm}
+                    onClick={() => !enableContinuousSearching && setClicked(true)}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     className="pr-2 h-[2.6rem]"
