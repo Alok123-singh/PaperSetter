@@ -9,11 +9,14 @@ const Search = (
         enableSuggestion = false, 
         enableContinuousSearching = true, 
         enableSmartSearch = !enableContinuousSearching,
+        minSuggestionsLimit = 5, // min minSuggestionsLimit suggestions will be shown
+        maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear
 
     }) => {
 
-    const [minSuggestionsLimit,setMinSuggestionsLimit] = useState(5);
-    const [maxSuggestionsLimit,setMaxSuggestionsLimit] = useState(100);
+    // const [minSuggestionsLimit,setMinSuggestionsLimit] = useState(5); // min minSuggestionsLimit suggestions will be shown
+
+    // const [maxSuggestionsLimit,setMaxSuggestionsLimit] = useState(100); // after maxSuggestionsLimit the Show more suggestions options would not appear
 
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
