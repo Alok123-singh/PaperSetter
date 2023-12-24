@@ -9,7 +9,7 @@ const Search = (
         enableSuggestion = false, 
         enableContinuousSearching = true, 
         enableSmartSearch = !enableContinuousSearching,
-        minSuggestionsLimit = 5, // min minSuggestionsLimit suggestions will be shown
+        minSuggestionsLimit = 3, // min minSuggestionsLimit suggestions will be shown
         maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear. In short max suggestions that can be suggested for a particular search term
 
     }) => {
@@ -58,6 +58,7 @@ const Search = (
 
     useEffect(() => {
         // console.log('Clicked',clicked);
+        console.log('Search limit',searchLimit);
         if(!enableContinuousSearching && enableSmartSearch && searchTerm === '' && clicked === true){
             let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
             if(previousSuggestions){
@@ -75,20 +76,20 @@ const Search = (
                     if(isPresent === false) filteredSuggestions.push(suggestion);
                     return (suggestion);
                 });
-                setSuggestions(filteredSuggestions);
+                setSuggestions(filteredSuggestions.slice(0, searchLimit));
                 if(searchLimit >= filteredSuggestions.length || searchLimit >= maxSuggestionsLimit) setShowMoreOptions(false);
             }
         }
 
-    }, [clicked]);
+    }, [clicked, searchLimit]);
 
 
     useEffect(() => {
         // If the search term is empty, set suggestions to an empty array
         if (searchTerm === '') {
-            setSuggestions([]);
-            setSearchLimit(minSuggestionsLimit);
-            setShowMoreOptions(false);
+            // setSuggestions([]);
+            // setSearchLimit(minSuggestionsLimit);
+            // setShowMoreOptions(false);
             
         } else {
             
@@ -306,6 +307,7 @@ const Search = (
         // clear local storage
         localStorage.clear();
         if(localStorage.length === 0) console.log('Empty');
+        setSuggestions([]);
 
         if(searchTerm === ''){
             setSuggestions([]);
@@ -397,14 +399,14 @@ const Search = (
                                         {item[searchProperty]}
                                     </li>
                                 ))}
-                                <div onClick={() => resetSuggestions()} className=' w-full text-xs flex justify-end pr-2 py-2 border-gray-300 items-center text-gray-400 hover:text-gray-300 '>
-                                    <p className='cursor-pointer md:text-gray-500 md:hover:text-gray-400'>
+                                <div  className=' w-full text-xs flex justify-end pr-2 py-2 border-gray-300 items-center text-gray-400 hover:text-gray-300 '>
+                                    <p onClick={() => resetSuggestions()} className='cursor-pointer md:text-gray-500 md:hover:text-gray-400'>
                                         Reset Suggestions
                                     </p>
                                 </div>
                                 {showMoreOptions &&
-                                    <div onClick={() => setSearchLimit(prev => prev+minSuggestionsLimit)} className='text-sm text-gray-400 pb-2'>
-                                        <p className='cursor-pointer hover:text-gray-300'>
+                                    <div className='text-sm text-gray-400 pb-2'>
+                                        <p onClick={() => setSearchLimit(prev => prev+minSuggestionsLimit)}  className='cursor-pointer hover:text-gray-300'>
                                             Show more suggestions...
                                         </p>
                                     </div>
