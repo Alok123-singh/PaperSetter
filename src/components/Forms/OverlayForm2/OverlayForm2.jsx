@@ -1,6 +1,6 @@
 import React,{ useId } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Input, Button } from '../index';
+import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import Flatpickr from 'react-flatpickr';
@@ -10,18 +10,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 
-function Form({ onSubmit, formData }) {
+function OverlayForm2({ onClose, onSubmit, formData }) {
     const { register, handleSubmit, watch, control } = useForm();
     const id = useId();
 
     const addCourse = (data) => {
         onSubmit(data);
-        // onClose();
+        onClose();
     };
 
     const handleClickOutside = (event) => {
-        if (event.target.classList.contains('modal-overlay3')) {
-        //   onClose();
+        if (event.target.classList.contains('modal-overlay2')) {
+          onClose();
         }
     };
 
@@ -37,8 +37,8 @@ function Form({ onSubmit, formData }) {
     };
 
     return (
-        <div className={`cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay3 ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} >
-            <div className={`w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white py-[20px] rounded-md`}>
+        <div className={`fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay2 bg-black bg-opacity-50 z-50  ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}}  onClick={handleClickOutside}>
+            <div className={`relative overflow-y-auto w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white p-[20px] rounded-md z-1001`}>
                 <div className='space-y-1 mb-4 text-sm'>
                     <p className='pl-1 text-2xl font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>
@@ -297,7 +297,7 @@ function Form({ onSubmit, formData }) {
                                 }
 
                                 if(input.defaultValue !== undefined)
-                                    return  <Input
+                                    return  <Input1
                                                 key={index}
                                                 label={input.label}
                                                 type={input.type}
@@ -309,7 +309,7 @@ function Form({ onSubmit, formData }) {
                                                 {...register(input.name, { required: input.required })}
                                             />
 
-                                return <Input
+                                return <Input1
                                     key={index}
                                     label={input.label}
                                     type={input.type}
@@ -326,9 +326,9 @@ function Form({ onSubmit, formData }) {
                     <div className="grid grid-cols-1 gap-4 place-items-center w-full mt-4">
                         {formData.buttons.map((button, index) => (
                             <div key={index} className={`${button.style && button.style} mt-4`}>
-                                <Button type={button.type} className={button.style}>
+                                <Button1 type={button.type} className={button.style}>
                                     {button.text}
-                                </Button>
+                                </Button1>
                             </div>
                         ))}
                     </div>
@@ -340,4 +340,4 @@ function Form({ onSubmit, formData }) {
     );
 }
 
-export default Form
+export default OverlayForm2

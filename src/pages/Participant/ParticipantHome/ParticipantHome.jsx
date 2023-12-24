@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { Loading } from '../../../components/index'
+import { Loading1 } from '../../../components/index'
 
 
 function ParticipantHome() {
@@ -8,7 +8,7 @@ function ParticipantHome() {
 
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>

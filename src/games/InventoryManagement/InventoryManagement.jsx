@@ -1,9 +1,9 @@
 import { useState,useEffect } from 'react';
-import data from '../../JSON/queries.json'
+import data from '../../JSON/queries1.json'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { setResult } from '../../store/resultSlice';
-import { Loading } from '../../components/index'
+import { Loading1 } from '../../components/index'
 
 function InventoryManagement() {
 
@@ -383,7 +383,7 @@ function InventoryManagement() {
     }, []);
     
     return loading ? (
-        <Loading />
+        <Loading1 />
 
     ) : (
         <div className='w-full h-auto dark:bg-gray-400 flex flex-wrap justify-around items-center'>

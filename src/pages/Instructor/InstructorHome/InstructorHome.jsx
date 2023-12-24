@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Loading, Search, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
+import { Loading1, Search, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 
@@ -1147,7 +1147,7 @@ function InstructorHome() {
     };
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className='w-full h-auto mt-7 flex flex-col justify-center items-center'>

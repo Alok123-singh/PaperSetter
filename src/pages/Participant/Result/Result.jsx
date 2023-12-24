@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { Loading, TablePagination } from '../../../components/index'
+import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
 
 
@@ -98,7 +98,7 @@ function Result() {
     ]);
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className='w-full h-screen flex flex-col justify-center items-center dark:bg-gray-40  flex-wrap'>

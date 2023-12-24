@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 
-const Input = React.forwardRef(function Input(
+const Input1 = React.forwardRef(function Input(
     { 
         label, 
         type = 'text', 
@@ -89,4 +89,4 @@ const Input = React.forwardRef(function Input(
     return <div className=' w-full'>{renderInput()}</div>;
 });
 
-export default Input;
+export default Input1;

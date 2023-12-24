@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {Button, Input, Logo, Loading} from "../../../components/index"
+import {Button1, Input1, Logo, Loading1} from "../../../components/index"
 import {useForm} from "react-hook-form"
 
 function ResetPassword() {
@@ -62,7 +62,7 @@ function ResetPassword() {
 
     return (
         loading ? (
-            <Loading />
+            <Loading1 />
     
         ) : 
         (
@@ -90,7 +90,7 @@ function ResetPassword() {
                     </div>}
                     <form onSubmit={handleSubmit(reset)} className='mt-4'>
                         <div className='space-y-7'>
-                            <Input
+                            <Input1
                             // label = "Username"
                             type="text"
                             placeholder="Username"
@@ -101,7 +101,7 @@ function ResetPassword() {
                             />
 
                             <div className='relative'>
-                                <Input
+                                <Input1
                                     type='password'
                                     placeholder='Old password'
                                     {...register('oldPassword', {
@@ -112,7 +112,7 @@ function ResetPassword() {
                             </div>
 
                             <div className='relative'>
-                                <Input
+                                <Input1
                                     type='password'
                                     placeholder='New password'
                                     {...register('newPassword', {
@@ -121,10 +121,10 @@ function ResetPassword() {
                                 />
                             </div>
     
-                            <Button
+                            <Button1
                             type="submit"
                             className="w-full"
-                            >Reset</Button>
+                            >Reset</Button1>
                         </div>
                     </form>
                     

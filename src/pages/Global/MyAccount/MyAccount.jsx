@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { ThemeButton, Loading } from '../../../components/index';
+import { ThemeButton, Loading1 } from '../../../components/index';
 
 function MyAccount() {
 
@@ -8,7 +8,7 @@ function MyAccount() {
     const [loading, setLoading] = useState(false);
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div

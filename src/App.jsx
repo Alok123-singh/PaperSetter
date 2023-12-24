@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header, Footer, Loading, ErrorBoundary } from './components/index.js'
+import { Header, Footer, Loading1, ErrorBoundary } from './components/index.js'
 import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
 
     return loading ? (
-            <Loading />
+            <Loading1 />
         ) : 
         (
 

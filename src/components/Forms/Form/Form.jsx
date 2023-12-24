@@ -1,6 +1,6 @@
 import React,{ useId } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Input, Button } from '../index';
+import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import Flatpickr from 'react-flatpickr';
@@ -10,19 +10,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 
-function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
-
-    const { register, handleSubmit, setValue, watch, control } = useForm();
+function Form({ onSubmit, formData }) {
+    const { register, handleSubmit, watch, control } = useForm();
     const id = useId();
 
     const addCourse = (data) => {
         onSubmit(data);
-        onClose();
+        // onClose();
     };
 
     const handleClickOutside = (event) => {
-        if (event.target.classList.contains('modal-overlay')) {
-          onClose();
+        if (event.target.classList.contains('modal-overlay3')) {
+        //   onClose();
         }
     };
 
@@ -38,10 +37,10 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
     };
 
     return (
-        <div className=" fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay bg-black bg-opacity-50 z-50" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
-            <div className={` relative overflow-y-auto w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white p-[20px] rounded-md z-1001`}>
+        <div className={`cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay3 ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} >
+            <div className={`w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white py-[20px] rounded-md`}>
                 <div className='space-y-1 mb-4 text-sm'>
-                    <p className='pl-1 font-bold'>{formData.title}</p>
+                    <p className='pl-1 text-2xl font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>
                     <div className='bg-pink-400 h-[1px]'></div>
                 </div>
@@ -50,7 +49,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                 onSubmit={handleSubmit(addCourse)}
                 className=" w-full flex flex-col justify-center items-center "
                 >
-                    <div className="grid md:grid-cols-2 gap-4 w-full">
+                    <div className={`grid md:grid-cols-${(formData.formDesign && formData.formDesign.cols) ? formData.formDesign.cols : 2} gap-4 w-full`}>
                         {formData.inputs.map((input, index) => {
 
                                 if(input.type.includes('dateAndTime')){
@@ -72,7 +71,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                     <Controller
                                                         name={input.name}
                                                         control={control}
-                                                        defaultValue={parentData[input.defaultValue] || null}
+                                                        defaultValue={input.defaultValue || null}
                                                         rules={{ required: input.required }}
                                                         render={({ field }) => (
                                                             <Datetime
@@ -92,14 +91,14 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                     <Controller
                                                         name={input.name}
                                                         control={control}
-                                                        defaultValue={parentData[input.defaultValue] || null}
+                                                        defaultValue={input.defaultValue || null}
                                                         rules={{ required: input.required }}
                                                         render={({ field }) => (
                                                             <Flatpickr
                                                                 {...field}
                                                                 options={{
-                                                                    dateFormat: 'Y-m-d h:i K',
-                                                                    enableTime: true,
+                                                                    dateFormat: input.dateFormat != undefined ? input.dateFormat : 'Y-m-d h:i K',
+                                                                    enableTime: input.enableTime !== undefined ? input.enableTime : true,
                                                                     // Add more Flatpickr options as needed
                                                                 }}
                                                                 className="h-[3.55rem] w-full px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500"
@@ -112,17 +111,18 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                     <Controller
                                                         name={input.name}
                                                         control={control}
-                                                        defaultValue={parentData[input.defaultValue] || null}
+                                                        defaultValue={input.defaultValue || null}
                                                         rules={{ required: input.required }}
                                                         render={({ field }) => (
                                                             <DatePicker
                                                                 {...field}
                                                                 selected={field.value ? moment(field.value).toDate() : null}
-                                                                showTimeSelect
+                                                                showTimeSelect={input.enableTime !== undefined ? input.enableTime : true}
+
                                                                 timeFormat="HH:mm"
                                                                 timeIntervals={15}
-                                                                dateFormat="MMMM d, yyyy h:mm aa"
-                                                                className='w-[18rem] overflow-y-auto px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
+                                                                dateFormat={input.dateFormat != undefined ? input.dateFormat : "MMMM d, yyyy h:mm aa"}  
+                                                                className='w-[18rem] px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
                                                             />
                                                         )}
                                                         id={id}
@@ -150,7 +150,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                     
                                                     name={input.name}
                                                     control={control}
-                                                    defaultValue={parentData[input.defaultValue] || null}
+                                                    defaultValue={input.defaultValue || null}
                                                     rules={{ required: input.required }}
                                                     render={({ field }) => (
                                                         <select
@@ -186,7 +186,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                         <Controller
                                             name={input.name}
                                             control={control}
-                                            defaultValue={parentData[input.defaultValue] || null}
+                                            defaultValue={input.defaultValue || null}
                                             rules={{ required: input.required }}
                                             render={({ field }) => (
                                                 <div className="flex items-center space-x-2">
@@ -232,7 +232,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                         <Controller
                                             name={input.name}
                                             control={control}
-                                            defaultValue={parentData[input.defaultValue] || null}
+                                            defaultValue={input.defaultValue || null}
                                             rules={{ required: input.required }}
                                             render={({ field }) => (
                                                 <div className="flex items-center space-x-2">
@@ -280,7 +280,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                             <Controller
                                                 name={input.name}
                                                 control={control}
-                                                defaultValue={parentData[input.defaultValue] || null}
+                                                defaultValue={input.defaultValue || ''}
                                                 rules={{ required: input.required }}
                                                 render={({ field }) => (
                                                     <div className="w-full flex flex-col">
@@ -297,24 +297,24 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                 }
 
                                 if(input.defaultValue !== undefined)
-                                    return  <Input
+                                    return  <Input1
                                                 key={index}
                                                 label={input.label}
                                                 type={input.type}
                                                 className='cursor-pointer'
                                                 required={input.required}
-                                                defaultValue={parentData[input.defaultValue]}
+                                                defaultValue={input.defaultValue || null}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
                                                 {...register(input.name, { required: input.required })}
                                             />
 
-                                return <Input
+                                return <Input1
                                     key={index}
                                     label={input.label}
                                     type={input.type}
-                                    required={input.required}
                                     className='cursor-pointer'
+                                    required={input.required}
                                     placeholder={input.placeholder}
                                     name={input.name}
                                     {...register(input.name, { required: input.required })}
@@ -326,9 +326,9 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                     <div className="grid grid-cols-1 gap-4 place-items-center w-full mt-4">
                         {formData.buttons.map((button, index) => (
                             <div key={index} className={`${button.style && button.style} mt-4`}>
-                                <Button type={button.type} className={button.style}>
+                                <Button1 type={button.type} className={button.style}>
                                     {button.text}
-                                </Button>
+                                </Button1>
                             </div>
                         ))}
                     </div>
@@ -340,4 +340,4 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
     );
 }
 
-export default OverlayForm1;
+export default Form

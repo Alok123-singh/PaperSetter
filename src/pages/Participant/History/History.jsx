@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Loading, TablePagination } from '../../../components/index'
+import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
 
 
@@ -212,7 +212,7 @@ function History() {
     ];
 
     return loading ? (
-        <Loading />
+        <Loading1 />
 
     ) : (
         <div className='w-full justify-center items-center'>

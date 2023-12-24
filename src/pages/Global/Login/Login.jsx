@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button, Input, Logo, Loading } from "../../../components/index.js"
+import { Button1, Input1, Logo, Loading1 } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
@@ -93,7 +93,7 @@ function Login() {
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
                 <form onSubmit={handleSubmit(login)} className='mt-8'>
                     <div className='space-y-7'>
-                        <Input
+                        <Input1
                         // label = "Username"
                         type="text"
                         placeholder="Username"
@@ -104,7 +104,7 @@ function Login() {
                         />
 
                         <div className='relative'>
-                            <Input
+                            <Input1
                                 type='password'
                                 placeholder='Password'
                                 {...register('password', {
@@ -120,10 +120,10 @@ function Login() {
                         >Sign in</Button> */}
 
                         {loading === false ? (
-                            <Button
+                            <Button1
                             type="submit"
                             className="w-full"
-                            >Sign in</Button>
+                            >Sign in</Button1>
                         ) : (
                             <div className='w-full justify-center items-center'>
                                 <button disabled type="button" className="w-full justify-center text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">

@@ -3,7 +3,7 @@ import { MdAutorenew } from 'react-icons/md';
 
 
 
-function Loading() {
+function Loading1() {
     return (
         <div className='dark:bg-gray-400 cursor-wait w-full flex justify-center items-center h-screen'>
             <div className=''>
@@ -11,6 +11,6 @@ function Loading() {
             </div>
         </div>
     )
-}
+};
 
-export default Loading
+export default Loading1;

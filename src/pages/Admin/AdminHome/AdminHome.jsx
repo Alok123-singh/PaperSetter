@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
-import { OverlayForm1, OverlayForm2, Loading, Search, TablePagination, Button } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading1, Search, TablePagination, Button1 } from '../../../components/index'
 
 
 function AdminHome() {
@@ -11,7 +11,6 @@ function AdminHome() {
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
-
 
     const [filteredItems, setFilteredItems] = useState([]);
 
@@ -610,7 +609,7 @@ function AdminHome() {
     // add new course section ends
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className='w-full  h-auto py-10 flex flex-wrap flex-col justify-center items-center'>
@@ -628,7 +627,7 @@ function AdminHome() {
                     <div className='flex flex-col justify-center items-center text-xl'>
                         <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Course </p>
 
-                        <Button
+                        <Button1
                         className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
                         onClick={() => {
                             setShowAddCourse(prev => !prev);
@@ -637,7 +636,7 @@ function AdminHome() {
                         }}
                         >
                             Add
-                        </Button>
+                        </Button1>
                         
                     </div>
 

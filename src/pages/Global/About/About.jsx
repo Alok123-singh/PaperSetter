@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Loading } from '../../../components/index'
+import { Loading1 } from '../../../components/index'
 
 function About() {
 
@@ -7,7 +7,7 @@ function About() {
 
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
     <div className="about-us-container dark:bg-gray-400 p-8">

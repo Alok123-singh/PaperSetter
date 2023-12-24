@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input } from '../index';
+import { Button1, Input1 } from '../index';
 
 const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSuggestion = false, enableContinuousSearching = true }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -33,6 +33,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     }, []);
 
 
+    // useEffect1
     useEffect(() => {
         // If the search term is empty, set suggestions to an empty array
         if (searchTerm === '') {
@@ -40,6 +41,10 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
             setSearchLimit(5);
             setShowMoreOptions(false);
         } else {
+
+            // can store selected suggestion in a array in cache and when the next time same search field is show in suggestions then it should be in the top
+            console.log("Selected suggestion",selectedSuggestion);
+
             // Filter the items based on the search term
             const filteredItems = items.filter(item =>
                 item[searchProperty].toLowerCase().includes(searchTerm.toLowerCase())
@@ -159,7 +164,7 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
     return (
         <div className='w-[98%] relative flex justify-center items-center mt-5' >
             <div ref={searchRef} className="flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ">
-                <Input
+                <Input1
                     type="text"
                     placeholder={`Search by ${searchProperty}`}
                     value={searchTerm}
@@ -194,14 +199,14 @@ const Search = ({ items, setFilteredItems, searchProperty = 'name', enableSugges
                 }
             </div>
             {enableContinuousSearching === false && 
-                <Button
+                <Button1
                     className="w-[4.3rem] ml-1 sm:ml-2 my-1 h-[2.3rem] flex justify-center hover:bg-blue-500  items-center rounded-md"
                     onClick={() => {
                         setStartSearching(true);
                     }}
                 >
                     Search
-                </Button>
+                </Button1>
             }
         </div>
     );

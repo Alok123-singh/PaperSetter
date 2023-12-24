@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Loading, Form } from '../../../components/index'
+import { Loading1, Form } from '../../../components/index'
 
 
 function Contact() {
@@ -51,7 +51,7 @@ function Contact() {
 
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className="contact-us-container dark:bg-gray-400 p-8">

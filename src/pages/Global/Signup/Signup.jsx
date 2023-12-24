@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
-import {Button, Input, Logo, Loading} from '../../../components/index'
+import {Button1, Input1, Logo, Loading1} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
 
@@ -135,7 +135,7 @@ function Signup() {
     }
 
     return loading ? (
-        <Loading />
+        <Loading1 />
     ) : 
     (
         <div className="flex items-center justify-center dark:bg-gray-400 dark:text-gray-800 py-8">
@@ -173,7 +173,7 @@ function Signup() {
                     <div className='space-y-7'>
                         {step === 1 && (
                         <div className='space-y-7'>
-                            <Input
+                            <Input1
                             type="text"
                             // label="First Name: "
                             placeholder="First name"
@@ -185,7 +185,7 @@ function Signup() {
                             })}
                             />
 
-                            <Input
+                            <Input1
                             type="text"
                             // label="Last Name: "
                             placeholder="Last name"
@@ -197,13 +197,13 @@ function Signup() {
                             })}
                             />
 
-                            <Button 
+                            <Button1 
                             type="button" 
                             className="w-full"
                             onClick={() => setStep(prev => prev+1)}
                             >
                                 Next
-                            </Button>
+                            </Button1>
 
                         </div>)}
 
@@ -216,7 +216,7 @@ function Signup() {
                                 
                                 render={({ field, fieldState }) => (
                                 <div className='relative'>
-                                    <Input
+                                    <Input1
                                     // label = "Username"
                                     {...field}
                                     onBlur={(e) => checkUsernameAvailability(e.target.value)}
@@ -242,7 +242,7 @@ function Signup() {
                                 )}
                             />
 
-                            <Input
+                            <Input1
                             // label="Email: "
                             placeholder="Email"
                             type="text"
@@ -256,7 +256,7 @@ function Signup() {
                             />
 
                             <div className='relative'>
-                                <Input
+                                <Input1
                                     type='password'
                                     placeholder='Password'
                                     {...register('password', {
@@ -267,19 +267,19 @@ function Signup() {
                             </div>
 
                             <div className='flex justify-between'>
-                                <Button 
+                                <Button1 
                                 type="button" 
                                 className="w-1/2 mr-2 "
                                 onClick={() => setStep(prev => prev-1)}
                                 >
                                     Prev
-                                </Button>
+                                </Button1>
 
-                                <Button type="submit" 
+                                <Button1 type="submit" 
                                 className="w-1/2 bg-green-500"
                                 >
                                     Submit
-                                </Button>
+                                </Button1>
                             </div>
                             
                         </div>}
