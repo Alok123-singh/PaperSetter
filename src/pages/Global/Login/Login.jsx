@@ -66,9 +66,9 @@ function Login() {
 
     return (
         <div
-        className={`${loading === true && 'cursor-wait'} flex items-center justify-center w-full dark:bg-gray-400 dark:text-gray-800`}
+        className={`${loading === true && 'cursor-wait'} flex w-full py-8 items-center justify-center dark:bg-gray-400 dark:text-gray-800`}
         >
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 dark:bg-gray-300 rounded-xl p-7 border border-black/10`}>
+            <div className={`mx-auto w-full lg:w-[30%] max-w-lg bg-gray-100 dark:bg-gray-300 rounded-md p-7 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="w-full flex justify-center items-center">
                         <Link 
@@ -92,7 +92,7 @@ function Login() {
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
                 <form onSubmit={handleSubmit(login)} className='mt-8'>
-                    <div className='space-y-7'>
+                    <div className='space-y-7 '>
                         <Input1
                         // label = "Username"
                         type="text"

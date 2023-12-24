@@ -139,7 +139,7 @@ function Signup() {
     ) : 
     (
         <div className="flex items-center justify-center dark:bg-gray-400 dark:text-gray-800 py-8">
-            <div className={`mx-auto w-full max-w-lg bg-gray-50 dark:bg-gray-300 rounded-xl p-7 border border-black/10`}>
+            <div className={`mx-auto  w-full lg:w-[30%] max-w-lg bg-gray-50 dark:bg-gray-300 rounded-md p-7 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="w-full flex justify-center items-center">
                         <Link 

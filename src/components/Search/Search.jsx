@@ -10,10 +10,10 @@ const Search = (
         enableContinuousSearching = true, 
         enableSmartSearch = !enableContinuousSearching,
         minSuggestionsLimit = 5, // min minSuggestionsLimit suggestions will be shown
-        maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear
+        maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear. In short max suggestions that can be suggested for a particular search term
 
     }) => {
-
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(null);
