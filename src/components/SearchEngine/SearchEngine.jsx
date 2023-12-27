@@ -409,6 +409,7 @@ const SearchEngine = (
     return (
         <div className='w-[98%] relative flex justify-center items-center mt-5' >
             <div ref={searchRef} className={`flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ${width}`}>
+                {/* Input field section */}
                 <div className='w-full relative'>
                     <Input1
                         type="text"
@@ -431,6 +432,7 @@ const SearchEngine = (
                         </div>
                     )}
                 </div>
+                {/* Suggestions section */}
                 {enableSuggestion && 
                     <div className='w-full relative flex flex-col justify-start items-start'>
                         {suggestions.length > 0 && (
@@ -464,6 +466,7 @@ const SearchEngine = (
                     </div>
                 }
             </div>
+            {/* Search button section */}
             {enableContinuousSearching === false && 
                 <Button1
                     className="w-[4.3rem] ml-1 sm:ml-2 my-1 h-[2.3rem] flex justify-center hover:bg-blue-500  items-center rounded-md"
