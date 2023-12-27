@@ -322,7 +322,7 @@ const SearchEngine = (
         }
 
         // console.log("Highlighted index After", highlightedIndex);
-        
+
     };
 
     const resetSuggestions = () => {
