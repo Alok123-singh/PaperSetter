@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Loading1, Search, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
+import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 
@@ -1151,6 +1151,7 @@ function InstructorHome() {
     ) : 
     (
         <div className='w-full h-auto mt-7 flex flex-col justify-center items-center'>
+            {/* Heading section */}
             <div className='w-full flex justify-center items-center '>
                 <div>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Instructor Home</h1>
@@ -1159,7 +1160,7 @@ function InstructorHome() {
 
             {/* search email section */}
             <div className="w-full flex flex-col justify-center items-center mt-2">
-                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" />
+                <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" width='lg:w-[35%]' />
             </div>
 
             <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />

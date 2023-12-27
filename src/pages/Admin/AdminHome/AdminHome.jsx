@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
-import { OverlayForm1, OverlayForm2, Loading1, Search, TablePagination, Button1 } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, Button1 } from '../../../components/index'
 
 
 function AdminHome() {
@@ -652,7 +652,7 @@ function AdminHome() {
 
             {/* Search Email Section */}
             <div className="w-full flex  justify-center items-center">
-                <Search items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="email" />
+                <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="email" width='lg:w-[35%]' />
             </div>
 
             <TablePagination columnsDescription={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />

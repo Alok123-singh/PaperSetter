@@ -12,7 +12,7 @@ import OverlayForm1 from './Forms/OverlayForm1/OverlayForm1'
 import OverlayForm2 from './Forms/OverlayForm2/OverlayForm2'
 import Loading1 from './LoadingFormats/Loading1/Loading1'
 import Loading2 from './LoadingFormats/Loading2/Loading2'
-import Search from './Search/Search'
+import SearchEngine from './SearchEngine/SearchEngine'
 import TablePagination from './Pagination/TablePagination/TablePagination'
 import CardPagination from './Pagination/CardPagination/CardPagination'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
@@ -32,7 +32,7 @@ export  {
     OverlayForm2,
     Loading1,
     Loading2,
-    Search,
+    SearchEngine,
     TablePagination,
     CardPagination,
     ErrorBoundary,

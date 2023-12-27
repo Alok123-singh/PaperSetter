@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button1, Input1 } from '../index';
+import { FaSearch } from 'react-icons/fa';
 
-const Search = (
+
+const SearchEngine = (
     { 
         items, 
         setFilteredItems, 
         searchProperty = 'name', 
         enableSuggestion = false, 
-        enableContinuousSearching = true, 
+        enableContinuousSearching = false, 
         enableSmartSearch = !enableContinuousSearching,
-        minSuggestionsLimit = 3, // min minSuggestionsLimit suggestions will be shown
-        maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear. In short max suggestions that can be suggested for a particular search term
-
+        minSuggestionsLimit = 5, // min minSuggestionsLimit suggestions will be shown
+        maxSuggestionsLimit = 100, // after maxSuggestionsLimit the Show more suggestions options would not appear. In short maximum suggestions that can be suggested for a particular search term
+        width = 'w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%]' // width of input field
     }) => {
     
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +24,8 @@ const Search = (
     const [searchLimit, setSearchLimit] = useState(minSuggestionsLimit);
     const [showMoreOptions,setShowMoreOptions] = useState(false);
     const [startSearching, setStartSearching] = useState(false);
+
+    const [isHovered, setIsHovered] = useState(false);
 
     const [lastSearchedTerm, setLastSearchedTerm] = useState(searchTerm);
     
@@ -58,7 +62,7 @@ const Search = (
 
     useEffect(() => {
         // console.log('Clicked',clicked);
-        console.log('Search limit',searchLimit);
+        // console.log('Search limit',searchLimit);
         if(!enableContinuousSearching && enableSmartSearch && searchTerm === '' && clicked === true){
             let previousSuggestions = JSON.parse(localStorage.getItem('selectedSuggestions'));
             if(previousSuggestions){
@@ -287,6 +291,9 @@ const Search = (
     },[items]);
 
     const handleKeyDown = event => {
+
+        // console.log("Highlighted index Before", highlightedIndex);
+
         if (event.key === 'ArrowDown' && highlightedIndex < suggestions.length - 1) {
             // handleSuggestionClick(suggestions);
             setHighlightedIndex(prevIndex => prevIndex + 1);
@@ -301,6 +308,21 @@ const Search = (
                 setStartSearching(true);
             }
         }
+
+        if(event.key === 'ArrowUp' && highlightedIndex === -1){
+            setHighlightedIndex(suggestions.length-1);
+        }
+        
+        if(event.key === 'ArrowUp' && highlightedIndex === 0){
+            setHighlightedIndex(-1);
+        }
+        
+        if(event.key === 'ArrowDown' && highlightedIndex === suggestions.length-1){
+            setHighlightedIndex(-1);
+        }
+
+        // console.log("Highlighted index After", highlightedIndex);
+        
     };
 
     const resetSuggestions = () => {
@@ -372,25 +394,50 @@ const Search = (
         };
     }, []);
 
+    const formatPlaceholder = () => {
+        // Example: Convert 'courseCode' to 'Course Code'
+        const formattedPlaceholder = typeof searchProperty === 'string'
+            ? searchProperty
+                .replace(/([A-Z])/g, ' $1') // Insert space before capital letters
+                .toLowerCase() // Convert the entire string to lowercase
+            : searchProperty.toString(); // For non-string types, convert to string
+      
+        return `Search by ${formattedPlaceholder}`;
+    };
+    
+
     return (
         <div className='w-[98%] relative flex justify-center items-center mt-5' >
-            <div ref={searchRef} className="flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ">
-                <Input1
-                    type="text"
-                    placeholder={`Search by ${searchProperty}`}
-                    value={searchTerm}
-                    onClick={() => !enableContinuousSearching && setClicked(true)}
-                    onChange={(event) => handleInputChange(event)}
-                    onKeyDown={(event) => handleKeyDown(event)}
-                    className="pr-2 h-[2.6rem]"
-                />
+            <div ref={searchRef} className={`flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ${width}`}>
+                <div className='w-full relative'>
+                    <Input1
+                        type="text"
+                        placeholder={formatPlaceholder()}
+                        value={searchTerm}
+                        onClick={() => {
+                            if(enableContinuousSearching === false) setClicked(true);
+                            setHighlightedIndex(-1);
+                        }}
+                        onChange={(event) => handleInputChange(event)}
+                        onKeyDown={(event) => handleKeyDown(event)}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        className={`${isHovered === true ? 'pr-2 sm:pr-7' : 'pr-2'} h-[2.6rem] ${highlightedIndex === -1 && 'focus:bg-slate-200 hover:bg-gray-100 '}`}
+                    />
+                    
+                    {isHovered && (
+                        <div className={`hidden sm:flex absolute right-0 top-1/2 transform -translate-y-1/2 mr-2`}>
+                        <FaSearch className='text-blue-400' />
+                        </div>
+                    )}
+                </div>
                 {enableSuggestion && 
                     <div className='w-full relative flex flex-col justify-start items-start'>
                         {suggestions.length > 0 && (
-                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col sm:w-[23.2rem] justify-center items-center'>
+                            <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col w-full justify-center items-center'>
                                 {suggestions.map((item, index) => (
                                     <li
-                                        className={`w-full text-gray-600 hover:bg-gray-200 flex justify-start items-center p-3 border-b border-gray-300 ${
+                                        className={`w-full font-thin text-gray-600 hover:bg-gray-200 flex justify-start items-center p-2 border-b border-gray-300 ${
                                             selectedSuggestion === item || highlightedIndex === index ? 'bg-gray-200' : ''
                                         }`}
                                         key={index}
@@ -399,13 +446,13 @@ const Search = (
                                         {item[searchProperty]}
                                     </li>
                                 ))}
-                                <div  className=' w-full text-xs flex justify-end pr-2 py-2 border-gray-300 items-center text-gray-400 hover:text-gray-300 '>
-                                    <p onClick={() => resetSuggestions()} className='cursor-pointer md:text-gray-500 md:hover:text-gray-400'>
+                                <div  className={`w-full text-xs flex justify-end pr-2 ${showMoreOptions === true ? 'pt-3 pb-2 sm:pt-2' : 'py-2'} border-gray-300 items-center text-gray-400 hover:text-gray-300 `}>
+                                    <p onClick={() => resetSuggestions()} className='cursor-pointer text-gray-500 hover:text-gray-400 md:text-gray-400 md:hover:text-gray-300'>
                                         Reset Suggestions
                                     </p>
                                 </div>
                                 {showMoreOptions &&
-                                    <div className='text-sm text-gray-400 pb-2'>
+                                    <div className='text-sm text-gray-400 pb-3 sm:pb-2'>
                                         <p onClick={() => setSearchLimit(prev => prev+minSuggestionsLimit)}  className='cursor-pointer hover:text-gray-300'>
                                             Show more suggestions...
                                         </p>
@@ -431,4 +478,4 @@ const Search = (
     );
 };
 
-export default Search;
+export default SearchEngine;
