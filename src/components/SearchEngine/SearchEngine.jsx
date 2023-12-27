@@ -437,7 +437,7 @@ const SearchEngine = (
                             <ul className='absolute z-10 bg-white border rounded-md border-gray-300 flex flex-col w-full justify-center items-center'>
                                 {suggestions.map((item, index) => (
                                     <li
-                                        className={`w-full font-thin text-gray-600 hover:bg-gray-200 flex justify-start items-center p-2 border-b border-gray-300 ${
+                                        className={`w-full text-gray-600 hover:bg-gray-200 flex justify-start items-center p-2 border-b border-gray-300 ${
                                             selectedSuggestion === item || highlightedIndex === index ? 'bg-gray-200' : ''
                                         }`}
                                         key={index}
