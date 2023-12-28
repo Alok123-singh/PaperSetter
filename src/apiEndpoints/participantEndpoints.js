@@ -1,5 +1,5 @@
 const BASE_URL_DEV = 'http://localhost:8081/simlearn/score/api/v1';
-const BASE_URL_PROD = 'https://your-production-domain'; // Replace with your actual production domain
+const BASE_URL_PROD = 'https://production-domain'; // Replace with your actual production domain
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? BASE_URL_PROD : BASE_URL_DEV;
 
