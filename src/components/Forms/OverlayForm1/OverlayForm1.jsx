@@ -1,5 +1,5 @@
 import React,{ useId } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -12,7 +12,8 @@ import moment from 'moment';
 
 function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
 
-    const { register, handleSubmit, setValue, watch, control } = useForm();
+    const { register, handleSubmit, setValue, watch, control, formState } = useForm();
+    const { errors } = formState;
     const id = useId();
 
     const addCourse = (data) => {
@@ -150,19 +151,39 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                     
                                                     name={input.name}
                                                     control={control}
-                                                    defaultValue={parentData[input.defaultValue] || null}
-                                                    rules={{ required: input.required }}
+                                                    defaultValue={input.defaultValue || null}
+                                                    rules={{
+                                                        validate: (value) => {
+                                                            if (input.required && (value === '' || value === input.placeholder)) {
+                                                                return 'Please select an option';
+                                                            }
+                                                            
+                                                            return true;
+                                                        },
+                                                    }}
                                                     render={({ field }) => (
-                                                        <select
-                                                            {...field}
-                                                            className="w-full h-[3.55rem] appearance-none bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
-                                                        >
-                                                            {input.options.map((option,index) => (
-                                                                <option key={index} value={option}>
-                                                                    {option}
-                                                                </option>
-                                                            ))}
-                                                        </select>
+                                                        <div className='w-full flex flex-col justify-center items-start'>
+                                                            <select
+                                                                {...field}
+                                                                className="w-full h-[3.55rem] appearance-none bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                                                            >
+                                                                {/* Placeholder option */}
+                                                                {input.placeholder && 
+                                                                    <option value={input.placeholder}>
+                                                                        {input.placeholder}
+                                                                    </option>
+                                                                }
+                                                                
+                                                                {input.options.map((option,index) => (
+                                                                    <option key={index} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                            {errors[input.name] && (
+                                                                <p className="text-red-500 mt-3">{errors[input.name].message}</p>
+                                                            )}
+                                                        </div>
                                                     )}
                                                 />
                                             </div>

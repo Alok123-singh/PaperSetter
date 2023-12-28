@@ -1,5 +1,5 @@
 import React,{ useId } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useFormState  } from 'react-hook-form';
 import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -11,7 +11,8 @@ import moment from 'moment';
 
 
 function OverlayForm2({ onClose, onSubmit, formData }) {
-    const { register, handleSubmit, watch, control } = useForm();
+    const { register, handleSubmit, watch, control, formState } = useForm();
+    const { errors } = formState;
     const id = useId();
 
     const addCourse = (data) => {
@@ -38,7 +39,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
 
     return (
         <div className={`fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay2 bg-black bg-opacity-50 z-50  ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}}  onClick={handleClickOutside}>
-            <div className={`relative overflow-y-auto w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white p-[20px] rounded-md z-1001`}>
+            <div className={`relative overflow-y-auto max-h-[95%] w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white p-[20px] rounded-md z-1001`}>
                 <div className='space-y-1 mb-4 text-sm'>
                     <p className='pl-1 text-2xl font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>
@@ -49,7 +50,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                 onSubmit={handleSubmit(addCourse)}
                 className=" w-full flex flex-col justify-center items-center "
                 >
-                    <div className={`grid md:grid-cols-${(formData.formDesign && formData.formDesign.cols) ? formData.formDesign.cols : 2} gap-4 w-full`}>
+                    <div className={`grid md:grid-cols-${(formData.formDesign && formData.formDesign.cols) ? formData.formDesign.cols : 2} gap-8 w-full`}>
                         {formData.inputs.map((input, index) => {
 
                                 if(input.type.includes('dateAndTime')){
@@ -151,18 +152,38 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                     name={input.name}
                                                     control={control}
                                                     defaultValue={input.defaultValue || null}
-                                                    rules={{ required: input.required }}
+                                                    rules={{
+                                                        validate: (value) => {
+                                                            if (input.required && (value === '' || value === input.placeholder)) {
+                                                                return 'Please select an option';
+                                                            }
+                                                            
+                                                            return true;
+                                                        },
+                                                    }}
                                                     render={({ field }) => (
-                                                        <select
-                                                            {...field}
-                                                            className="w-full h-[3.55rem] appearance-none bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
-                                                        >
-                                                            {input.options.map((option,index) => (
-                                                                <option key={index} value={option}>
-                                                                    {option}
-                                                                </option>
-                                                            ))}
-                                                        </select>
+                                                        <div className='w-full flex flex-col justify-center items-start'>
+                                                            <select
+                                                                {...field}
+                                                                className="w-full h-[3.55rem] appearance-none bg-white border border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                                                            >
+                                                                {/* Placeholder option */}
+                                                                {input.placeholder && 
+                                                                    <option value={input.placeholder}>
+                                                                        {input.placeholder}
+                                                                    </option>
+                                                                }
+                                                                
+                                                                {input.options.map((option,index) => (
+                                                                    <option key={index} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                            {errors[input.name] && (
+                                                                <p className="text-red-500 mt-3">{errors[input.name].message}</p>
+                                                            )}
+                                                        </div>
                                                     )}
                                                 />
                                             </div>

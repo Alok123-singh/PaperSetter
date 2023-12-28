@@ -416,10 +416,11 @@ function AdminHome() {
                         </div>;
             },
             dataRender: (index, value, currentItem) => {
+                // console.log("Current Item", currentItem);
 
                 const props = {
                     courseList: JSON.stringify(currentItem.courseList),
-                    instructorName: currentItem.instructorName,
+                    instructorName: currentItem.name,
                 }
 
                 const queryString = Object.keys(props)
@@ -554,22 +555,26 @@ function AdminHome() {
     const createNewCourseFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true,  },
-            { label: 'Course Name', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true,  },
-            // { label: '', type: 'text', placeholder: 'Your phone number', name: 'phoneNumber', required: true,  },
-            // { label: 'Message', type: 'textarea', placeholder: 'Your message', name: 'message', required: true, defaultValue: 'Send message to us' },
-            // { label: 'Start Time', type: 'dateAndTime2', placeholder: 'Start Time', name: 'startTime', required: true, defaultValue: new Date('2024-01-26'), enableTime : false, dateFormat : 'Y-m-d', },
-            // { label: 'End Time', type: 'dateAndTime3', placeholder: 'End Time', name: 'endTime', required: true, defaultValue: new Date('2024-01-26'), enableTime : false, dateFormat : 'MMMM d, yyyy', },
+            { label: 'Instuctor Email Id', type: 'text', placeholder: '', name: 'email', required: true,  },
+            { label: 'Instructor Name', type: 'text', placeholder: '', name: 'name', required: true,  },
+            { label: 'Password', type: 'password', placeholder: '', name: 'password', required: true,  },
+            { label: 'E Learning', type: 'select', options: ['Inventory Management', 'Nego Test'], placeholder: 'Select E Learning', defaultValue : 'Select E Learning', name: 'eLearning', required: true,  },
+            { label: 'Course Name', type: 'text', placeholder: '', name: 'courseName', required: true,  },
+            { label: 'No. of Licenses', type: 'text', placeholder: '', name: 'licenses', required: true,  },
+            { label: 'Total Markets', type: 'text', placeholder: '', name: 'markets', required: true,  },
+            { label: 'Students in each market', type: 'text', placeholder: '', name: 'studentsInEachMarket', required: true,  },
+            { label: 'Start Date & Time', type: 'dateAndTime2', placeholder: '', name: 'startTime', required: true,  },
+            { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true,  },
+            { label: 'Number of attempts', type: 'text', placeholder: '', name: 'attempts', required: true,  },
             // Add more input configurations as needed
         ],
         buttons : [
             // Define your form buttons here
-            // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Submit', style: 'w-[6rem]' },
+            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-sm' },
             // Add more button configurations as needed
         ],
-        title : 'Add New Course',
-        desc : "Enter details of the course to be created",
+        title : 'Create Course',
+        desc : "You can create your course",
         formHeight : "",
         formWidth : "lg:w-3/4", // total width of the form
         formDesign : {

@@ -449,7 +449,7 @@ const SearchEngine = (
                                     </li>
                                 ))}
                                 <div  className={`w-full text-xs flex justify-end pr-2 ${showMoreOptions === true ? 'pt-3 pb-2 sm:pt-2' : 'py-2'} border-gray-300 items-center text-gray-400 hover:text-gray-300 `}>
-                                    <p onClick={() => resetSuggestions()} className='cursor-pointer text-gray-500 hover:text-gray-400 md:text-gray-400 md:hover:text-gray-300'>
+                                    <p onClick={() => resetSuggestions()} className='cursor-pointer text-gray-500 hover:text-gray-400 md:text-gray-500 md:hover:text-gray-400'>
                                         Reset Suggestions
                                     </p>
                                 </div>

@@ -168,7 +168,7 @@ function CardPagination({
 
                 {paginationEnable === true && (
                 <div className="w-full text-sm md:w-auto flex md:space-x-5 flex-wrap justify-evenly md:justify-center items-center mt-4">
-                    <span className="mr-1">Items per page :</span>
+                    <span className="mr-1 font-bold text-rose-500 cursor-default">Items per page :</span>
                     <div className="relative inline-flex">
                     <select
                         value={itemsPerPage}

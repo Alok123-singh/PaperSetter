@@ -13,6 +13,8 @@ function InstructorHome() {
     const [showFormIndex2, setShowFormIndex2] = useState(null);
     const [showFormIndex3, setShowFormIndex3] = useState(null);
 
+    const [displayFormat,setDisplayFormat] = useState('Table');
+
     const [filteredItems, setFilteredItems] = useState([]);
 
     let animationTimeout;
@@ -82,7 +84,7 @@ function InstructorHome() {
         inputs : [
             // Define your form inputs here
             { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', },
-            { label: 'Archive', type: 'select', options : ['No','Yes'], placeholder: 'Archive', name: 'archive', required: true, defaultValue: 'archive', },
+            { label: 'Archive', type: 'select', options : ['No','Yes'], placeholder: 'Select archive option', name: 'archive', required: true, defaultValue: 'Select archive option', },
             // { label: 'Checkbox', type: 'checkbox', options : ['Yes','No'], placeholder: 'Checkbox', name: 'bad', required: true, defaultValue: 'bad' },
             // { label: 'Radio', type: 'radio', options : ['Yes','No'], placeholder: 'Radio', name: 'bad', required: true, defaultValue: 'bad' },
             // Add more input configurations as needed
@@ -1163,9 +1165,29 @@ function InstructorHome() {
                 <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" width='lg:w-[35%]' />
             </div>
 
-            <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
-
-            {/* <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  /> */}
+            {displayFormat === 'Table' && 
+                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+            }
+            
+            {displayFormat === 'Card' && 
+                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  />
+            }
+            
+            {/* Select display format as Table or Card */}
+            <div className='w-full mb-8 flex justify-center items-center'>
+                <p className='text-green-600 font-lg font-bold cursor-default'>
+                    Select display option :
+                </p>
+                
+                <select
+                    value={displayFormat}
+                    onChange={ event => setDisplayFormat(event.target.value) }
+                    className="flex justify-center items-center appearance-none bg-white border border-gray-400 text-gray-700 ml-6 py-2 px-4 rounded leading-tight focus:outline-none focus:border-gray-500"
+                >
+                    <option value="Table">Table</option>
+                    <option value="Card">Card</option>
+                </select>
+                </div>
         </div>
     )
 };
