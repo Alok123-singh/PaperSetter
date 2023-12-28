@@ -4,6 +4,7 @@ import {Button1, Input1, Logo, Loading1} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
 import { AUTH_ENDPOINTS } from '../../../apiEndpoints/index';
+import { config } from '../../../configurations'
 
 
 function Signup() {
@@ -20,7 +21,7 @@ function Signup() {
         let errors = [];
         
         try {
-            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const credentials = btoa(config.username + ':' + config.password);
             const response = await fetch(AUTH_ENDPOINTS.CHECK_USERNAME(username), {
                 method: 'GET',
                 headers: {
@@ -100,7 +101,7 @@ function Signup() {
 
         try{
             if(usernameAvailability === true && errors.length === 0){
-                const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+                const credentials = btoa(config.username + ':' + config.password);
                 const response = await fetch(AUTH_ENDPOINTS.SIGNUP,{
                     method: 'POST',
                     headers: {

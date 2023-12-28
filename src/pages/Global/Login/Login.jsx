@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
 import { MdAutorenew } from 'react-icons/md';
 import { AUTH_ENDPOINTS } from '../../../apiEndpoints';
+import { config } from '../../../configurations'
 // import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
 
 
@@ -22,7 +23,7 @@ function Login() {
         setError("")
 
         try{
-            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const credentials = btoa(config.username + ':' + config.password);
             const response = await fetch(AUTH_ENDPOINTS.LOGIN,{
                 method: 'POST',
                 headers: {

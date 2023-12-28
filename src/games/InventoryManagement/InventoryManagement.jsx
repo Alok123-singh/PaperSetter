@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setResult } from '../../store/resultSlice';
 import { Loading1 } from '../../components/index'
 import { PARTICIPANT_ENDPOINTS } from '../../apiEndpoints/index';
+import { config } from '../../configurations'
 
 function InventoryManagement() {
 
@@ -119,7 +120,7 @@ function InventoryManagement() {
         console.log("Result Data",JSON.stringify(data));
         
         try{
-            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const credentials = btoa(config.username + ':' + config.password);
             const response = await fetch(PARTICIPANT_ENDPOINTS.SAVE_RESULT,{
                 method: 'POST',
                 headers: {

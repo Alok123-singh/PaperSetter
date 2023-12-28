@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {Button1, Input1, Logo, Loading1} from "../../../components/index"
 import {useForm} from "react-hook-form"
 import { AUTH_ENDPOINTS } from '../../../apiEndpoints/index'
+import { config } from '../../../configurations'
 
 function ResetPassword() {
 
@@ -25,8 +26,15 @@ function ResetPassword() {
             return;
         }
 
+        if(data.newPassword === data.oldPassword){
+            errors.push("Enter new password")
+            setLoading(false);
+            setError(errors);
+            return;
+        }
+
         try{
-            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const credentials = btoa(config.username + ':' + config.password);
             const response = await fetch(AUTH_ENDPOINTS.RESET_PASSWORD,{
                 method: 'POST',
                 headers: {

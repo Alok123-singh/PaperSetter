@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
 import { PARTICIPANT_ENDPOINTS } from '../../../apiEndpoints/index';
+import { config } from '../../../configurations'
 
 
 function History() {
@@ -22,7 +23,7 @@ function History() {
         let errors = [];
 
         try{
-            const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
+            const credentials = btoa(config.username + ':' + config.password);
             const response = await fetch(PARTICIPANT_ENDPOINTS.FETCH_HISTORY(username), {
                 method: 'GET',
                 headers: {
