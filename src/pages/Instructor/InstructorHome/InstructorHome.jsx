@@ -1187,7 +1187,7 @@ function InstructorHome() {
                     <option value="Table">Table</option>
                     <option value="Card">Card</option>
                 </select>
-                </div>
+            </div>
         </div>
     )
 };

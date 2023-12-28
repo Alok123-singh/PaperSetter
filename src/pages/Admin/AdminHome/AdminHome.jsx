@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
-import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, Button1 } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1 } from '../../../components/index'
 
 
 function AdminHome() {
@@ -11,6 +11,8 @@ function AdminHome() {
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
+
+    const [displayFormat,setDisplayFormat] = useState('Table');
 
     const [filteredItems, setFilteredItems] = useState([]);
 
@@ -128,7 +130,43 @@ function AdminHome() {
                 />
     };
 
-    const columnsDescription = [
+    const [items,setItems] = useState([
+        {
+            name : 'Anand Pratap Singh Bais',
+
+            email : 'anandpsingh7@gmail.com',
+            
+            password : '1234',
+
+            courseList: [
+                {
+                    courseCode : 'CSE301',
+                    courseName : 'Inventory Management'
+                },
+                {
+                    courseCode : 'CSE307',
+                    courseName : 'Hotel Management'
+                }
+            ]
+        },
+        {
+            name : 'Chotu Don',
+
+            email : 'chotudon@gmail.com',
+            
+            password : 'chotu@don',
+
+            courseList: [
+                {
+                    courseCode : 'CSE307',
+                    courseName : 'Hotel Management'
+                }
+            ]
+
+        }
+    ]);
+
+    const tableColumnsDescription = [
         { // Instructor Name
             header : 'Instructor Name',
             dataKey: 'name', 
@@ -182,7 +220,7 @@ function AdminHome() {
                         </div>;
             }
         },
-        { // Email Id
+        { // Email
             header : 'Email Id',
             dataKey: 'email', 
             label: 'Email Id', 
@@ -506,41 +544,383 @@ function AdminHome() {
         },
     ];
 
-    const [items,setItems] = useState([
-        {
-            name : 'Anand Pratap Singh Bais',
+    // cardColumnsDescription starts here
 
-            email : 'anandpsingh7@gmail.com',
-            
-            password : '1234',
-
-            courseList: [
-                {
-                    courseCode : 'CSE301',
-                    courseName : 'Inventory Management'
+    const cardColumnsDescription = [
+        { // Instructor Name
+            header : 'Instructor Name',
+            dataKey: 'name', 
+            label: 'Instructor Name', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Name of the instructor','name']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
                 },
-                {
-                    courseCode : 'CSE307',
-                    courseName : 'Hotel Management'
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'name' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+
+                const props = {
+                    courseList: JSON.stringify(currentItem.courseList),
+                    instructorName: currentItem.instructorName,
                 }
-            ]
+
+                const queryString = Object.keys(props)
+                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                    .join('&');
+                
+                return  <div className='flex flex-col w-full justify-end items-end'>
+                            <textarea value={value} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
+
+                            {/* <a 
+                            href={``}
+                            target='_blank'
+                            className={`cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
+
+                                <IoMdOpen />
+                            </a> */}
+                            
+                        </div>
+            } 
         },
-        {
-            name : 'Chotu Don',
-
-            email : 'chotudon@gmail.com',
-            
-            password : 'chotu@don',
-
-            courseList: [
-                {
-                    courseCode : 'CSE307',
-                    courseName : 'Hotel Management'
+        { // Email 
+            header : 'Email',
+            dataKey: 'email', 
+            label: 'Email', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Email of the instructor','email']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'email' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={` w-full h-full font-bold flex text-slate-500 flex-wrap justify-end items-center`}
+                        >
+                            {value}
+                            
+                        </div>;
+            }
+        },
+        { // Update Password
+            header : 'Update Password',
+            dataKey: 'update', 
+            label: 'Update Password', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.email,'Update password of Instructor','update']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
+                            hoveredDetails[3] === 'update' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                            {/* <FaPencilAlt size={9} className='mb-3 ml-1' /> */}
+                            
+                        </div>;
+            },
+            rowFunctionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex1 === null)
+                            setShowFormIndex1(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex1 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex1,updatePassword)
                 }
-            ]
 
-        }
-    ]);
+            },
+            dataRender: (index, value, currentItem) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'update'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
+                            {<FaPencilAlt size={14} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'update' ? ' animate-bounce' : ''}`} />}
+                        </p>
+            } 
+        },
+        { // Delete
+            header : 'Delete',
+            dataKey: 'delete', 
+            label: 'Delete', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.email,'Remove Instructor from the organization','delete']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
+                            hoveredDetails[3] === 'delete' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                            <FaPencilAlt size={9} className='mb-3 ml-1' />
+                            
+                        </div>;
+            },
+            rowFunctionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        const confirmDelete = window.confirm('Are you sure you want to remove this instructor from organization?');
+
+                        // Check if the user clicked "OK"
+                        if (confirmDelete) {
+                            // Create a copy of the array
+                            const newData = [...items];
+
+                            // Use splice to remove the element at the specified index
+                            newData.splice(index, 1);
+
+                            // Update the state with the modified array
+                            setItems(newData);
+                        }
+                    },
+                },
+
+            },
+            dataRender: (index, value, currentItem) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'trash'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] bg-blue-400 rounded-md flex font-bold justify-center items-center`}>
+
+                            {<FaTrash size={14} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'trash' ? ' animate-bounce' : ''}`} />}
+                        </p>
+            } 
+        },
+        { // Courses
+            header : 'Courses',
+            dataKey: 'courses', 
+            label: 'Courses', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.email,'Show all the courses that Instructor has','courses']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
+                            hoveredDetails[3] === 'courses' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <FaInfoCircle size={16} className="text-blue-500" />
+                                        {hoveredDetails[2]}
+                                    </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            
+              
+            dataRender: (index, value, currentItem) => {
+                const props = {
+                    courseList: JSON.stringify(currentItem.courseList),
+                    instructorName: currentItem.name,
+                }
+
+                const queryString = Object.keys(props)
+                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                    .join('&');
+
+                return  <div
+                            className={`w-1/2 h-full text-start text-slate-500 font-bold flex flex-wrap justify-end items-center`}
+                        >
+                            <a 
+                            onMouseEnter={() => handleMouseEnter([index,'info'])}
+                            onMouseLeave={handleMouseLeave} 
+                            href={`/admin/instructor/courses?${queryString}`}
+                            target='_blank'
+                            className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+
+                                {<FaInfoCircle size={14} className=' cursor-pointer' /> }
+                            </a>
+                            
+                        </div>;
+            }
+        },
+        { // Assign
+            header : 'Assign',
+            dataKey: 'assign', 
+            label: 'Assign', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.email,'Update password of Instructor','assign']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
+                            hoveredDetails[3] === 'assign' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                            {/* <FaPencilAlt size={9} className='mb-3 ml-1' /> */}
+                            
+                        </div>;
+            },
+            rowFunctionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex2 === null)
+                            setShowFormIndex2(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex2 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex2,assignCourse)
+                }
+
+            },
+            dataRender: (index, value, currentItem) => {
+                return <p 
+                        onMouseEnter={() => handleMouseEnter([index,'assign'])}
+                        onMouseLeave={handleMouseLeave} 
+                        className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
+                            {<IoIosAdd size={25} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'assign' ? ' animate-bounce' : ''}`} />}
+                        </p>
+            } 
+        },
+    ];
+
+    // cardColumnsDescription ends here 
 
     // add new course section starts
 
@@ -660,8 +1040,30 @@ function AdminHome() {
                 <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion searchProperty="email" width='lg:w-[35%]' />
             </div>
 
-            <TablePagination columnsDescription={columnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+            {displayFormat === 'Table' && 
+                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+            }
             
+
+            {displayFormat === 'Card' && 
+                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  />
+            }
+            
+            {/* Select display format as Table or Card */}
+            <div className='w-full mb-8 flex justify-center items-center'>
+                <p className='text-green-600 font-lg font-bold cursor-default'>
+                    Select display option :
+                </p>
+                
+                <select
+                    value={displayFormat}
+                    onChange={ event => setDisplayFormat(event.target.value) }
+                    className="flex justify-center items-center appearance-none bg-white border border-gray-400 text-gray-700 ml-6 py-2 px-4 rounded leading-tight focus:outline-none focus:border-gray-500"
+                >
+                    <option value="Table">Table</option>
+                    <option value="Card">Card</option>
+                </select>
+            </div>
             
         </div>
     )
