@@ -1,5 +1,5 @@
 import { useState,useEffect } from 'react';
-import data from '../../JSON/queries1.json'
+import { queries1 } from '../../queries'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { setResult } from '../../store/resultSlice';
@@ -24,7 +24,7 @@ function InventoryManagement() {
     // const [change, setChange] = useState(false);
 
     const [queries,setQueries] = useState(() => {
-        return data;
+        return queries1;
     });
 
     const [query,setQuery] = useState(() => (queries[index]));

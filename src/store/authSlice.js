@@ -5,7 +5,7 @@ const initialState = {
     loginStatus: true,
     username: '',
     role : ROLES.INSTRUCTOR,
-}
+};
 
 const authSlice = createSlice({
     name: "auth",

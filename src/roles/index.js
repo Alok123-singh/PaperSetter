@@ -1,5 +1,5 @@
 import Home from './Home/Home'
-import ROLES from './constants/roles'
+import ROLES from './Constants/roles'
 
 export {
     Home,
