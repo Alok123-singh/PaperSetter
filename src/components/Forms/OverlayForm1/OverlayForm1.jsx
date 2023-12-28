@@ -327,6 +327,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                 defaultValue={parentData[input.defaultValue]}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
+                                                disabled={input.disabled}
                                                 {...register(input.name, { required: input.required })}
                                             />
 
@@ -338,6 +339,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                     className='cursor-pointer'
                                     placeholder={input.placeholder}
                                     name={input.name}
+                                    disabled={input.disabled}
                                     {...register(input.name, { required: input.required })}
                                 />
                             }

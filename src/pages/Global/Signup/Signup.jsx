@@ -3,6 +3,7 @@ import {Link ,useNavigate} from 'react-router-dom'
 import {Button1, Input1, Logo, Loading1} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
+import { AUTH_ENDPOINTS } from '../../../apiEndpoints/index';
 
 
 function Signup() {
@@ -20,7 +21,7 @@ function Signup() {
         
         try {
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-            const response = await fetch(`http://localhost:8082/simlearn/authentication/api/v1/username/${username}`, {
+            const response = await fetch(AUTH_ENDPOINTS.CHECK_USERNAME(username), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ function Signup() {
 
     const create = async (data) => {
         setLoading(true);
-        setError("");
+        setError([]);
 
         const errors = [];
 
@@ -100,7 +101,7 @@ function Signup() {
         try{
             if(usernameAvailability === true && errors.length === 0){
                 const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-                const response = await fetch('http://localhost:8082/simlearn/authentication/api/v1/account',{
+                const response = await fetch(AUTH_ENDPOINTS.SIGNUP,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // Specify the content type as JSON

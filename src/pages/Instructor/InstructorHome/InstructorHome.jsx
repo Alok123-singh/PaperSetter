@@ -822,7 +822,7 @@ function InstructorHome() {
                     .join('&');
                 
                 return  <div className='flex flex-col w-full justify-end items-end'>
-                            <textarea value={value} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
+                            <textarea value={value} onChange={() => {}} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
 
                             <a 
                             href={``}

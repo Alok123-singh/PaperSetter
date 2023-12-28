@@ -1,6 +1,6 @@
 import React,{ useId } from 'react';
 import { Controller, useForm, useFormState  } from 'react-hook-form';
-import { Input1, Button1 } from '../../index';
+import { Input1, Button1, Logo } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import Flatpickr from 'react-flatpickr';
@@ -316,7 +316,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                         </div>
                                     );
                                 }
-
+                                
                                 if(input.defaultValue !== undefined)
                                     return  <Input1
                                                 key={index}
@@ -327,6 +327,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                 defaultValue={input.defaultValue || null}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
+                                                readOnly={input.readOnly || false}
                                                 {...register(input.name, { required: input.required })}
                                             />
 
@@ -338,6 +339,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                     required={input.required}
                                     placeholder={input.placeholder}
                                     name={input.name}
+                                    readOnly={input.readOnly || false}
                                     {...register(input.name, { required: input.required })}
                                 />
                             }

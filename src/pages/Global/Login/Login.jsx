@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form"
 import { useDispatch } from 'react-redux';
 import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
 import { MdAutorenew } from 'react-icons/md';
+import { AUTH_ENDPOINTS } from '../../../apiEndpoints';
 // import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
 
 
@@ -17,12 +18,12 @@ function Login() {
 
     const login = async(data) => {
         setLoading(true);
-        console.log(data);
+        // console.log(data);
         setError("")
 
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-            const response = await fetch('http://localhost:8082/simlearn/authentication/api/v1/login',{
+            const response = await fetch(AUTH_ENDPOINTS.LOGIN,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type as JSON

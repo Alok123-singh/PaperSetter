@@ -117,7 +117,7 @@ function CardPagination({
                     
                     <div
                     key={index}
-                    className={` bg-white w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
+                    className={` bg-white w-[16.5rem] sm:w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
                     >
                         {showRowNumbers && (
                             <div className={`bg-gray-300 py-1 rounded-lg text-center ${rowsDesign}`}>
@@ -131,7 +131,6 @@ function CardPagination({
                                 className={`w-full flex justify-between items-center p-1 border rounded-lg border-gray-300  ${rowsDesign}`}
                             >
                                 <div
-                                    key={columnIndex}
 
                                     onClick={() => (column.columnFunctionality && column.columnFunctionality.event.onClick) && column.columnFunctionality.event.onClick(columnIndex,column,item)}
 

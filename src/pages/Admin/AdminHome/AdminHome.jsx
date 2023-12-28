@@ -1,7 +1,9 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1 } from '../../../components/index'
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 function AdminHome() {
@@ -597,7 +599,7 @@ function AdminHome() {
                     .join('&');
                 
                 return  <div className='flex flex-col w-full justify-end items-end'>
-                            <textarea value={value} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
+                            <textarea value={value} onChange={() => {}} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
 
                             {/* <a 
                             href={``}
@@ -932,6 +934,64 @@ function AdminHome() {
 
     }
 
+    // generate a unique course Code everytime create add course form appears
+    const generateUniqueCourseCode = () => {
+        const getRandomAlphabets = (length) => {
+            const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += alphabets.charAt(Math.floor(Math.random() * alphabets.length));
+            }
+            return result;
+        };
+      
+        const getJumbledString = (input) => {
+            return input
+                .split('')
+                .sort(() => Math.random() - 0.5)
+                .join('');
+        };
+      
+        const getJumbledTimestamp = () => {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+            
+            // Combine time components
+            const timeString = `${hours}${minutes}${seconds}${milliseconds}`;
+        
+            // Jumble the timestamp
+            const jumbledTimestamp = getJumbledString(timeString);
+        
+            return jumbledTimestamp;
+        };
+      
+        // Maximum length for courseCode
+        const maxCodeLength = 10;
+      
+        // Generate at least 4 alphabets for the start of courseCode and jumble them
+        const initialAlphabets = getRandomAlphabets(4);
+        const jumbledInitialAlphabets = getJumbledString(initialAlphabets);
+      
+        // Generate jumbled timestamp
+        const jumbledTimestamp = getJumbledTimestamp();
+      
+        // Combine all parts to form the final courseCode
+        let courseCode = jumbledInitialAlphabets + jumbledTimestamp;
+      
+        // Trim alphabets if necessary to accommodate the timestamp
+        if (courseCode.length > maxCodeLength) {
+            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(2, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
+            courseCode = trimmedAlphabets + jumbledTimestamp;
+        }
+        
+        return courseCode;
+    };
+
+    const [courseCode, setCourseCode] = useState(() => generateUniqueCourseCode());
+
     const createNewCourseFormData = {
         inputs : [
             // Define your form inputs here
@@ -939,6 +999,7 @@ function AdminHome() {
             { label: 'Instructor Name', type: 'text', placeholder: '', name: 'name', required: true,  },
             { label: 'Password', type: 'password', placeholder: '', name: 'password', required: true,  },
             { label: 'E Learning', type: 'select', options: ['Inventory Management', 'Nego Test'], placeholder: 'Select E Learning', defaultValue : 'Select E Learning', name: 'eLearning', required: true,  },
+            { label: 'Course Code', type: 'text', placeholder: '', name: 'courseCode', required: true, defaultValue: courseCode, readOnly : true },
             { label: 'Course Name', type: 'text', placeholder: '', name: 'courseName', required: true,  },
             { label: 'No. of Licenses', type: 'text', placeholder: '', name: 'licenses', required: true,  },
             { label: 'Total Markets', type: 'text', placeholder: '', name: 'markets', required: true,  },
@@ -990,6 +1051,11 @@ function AdminHome() {
 
         setHoveredDetails([]);
     };
+
+    // generating unique code everytime form opens
+    useEffect(() => {
+        setCourseCode(generateUniqueCourseCode());
+    }, [showAddCourse]);
 
     // add new course section ends
 

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {Button1, Input1, Logo, Loading1} from "../../../components/index"
 import {useForm} from "react-hook-form"
+import { AUTH_ENDPOINTS } from '../../../apiEndpoints/index'
 
 function ResetPassword() {
 
@@ -13,19 +14,20 @@ function ResetPassword() {
     const reset = async (data) => {
         setLoading(true);
         console.log(data);
-        setError('');
+        setError([]);
 
         let errors = [];
 
         if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
-            setError("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
+            errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
             setLoading(false);
+            setError(errors);
             return;
         }
 
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-            const response = await fetch('http://localhost:8082/simlearn/authentication/api/v1/password',{
+            const response = await fetch(AUTH_ENDPOINTS.RESET_PASSWORD,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type as JSON
@@ -134,6 +136,6 @@ function ResetPassword() {
             </div>
         )
     )
-}
+};
 
 export default ResetPassword

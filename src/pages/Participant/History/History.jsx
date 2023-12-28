@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
+import { PARTICIPANT_ENDPOINTS } from '../../../apiEndpoints/index';
 
 
 function History() {
@@ -22,7 +23,7 @@ function History() {
 
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-            const response = await fetch(`http://localhost:8081/simlearn/score/api/v1/student/find/${username}`, {
+            const response = await fetch(PARTICIPANT_ENDPOINTS.FETCH_HISTORY(username), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

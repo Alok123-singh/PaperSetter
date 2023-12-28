@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { setResult } from '../../store/resultSlice';
 import { Loading1 } from '../../components/index'
+import { PARTICIPANT_ENDPOINTS } from '../../apiEndpoints/index';
 
 function InventoryManagement() {
 
@@ -119,7 +120,7 @@ function InventoryManagement() {
         
         try{
             const credentials = btoa('5595832005:5dceeeb7-47f3-4dc9-8f00-2845af1da8d2');
-            const response = await fetch('http://localhost:8081/simlearn/score/api/v1/save',{
+            const response = await fetch(PARTICIPANT_ENDPOINTS.SAVE_RESULT,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type as JSON

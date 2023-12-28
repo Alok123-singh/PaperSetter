@@ -327,6 +327,7 @@ function Form({ onSubmit, formData }) {
                                                 defaultValue={input.defaultValue || null}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
+                                                readOnly={input.readOnly || false}
                                                 {...register(input.name, { required: input.required })}
                                             />
 
@@ -338,6 +339,7 @@ function Form({ onSubmit, formData }) {
                                     required={input.required}
                                     placeholder={input.placeholder}
                                     name={input.name}
+                                    readOnly={input.readOnly || false}
                                     {...register(input.name, { required: input.required })}
                                 />
                             }
