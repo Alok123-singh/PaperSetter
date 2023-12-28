@@ -19,36 +19,6 @@ function AdminHome() {
     const [hoveredDetails, setHoveredDetails] = useState([]);
     let animationTimeout;
 
-    const addInstructor = (data) => {
-        setLoading(true);
-
-        let newItems = [...items];
-
-        newItems = [...newItems,  
-            {
-                name : data.name,
-
-                emailId : data.instructorEmail,
-                
-                password : data.password,
-
-                update : <FaPencilAlt size={14} className=' cursor-pointer' />,
-
-                delete : <FaTrash size={14} className=' cursor-pointer' />,
-
-                courses : <FaInfoCircle size={14} className=' cursor-pointer' /> ,
-
-                add : <IoIosAdd size={25} className=' cursor-pointer' />,
-
-                courseList: []
-            }
-        ]
-
-        setItems(newItems);
-
-        setLoading(false);
-    };
-
     const assignCourse = (data) => {
         setLoading(true);
 
@@ -982,7 +952,7 @@ function AdminHome() {
 
     const [showForm, setShowForm] = useState(null);
 
-    const onSubmit = (data) => {
+    const createNewCourse = (data) => {
         console.log("Form Submitted",data);
 
 
@@ -1090,7 +1060,7 @@ function AdminHome() {
                     </div>
 
                     {showForm === true && ( 
-                        overlayForm2(createNewCourseFormData,setShowForm,onSubmit)
+                        overlayForm2(createNewCourseFormData,setShowForm,createNewCourse)
                     
                     )}
                     

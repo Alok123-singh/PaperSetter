@@ -5,8 +5,8 @@ import { FaSearch } from 'react-icons/fa';
 
 const SearchEngine = (
     { 
-        items, 
-        setFilteredItems, 
+        items = [], 
+        setFilteredItems = (items) => {}, 
         searchProperty = 'name', 
         enableSuggestion = false, 
         enableContinuousSearching = false, 

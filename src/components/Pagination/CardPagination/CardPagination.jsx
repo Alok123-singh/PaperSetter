@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { MdError } from 'react-icons/md';
 
@@ -15,6 +15,8 @@ function CardPagination({
     columnsDesign = '',
     rowsDesign = '',
     }) {
+    const [highlightedIndex,setHiglightIndex] = useState(-1);
+
     const updatedColumns = showRowNumbers
         ? [{ header: '#', dataKey: 'rowNumber' }, ...columnsDescription]
         : columnsDescription;
@@ -116,11 +118,13 @@ function CardPagination({
                 {currentItems.map((item, index) => (
                     
                     <div
+                    onMouseEnter={() => setHiglightIndex(index)}
+                    onMouseLeave={() => setHiglightIndex(-1)}
                     key={index}
-                    className={` bg-white w-[16.5rem] sm:w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
+                    className={` bg-white w-[16.1rem] sm:w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
                     >
                         {showRowNumbers && (
-                            <div className={`bg-gray-300 py-1 rounded-lg text-center ${rowsDesign}`}>
+                            <div className={`bg-gray-300 ${highlightedIndex === index && 'bg-slate-400 text-white'} py-1 rounded-lg text-center ${rowsDesign}`}>
                             {index + 1 + (currentPage - 1) * itemsPerPage}
                             </div>
                         )}

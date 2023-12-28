@@ -20,12 +20,6 @@ function Form({ onSubmit, formData }) {
         // onClose();
     };
 
-    const handleClickOutside = (event) => {
-        if (event.target.classList.contains('modal-overlay3')) {
-        //   onClose();
-        }
-    };
-
     const renderInput = (props, openCalendar, closeCalendar) => {
         return (
           <input

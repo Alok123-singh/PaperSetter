@@ -1165,15 +1165,15 @@ function InstructorHome() {
                 console.log("Date Render Start time",currentItem.startTime);
 
                 console.log("CurrentItem",currentItem);
-                return  <div className='w-[11.2rem] ml-[-1.55rem] bg-[#f5f467] py-2 rounded-md  flex flex-col justify-center items-center'>
+                return  <div className='w-full h-[3rem] sm:h-auto sm:w-[11.2rem] sm:ml-[-1.55rem] bg-[#f5f467] py-2 rounded-md  flex flex-col justify-center items-center'>
                             
-                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
 
-                            <p className='text-xs bg-[#f5f467] '>
+                            <p className='text-xs hidden sm:flex bg-[#f5f467] '>
                                 to
                             </p>
 
-                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} className='bg-[#f5f467] pl-1 cursor-pointer outline-none flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
 
                             <p 
                             onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}
