@@ -121,7 +121,7 @@ function CardPagination({
                     onMouseEnter={() => setHiglightIndex(index)}
                     onMouseLeave={() => setHiglightIndex(-1)}
                     key={index}
-                    className={` bg-white w-[16.5rem] sm:w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
+                    className={` bg-white w-[16.1rem] sm:w-[21.5rem] p-3 border m-2 rounded-md border-gray-300 shadow-lg  ${roundedDesign}`}
                     >
                         {showRowNumbers && (
                             <div className={`bg-gray-300 ${highlightedIndex === index && 'bg-slate-400 text-white'} py-1 rounded-lg text-center ${rowsDesign}`}>
