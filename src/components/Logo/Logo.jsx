@@ -1,5 +1,5 @@
 import React from 'react'
-import LogoImage from '../../assets/logo.jpg'
+import { LogoImage } from '../../assets'
 
 function Logo({width = '100px'}) {
     return (
