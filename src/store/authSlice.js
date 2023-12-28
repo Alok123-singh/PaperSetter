@@ -4,7 +4,7 @@ import { ROLES } from '../roles/index'
 const initialState = {
     loginStatus: true,
     username: '',
-    role : ROLES.ADMIN,
+    role : ROLES.INSTRUCTOR,
 }
 
 const authSlice = createSlice({

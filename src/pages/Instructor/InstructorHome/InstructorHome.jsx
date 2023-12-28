@@ -157,9 +157,65 @@ function InstructorHome() {
         }
     }
 
+    // generate a unique course Code everytime create add course form appears
+    const generateUniqueCourseCode = () => {
+        const getRandomAlphabets = (length) => {
+            const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += alphabets.charAt(Math.floor(Math.random() * alphabets.length));
+            }
+            return result;
+        };
+      
+        const getJumbledString = (input) => {
+            return input
+                .split('')
+                .sort(() => Math.random() - 0.5)
+                .join('');
+        };
+      
+        const getJumbledTimestamp = () => {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+            
+            // Combine time components
+            const timeString = `${hours}${minutes}${seconds}${milliseconds}`;
+        
+            // Jumble the timestamp
+            const jumbledTimestamp = getJumbledString(timeString);
+        
+            return jumbledTimestamp;
+        };
+      
+        // Maximum length for courseCode
+        const maxCodeLength = 10;
+      
+        // Generate at least 4 alphabets for the start of courseCode and jumble them
+        const initialAlphabets = getRandomAlphabets(4);
+        const jumbledInitialAlphabets = getJumbledString(initialAlphabets);
+      
+        // Generate jumbled timestamp
+        const jumbledTimestamp = getJumbledTimestamp();
+      
+        // Combine all parts to form the final courseCode
+        let courseCode = jumbledInitialAlphabets + jumbledTimestamp;
+      
+        // Trim alphabets if necessary to accommodate the timestamp
+        if (courseCode.length > maxCodeLength) {
+            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(2, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
+            courseCode = trimmedAlphabets + jumbledTimestamp;
+        }
+        
+        return courseCode;
+    };
+
     const [items,setItems] = useState([
         {
-            courseCode : 'iSldaR173718',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Logistics Practice',
             
@@ -180,7 +236,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
         {
-            courseCode : 'FIHfQ6165109',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Nego Test',
             
@@ -201,7 +257,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
         },
         {
-            courseCode : 'ZIFKQ6162409',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Inventory Management',
             
@@ -222,7 +278,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
         },
         {
-            courseCode : 'oSldaR173218',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Logistics Practice2',
             
@@ -243,7 +299,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
         {
-            courseCode : 'kSldaR173418',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Logistics Practice3',
             
@@ -264,7 +320,7 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
         {
-            courseCode : 'QSldaR173618',
+            courseCode : generateUniqueCourseCode(),
 
             name : 'Logistics Practice4',
             
