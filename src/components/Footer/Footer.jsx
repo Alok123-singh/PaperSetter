@@ -14,7 +14,7 @@ function Footer() {
                             </Link>
                             <div className='mt-2'>
                                 <p className="text-center text-sm text-gray-900 dark:text-slate-400">
-                                    &copy; Copyright 2024. All Rights Reserved by SIMLERN.
+                                    &copy; Copyright 2024. All Rights Reserved by SIMLEARN.
                                 </p>
                             </div>
                         </div>

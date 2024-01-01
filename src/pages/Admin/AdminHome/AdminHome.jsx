@@ -2,12 +2,19 @@ import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1 } from '../../../components/index'
+import { useSelector } from 'react-redux';
+import { config } from '../../../configurations'
+import { ADMIN_ENDPOINTS, GAME_ENDPOINTS, AUTH_ENDPOINTS } from '../../../apiEndpoints'
+import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse } from '../../../apiFunctionalities'
 
 
 function AdminHome() {
 
     const [loading, setLoading] = useState(false);
     const [showAddCourse, setShowAddCourse] = useState(false);
+    const [errors,setErrors] = useState([]);
+
+    const [refreshData, setRefreshData] = useState(false);
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
     const [showFormIndex2, setShowFormIndex2] = useState(null);
@@ -17,6 +24,12 @@ function AdminHome() {
     const [filteredItems, setFilteredItems] = useState([]);
 
     const [hoveredDetails, setHoveredDetails] = useState([]);
+    const [allInstructorAccounts, setAllInstructorAccounts] = useState([]);
+    const [allAvailaibleGames, setAllAvailaibleGames] = useState([]);
+
+    // const username = useSelector(state => state.auth.username);
+    const username = "anand12";
+
     let animationTimeout;
 
     const assignCourse = (data) => {
@@ -26,7 +39,7 @@ function AdminHome() {
 
         let newItems = [...items];
 
-        newItems = newItems.map((item) => item.email === data['email'] ? {...item, courseList: [...item.courseList , { courseCode: data['courseCode'], courseName: data['courseName'] }]} : item);
+        newItems = newItems.map((item) => item.email === data['email'] ? {...item, courseEntities: [...item.courseEntities , { courseCode: data['courseCode'], courseName: data['courseName'] }]} : item);
 
         setItems(newItems);
 
@@ -118,7 +131,7 @@ function AdminHome() {
                 .join('');
         };
       
-        const getJumbledTimestamp = () => {
+        const getTimestamp = () => {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -128,10 +141,7 @@ function AdminHome() {
             // Combine time components
             const timeString = `${hours}${minutes}${seconds}${milliseconds}`;
         
-            // Jumble the timestamp
-            const jumbledTimestamp = getJumbledString(timeString);
-        
-            return jumbledTimestamp;
+            return (timeString);
         };
       
         // Maximum length for courseCode
@@ -142,15 +152,15 @@ function AdminHome() {
         const jumbledInitialAlphabets = getJumbledString(initialAlphabets);
       
         // Generate jumbled timestamp
-        const jumbledTimestamp = getJumbledTimestamp();
+        const timestamp = getTimestamp();
       
         // Combine all parts to form the final courseCode
-        let courseCode = jumbledInitialAlphabets + jumbledTimestamp;
+        let courseCode = jumbledInitialAlphabets + timestamp;
       
         // Trim alphabets if necessary to accommodate the timestamp
         if (courseCode.length > maxCodeLength) {
-            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(2, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
-            courseCode = trimmedAlphabets + jumbledTimestamp;
+            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(3, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
+            courseCode = trimmedAlphabets + timestamp;
         }
         
         return courseCode;
@@ -164,7 +174,7 @@ function AdminHome() {
             
             password : '1234',
 
-            courseList: [
+            courseEntities: [
                 {
                     courseCode : generateUniqueCourseCode(),
                     courseName : 'Inventory Management'
@@ -182,7 +192,7 @@ function AdminHome() {
             
             password : 'chotu@don',
 
-            courseList: [
+            courseEntities: [
                 {
                     courseCode : generateUniqueCourseCode(),
                     courseName : 'Hotel Management'
@@ -191,6 +201,30 @@ function AdminHome() {
 
         }
     ]);
+
+    function convertIsoStringToObject(isoString) {
+        // Create a new Date object from the ISO string
+        const dateObject = new Date(isoString);
+      
+        // Check if the dateObject is valid
+        if (isNaN(dateObject.getTime())) {
+          console.error('Invalid ISO format');
+          return null;
+        }
+      
+        // Use toISOString() to get the ISO string representation
+        const formattedString = dateObject.toISOString();
+      
+        // Extract the date and time part from the ISO string
+        const desiredFormat = formattedString.slice(0, 19);
+      
+        // Create an array with the desired format
+        const resultArray = [dateObject];
+      
+        return resultArray;
+    }
+
+
 
     const tableColumnsDescription = [
         { // Instructor Name
@@ -408,20 +442,23 @@ function AdminHome() {
             rowFunctionality: {
                 
                 event: {
-                    onClick: (index) => {
+                    onClick: (index, item) => {
+                        console.log();
                         // Display a confirmation dialog
                         const confirmDelete = window.confirm('Are you sure you want to remove this instructor from organization?');
 
                         // Check if the user clicked "OK"
                         if (confirmDelete) {
-                            // Create a copy of the array
-                            const newData = [...items];
 
-                            // Use splice to remove the element at the specified index
-                            newData.splice(index, 1);
+                            deleteInstructorAccount(item.username, setRefreshData, setLoading, setErrors);
+                            // // Create a copy of the array
+                            // const newData = [...items];
 
-                            // Update the state with the modified array
-                            setItems(newData);
+                            // // Use splice to remove the element at the specified index
+                            // newData.splice(index, 1);
+
+                            // // Update the state with the modified array
+                            // setItems(newData);
                         }
                     },
                 },
@@ -483,7 +520,7 @@ function AdminHome() {
                 // console.log("Current Item", currentItem);
 
                 const props = {
-                    courseList: JSON.stringify(currentItem.courseList),
+                    courseEntities: JSON.stringify(currentItem.courseEntities),
                     instructorName: currentItem.name,
                 }
 
@@ -502,72 +539,72 @@ function AdminHome() {
                         </a>
             } 
         },
-        { // Assign
-            header : 'Assign',
-            dataKey: 'add', 
-            label: 'Add', 
-            columnFunctionality : {
-                event: {
-                    onMouseEnter: (index,item) => {
-                        // alert('Entered')
-                        setHoveredDetails([index,'Assign a new course to the Instructor','add']);
-                    },
-                    onMouseLeave: (index,item) => {
-                        setHoveredDetails([]);
-                    }
-                },
+        // { // Assign
+        //     header : 'Assign',
+        //     dataKey: 'add', 
+        //     label: 'Add', 
+        //     columnFunctionality : {
+        //         event: {
+        //             onMouseEnter: (index,item) => {
+        //                 // alert('Entered')
+        //                 setHoveredDetails([index,'Assign a new course to the Instructor','add']);
+        //             },
+        //             onMouseLeave: (index,item) => {
+        //                 setHoveredDetails([]);
+        //             }
+        //         },
     
-            },
-            columnRender: (index,value) => {
-                return <div
-                            className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
-                                hoveredDetails.length > 0 &&
-                                hoveredDetails[0] === index &&
-                                hoveredDetails[2] === 'add'
-                                    ? 'z-10'
-                                    : 'z-1'
-                            }`}
-                        >
-                            {hoveredDetails.length > 0 &&
-                            hoveredDetails[0] === index &&
-                            hoveredDetails[2] === 'add' && (
-                                <div
-                                className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-                                >
-                                <div className='flex flex-col justify-center items-center'>
-                                    <FaInfoCircle size={16} className="text-blue-500" />
-                                    {hoveredDetails[1]}
-                                </div>
-                                </div>
-                            )}
-                            {value}
-                            <FaPencilAlt size={9} className='mb-3 ml-1' />
+        //     },
+        //     columnRender: (index,value) => {
+        //         return <div
+        //                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
+        //                         hoveredDetails.length > 0 &&
+        //                         hoveredDetails[0] === index &&
+        //                         hoveredDetails[2] === 'add'
+        //                             ? 'z-10'
+        //                             : 'z-1'
+        //                     }`}
+        //                 >
+        //                     {hoveredDetails.length > 0 &&
+        //                     hoveredDetails[0] === index &&
+        //                     hoveredDetails[2] === 'add' && (
+        //                         <div
+        //                         className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+        //                         >
+        //                         <div className='flex flex-col justify-center items-center'>
+        //                             <FaInfoCircle size={16} className="text-blue-500" />
+        //                             {hoveredDetails[1]}
+        //                         </div>
+        //                         </div>
+        //                     )}
+        //                     {value}
+        //                     <FaPencilAlt size={9} className='mb-3 ml-1' />
                             
-                        </div>;
-            },
-            rowFunctionality: {
+        //                 </div>;
+        //     },
+        //     rowFunctionality: {
                 
-                event: {
-                    onClick : (index) => {
-                        if(showFormIndex1 === null)
-                            setShowFormIndex1(index);
-                    },
-                },
-                action: (currentItem,index) => {
-                    return showFormIndex1 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex1,assignCourse)
-                }
+        //         event: {
+        //             onClick : (index) => {
+        //                 if(showFormIndex1 === null)
+        //                     setShowFormIndex1(index);
+        //             },
+        //         },
+        //         action: (currentItem,index) => {
+        //             return showFormIndex1 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex1,assignCourse)
+        //         }
 
-            },
-            dataRender: (index, value, currentItem) => {
-                return <p 
-                        onMouseEnter={() => handleMouseEnter([index,'add'])}
-                        onMouseLeave={handleMouseLeave} 
-                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
+        //     },
+        //     dataRender: (index, value, currentItem) => {
+        //         return <p 
+        //                 onMouseEnter={() => handleMouseEnter([index,'add'])}
+        //                 onMouseLeave={handleMouseLeave} 
+        //                 className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
 
-                            {<IoIosAdd size={25} className=' cursor-pointer' />}
-                        </p>
-            } 
-        },
+        //                     {<IoIosAdd size={25} className=' cursor-pointer' />}
+        //                 </p>
+        //     } 
+        // },
     ];
 
     // cardColumnsDescription starts here
@@ -581,7 +618,7 @@ function AdminHome() {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.courseCode,'Name of the instructor','name']);
+                        setHoveredDetails([index,currentItem.email,'Name of the instructor','name']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -596,7 +633,7 @@ function AdminHome() {
                             className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
                         >
                             {hoveredDetails.length > 0 &&
-                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
                             hoveredDetails[3] === 'name' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
@@ -614,7 +651,7 @@ function AdminHome() {
             dataRender: (index, value, currentItem) => {
 
                 const props = {
-                    courseList: JSON.stringify(currentItem.courseList),
+                    courseEntities: JSON.stringify(currentItem.courseEntities),
                     instructorName: currentItem.instructorName,
                 }
 
@@ -644,7 +681,7 @@ function AdminHome() {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.courseCode,'Email of the instructor','email']);
+                        setHoveredDetails([index,currentItem.email,'Email of the instructor','email']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -659,7 +696,7 @@ function AdminHome() {
                             className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
                         >
                             {hoveredDetails.length > 0 &&
-                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
                             hoveredDetails[3] === 'email' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
@@ -788,19 +825,14 @@ function AdminHome() {
             rowFunctionality: {
                 
                 event: {
-                    onClick : (index) => {
+                    onClick : (index,item) => {
                         const confirmDelete = window.confirm('Are you sure you want to remove this instructor from organization?');
 
                         // Check if the user clicked "OK"
                         if (confirmDelete) {
-                            // Create a copy of the array
-                            const newData = [...items];
 
-                            // Use splice to remove the element at the specified index
-                            newData.splice(index, 1);
+                            deleteInstructorAccount(item.username, setRefreshData, setLoading, setErrors);
 
-                            // Update the state with the modified array
-                            setItems(newData);
                         }
                     },
                 },
@@ -858,7 +890,7 @@ function AdminHome() {
               
             dataRender: (index, value, currentItem) => {
                 const props = {
-                    courseList: JSON.stringify(currentItem.courseList),
+                    courseEntities: JSON.stringify(currentItem.courseEntities),
                     instructorName: currentItem.name,
                 }
 
@@ -882,96 +914,115 @@ function AdminHome() {
                         </div>;
             }
         },
-        { // Assign
-            header : 'Assign',
-            dataKey: 'assign', 
-            label: 'Assign', 
-            columnFunctionality : {
-                event: {
-                    onMouseEnter: (index,value,currentItem) => {
-                        // alert('Entered')
-                        setHoveredDetails([index,currentItem.email,'Update password of Instructor','assign']);
-                    },
-                    onMouseLeave: (index,value,currentItem) => {
-                        setHoveredDetails([]);
-                    }
-                },
+        // { // Assign
+        //     header : 'Assign',
+        //     dataKey: 'assign', 
+        //     label: 'Assign', 
+        //     columnFunctionality : {
+        //         event: {
+        //             onMouseEnter: (index,value,currentItem) => {
+        //                 // alert('Entered')
+        //                 setHoveredDetails([index,currentItem.email,'Update password of Instructor','assign']);
+        //             },
+        //             onMouseLeave: (index,value,currentItem) => {
+        //                 setHoveredDetails([]);
+        //             }
+        //         },
     
-            },
-            columnRender: (index,value,currentItem) => {
-                return <div
-                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-                            onMouseLeave={handleMouseLeave} 
-                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-                        >
-                            {hoveredDetails.length > 0 &&
-                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
-                            hoveredDetails[3] === 'assign' && (
-                                <div
-                                className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-                                >
-                                <div className='flex flex-col justify-center items-center'>
-                                    <FaInfoCircle size={16} className="text-blue-500" />
-                                    {hoveredDetails[2]}
-                                </div>
-                                </div>
-                            )}
-                            {value}
+        //     },
+        //     columnRender: (index,value,currentItem) => {
+        //         return <div
+        //                     // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+        //                     onMouseLeave={handleMouseLeave} 
+        //                     className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+        //                 >
+        //                     {hoveredDetails.length > 0 &&
+        //                     hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
+        //                     hoveredDetails[3] === 'assign' && (
+        //                         <div
+        //                         className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+        //                         >
+        //                         <div className='flex flex-col justify-center items-center'>
+        //                             <FaInfoCircle size={16} className="text-blue-500" />
+        //                             {hoveredDetails[2]}
+        //                         </div>
+        //                         </div>
+        //                     )}
+        //                     {value}
                             
-                            {/* <FaPencilAlt size={9} className='mb-3 ml-1' /> */}
+        //                     {/* <FaPencilAlt size={9} className='mb-3 ml-1' /> */}
                             
-                        </div>;
-            },
-            rowFunctionality: {
+        //                 </div>;
+        //     },
+        //     rowFunctionality: {
                 
-                event: {
-                    onClick : (index) => {
-                        if(showFormIndex2 === null)
-                            setShowFormIndex2(index);
-                    },
-                },
-                action: (currentItem,index) => {
-                    return showFormIndex2 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex2,assignCourse)
-                }
+        //         event: {
+        //             onClick : (index) => {
+        //                 if(showFormIndex2 === null)
+        //                     setShowFormIndex2(index);
+        //             },
+        //         },
+        //         action: (currentItem,index) => {
+        //             return showFormIndex2 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex2,assignCourse)
+        //         }
 
-            },
-            dataRender: (index, value, currentItem) => {
-                return <p 
-                        onMouseEnter={() => handleMouseEnter([index,'assign'])}
-                        onMouseLeave={handleMouseLeave} 
-                        className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
-                            {<IoIosAdd size={25} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'assign' ? ' animate-bounce' : ''}`} />}
-                        </p>
-            } 
-        },
+        //     },
+        //     dataRender: (index, value, currentItem) => {
+        //         return <p 
+        //                 onMouseEnter={() => handleMouseEnter([index,'assign'])}
+        //                 onMouseLeave={handleMouseLeave} 
+        //                 className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
+        //                     {<IoIosAdd size={25} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'assign' ? ' animate-bounce' : ''}`} />}
+        //                 </p>
+        //     } 
+        // },
     ];
 
     // cardColumnsDescription ends here 
 
-    // add new course section starts
+    // create new course section starts
 
     const [showForm, setShowForm] = useState(null);
 
-    const createNewCourse = (data) => {
-        console.log("Form Submitted",data);
+    function convertTimeObjectToIsoString(isoString) {
+        // Create a new Date object from the ISO string
+        const dateObject = new Date(isoString);
+      
+        // Check if the dateObject is valid
+        if (isNaN(dateObject.getTime())) {
+          console.error('Invalid date format');
+          return null;
+        }
+      
+        // Use toISOString() to get the ISO string representation
+        const formattedString = dateObject.toISOString();
+      
+        // Extract the date and time part from the ISO string
+        const desiredFormat = formattedString.slice(0, 19);
+      
+        return desiredFormat;
+    }
 
+    const createNewCourseSubmit = async (data) => {
 
+        createNewCourse(data,username,setRefreshData,setLoading,setErrors);
     }
 
     const [courseCode, setCourseCode] = useState(() => generateUniqueCourseCode());
 
+
     const createNewCourseFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Instuctor Email Id', type: 'text', placeholder: '', name: 'email', required: true,  },
-            { label: 'Instructor Name', type: 'text', placeholder: '', name: 'name', required: true,  },
-            { label: 'Password', type: 'password', placeholder: '', name: 'password', required: true,  },
-            { label: 'E Learning', type: 'select', options: ['Inventory Management', 'Nego Test'], placeholder: 'Select E Learning', defaultValue : 'Select E Learning', name: 'eLearning', required: true,  },
+            { label: 'Assign to', type: 'select', options : allInstructorAccounts, accessFieldName : 'email', placeholder: 'Select Instructor', defaultValue : 'Select Instructor', name: 'assignToEmail', required: true,  },
+            // { label: 'Instructor Name', type: 'text', placeholder: '', name: 'name', required: true,  },
+            // { label: 'Password', type: 'password', placeholder: '', name: 'password', required: true,  },
+            { label: 'E Learning', type: 'select', options: allAvailaibleGames, accessFieldName : 'name', placeholder: 'Select Course Name', defaultValue : 'Select Course Name', name: 'courseName', required: true,  },
             { label: 'Course Code', type: 'text', placeholder: '', name: 'courseCode', required: true, defaultValue: courseCode, readOnly : true },
-            { label: 'Course Name', type: 'text', placeholder: '', name: 'courseName', required: true,  },
-            { label: 'No. of Licenses', type: 'text', placeholder: '', name: 'licenses', required: true,  },
-            { label: 'Total Markets', type: 'text', placeholder: '', name: 'markets', required: true,  },
-            { label: 'Students in each market', type: 'text', placeholder: '', name: 'studentsInEachMarket', required: true,  },
+            // { label: 'Course Name', type: 'text', placeholder: '', name: 'courseName', required: true,  },
+            { label: 'No. of Licenses / Users', type: 'text', placeholder: '', name: 'licenses', required: true,  },
+            { label: 'Number of Groups with 5 students', type: 'text', placeholder: '', name: 'groupOfFive', required: true,  },
+            { label: 'Number of Groups with 4 students', type: 'text', placeholder: '', name: 'groupOfFour', required: true,  },
             { label: 'Start Date & Time', type: 'dateAndTime2', placeholder: '', name: 'startTime', required: true,  },
             { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true,  },
             { label: 'Number of attempts', type: 'text', placeholder: '', name: 'attempts', required: true,  },
@@ -989,7 +1040,8 @@ function AdminHome() {
         formDesign : {
             start: 'justify-center', // define whether the form should appear in the start 
             cols: 2, // define how many fields should be in 1 row
-        }
+        },
+        errors : errors,
     }
 
     const overlayForm2 = (formData,setShowForm,onSubmit) => { 
@@ -1025,7 +1077,18 @@ function AdminHome() {
         setCourseCode(generateUniqueCourseCode());
     }, [showAddCourse]);
 
-    // add new course section ends
+    // fetch all necessary data from backend when page loads
+    useEffect(() => {
+        // const isoString = '2024-01-26T13:00:00';
+        // console.log(convertIsoStringToObject(isoString));
+        fetchAllInstructors(setItems, setLoading, setErrors);
+        fetchAllInstructorsAccounts(setAllInstructorAccounts, setLoading, setErrors);
+        fetchAllAvailaibleGames(setAllAvailaibleGames, setLoading, setErrors);
+
+
+    }, [refreshData]);
+
+    // create new course section ends
 
     return loading ? (
         <Loading1 />
@@ -1060,14 +1123,13 @@ function AdminHome() {
                     </div>
 
                     {showForm === true && ( 
-                        overlayForm2(createNewCourseFormData,setShowForm,createNewCourse)
+                        overlayForm2(createNewCourseFormData,setShowForm,createNewCourseSubmit)
                     
                     )}
                     
 
                 </div>
             </div>
-
 
             {/* Search Email Section */}
             <div className="w-full flex  justify-center items-center">

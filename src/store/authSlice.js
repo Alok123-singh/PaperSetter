@@ -4,7 +4,8 @@ import { ROLES } from '../roles/index'
 const initialState = {
     loginStatus: true,
     username: '',
-    role : ROLES.INSTRUCTOR,
+    email : '',
+    role : ROLES.ADMIN,
 };
 
 const authSlice = createSlice({
@@ -20,10 +21,13 @@ const authSlice = createSlice({
         setRole: (state, action) => {
             state.role = action.payload;
         },
+        setEmail: (state,action) => {
+            state.email = action.payload;
+        }
     }
 
 });
 
-export const { setUsername, setLoginStatus, setRole } = authSlice.actions;
+export const { setUsername, setLoginStatus, setRole, setEmail } = authSlice.actions;
 
 export default authSlice.reducer;

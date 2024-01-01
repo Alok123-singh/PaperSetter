@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
-import { PARTICIPANT_ENDPOINTS } from '../../../apiEndpoints/index';
+import { GAME_ENDPOINTS } from '../../../apiEndpoints/index';
 import { config } from '../../../configurations'
+import { fetchHistory } from '../../../apiFunctionalities'
 
 
 function History() {
@@ -16,41 +17,41 @@ function History() {
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
 
-    const fetchHistory = async (username) => {
-        setLoading(true);
-        setError('');
+    // const fetchHistory = async (username) => {
+    //     setLoading(true);
+    //     setError('');
 
-        let errors = [];
+    //     let errors = [];
 
-        try{
-            const credentials = btoa(config.username + ':' + config.password);
-            const response = await fetch(PARTICIPANT_ENDPOINTS.FETCH_HISTORY(username), {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${credentials}`,
-                },
-            });
-            const data = await response.json();
+    //     try{
+    //         const credentials = btoa(config.username + ':' + config.password);
+    //         const response = await fetch(GAME_ENDPOINTS.FETCH_HISTORY(username), {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Basic ${credentials}`,
+    //             },
+    //         });
+    //         const data = await response.json();
 
-            if(data.length !== 0)
-                setHistory(data.reverse());
+    //         if(data.length !== 0)
+    //             setHistory(data.reverse());
 
-        }
-        catch(err){
-            errors.push(err);
-            console.log("History error :",err);
-        }
+    //     }
+    //     catch(err){
+    //         errors.push(err);
+    //         console.log("History error :",err);
+    //     }
 
-        if(errors.length > 0){
-            setError(errors);
-        }
+    //     if(errors.length > 0){
+    //         setError(errors);
+    //     }
 
-        setLoading(false);
-    }
+    //     setLoading(false);
+    // }
 
     useEffect(() => {
-        fetchHistory(username);
+        fetchHistory(username, setHistory, setLoading, setError);
 
     }, []);
 

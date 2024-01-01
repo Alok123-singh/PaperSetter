@@ -16,6 +16,7 @@ import SearchEngine from './SearchEngine/SearchEngine'
 import TablePagination from './Pagination/TablePagination/TablePagination'
 import CardPagination from './Pagination/CardPagination/CardPagination'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import Card1 from './Cards/Card1/Card1'
 
 export  {
     Button1,
@@ -36,6 +37,8 @@ export  {
     TablePagination,
     CardPagination,
     ErrorBoundary,
+    Card1,
+    
     
 
 };

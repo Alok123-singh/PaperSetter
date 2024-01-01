@@ -86,7 +86,7 @@ function Header() {
                         <div className={`w-1/3 flex justify-center items-center`}>
 
                             <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
-                                SIMLERN
+                                SIMLEARN
                             </div>
                             
                         </div>
@@ -210,7 +210,7 @@ function Header() {
                                 </Link>
 
                                 <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
-                                        SIMLERN
+                                        SIMLEARN
                                 </div>
 
                                 <div className='flex sm:hidden'>

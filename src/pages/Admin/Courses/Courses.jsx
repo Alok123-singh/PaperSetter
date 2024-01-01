@@ -9,7 +9,7 @@ function Courses() {
     const queryParams = new URLSearchParams(search);
 
     // Retrieve values from query parameters
-    const courseList = JSON.parse(queryParams.get('courseList')) || [];
+    const courseEntities = JSON.parse(queryParams.get('courseEntities')) || [];
     const instructorName = queryParams.get('instructorName');
 
 
@@ -54,7 +54,7 @@ function Courses() {
                 <strong>Instructor Name</strong> : {instructorName}
             </p>
 
-            <TablePagination columnsDescription={columnsDescription} items={courseList} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+            <TablePagination columnsDescription={columnsDescription} items={courseEntities} showRowNumbers={true} roundedDesign='rounded-lg' columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
         </div>
     )
 }

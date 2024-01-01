@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { Loading1 } from '../../../components/index'
+import { Loading1, Card1 } from '../../../components/index'
 
 
 function ParticipantHome() {
@@ -11,29 +11,10 @@ function ParticipantHome() {
         <Loading1 />
     ) : 
     (
-        <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>
+        <div className = 'py-10 flex justify-evenly items-center dark:bg-gray-40  flex-wrap'>
+            <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' />
 
-            <div className="w-[195px] rounded-md border-2 bg-gray-100 dark:bg-gray-200 border-gray-300 dark:border-gray-500 flex flex-col justify-center items-center">
-                <Link to={"/inventory-management"}>
-                    <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU"
-                        alt="Game"
-                        className="h-[130px] w-[90%] rounded-lg object-cover mt-2 ml-1.5"
-                    />
-                </Link>
-
-                <div className="p-2 pb-6 flex flex-col justify-center items-center">
-                    <Link to="/inventory-management">
-                        <div
-                            type="text"
-                            className=" text-xl text-center font-sans bg-transparent text-purple-700   hover:text-purple-600  rounded"
-                        >
-                            Inventory Management
-                        </div>
-                    </Link>
-                </div>
-            </div>
-
+            <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/seating-allocation' title='Seating Allocation' />
         </div>
     )
 }

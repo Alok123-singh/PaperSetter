@@ -1,11 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
+import { config } from '../../../configurations'
+import { INSTRUCTOR_ENDPOINTS } from '../../../apiEndpoints'
+import { useSelector } from 'react-redux';
+import { fetchAllCourses } from '../../../apiFunctionalities'
 
 
 function InstructorHome() {
     const [loading, setLoading] = useState(false);
+    const [errors,setErrors] = useState([]);
+    // const username = useSelector(state => state.auth.username);
+    const username = "anand12";
     
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
@@ -175,7 +182,7 @@ function InstructorHome() {
                 .join('');
         };
       
-        const getJumbledTimestamp = () => {
+        const getTimestamp = () => {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -185,10 +192,7 @@ function InstructorHome() {
             // Combine time components
             const timeString = `${hours}${minutes}${seconds}${milliseconds}`;
         
-            // Jumble the timestamp
-            const jumbledTimestamp = getJumbledString(timeString);
-        
-            return jumbledTimestamp;
+            return (timeString);
         };
       
         // Maximum length for courseCode
@@ -199,15 +203,15 @@ function InstructorHome() {
         const jumbledInitialAlphabets = getJumbledString(initialAlphabets);
       
         // Generate jumbled timestamp
-        const jumbledTimestamp = getJumbledTimestamp();
+        const timestamp = getTimestamp();
       
         // Combine all parts to form the final courseCode
-        let courseCode = jumbledInitialAlphabets + jumbledTimestamp;
+        let courseCode = jumbledInitialAlphabets + timestamp;
       
         // Trim alphabets if necessary to accommodate the timestamp
         if (courseCode.length > maxCodeLength) {
-            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(2, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
-            courseCode = trimmedAlphabets + jumbledTimestamp;
+            const trimmedAlphabets = jumbledInitialAlphabets.substring(0, Math.max(3, jumbledInitialAlphabets.length - (courseCode.length - maxCodeLength)));
+            courseCode = trimmedAlphabets + timestamp;
         }
         
         return courseCode;
@@ -217,15 +221,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Logistics Practice',
+            courseName : 'Logistics Practice',
             
             studentRegistered : '0',
 
-            studentAttempts : '3',
+            attempts : '3',
 
             archive : 'No',
 
-            licenseLeft : '15',
+            licenses : '15',
 
             startTime : new Date('2024-01-26T13:00:00'),
 
@@ -238,15 +242,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Nego Test',
+            courseName : 'Nego Test',
             
             studentRegistered : '1',
 
-            studentAttempts : '5',
+            attempts : '5',
 
             archive : 'No',
 
-            licenseLeft : '2',
+            licenses : '2',
 
             startTime : new Date('2024-01-28T16:00:00'),
 
@@ -259,15 +263,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Inventory Management',
+            courseName : 'Inventory Management',
             
             studentRegistered : '7',
 
-            studentAttempts : '5',
+            attempts : '5',
 
             archive : 'No',
 
-            licenseLeft : '2',
+            licenses : '2',
 
             startTime : new Date('2024-01-20T14:00:00'),
 
@@ -280,15 +284,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Logistics Practice2',
+            courseName : 'Logistics Practice2',
             
             studentRegistered : '0',
 
-            studentAttempts : '3',
+            attempts : '3',
 
             archive : 'No',
 
-            licenseLeft : '15',
+            licenses : '15',
 
             startTime : new Date('2024-01-24T13:00:00'),
 
@@ -301,15 +305,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Logistics Practice3',
+            courseName : 'Logistics Practice3',
             
             studentRegistered : '0',
 
-            studentAttempts : '3',
+            attempts : '3',
 
             archive : 'No',
 
-            licenseLeft : '15',
+            licenses : '15',
 
             startTime : new Date('2024-01-21T13:00:00'),
 
@@ -322,15 +326,15 @@ function InstructorHome() {
         {
             courseCode : generateUniqueCourseCode(),
 
-            name : 'Logistics Practice4',
+            courseName : 'Logistics Practice4',
             
             studentRegistered : '0',
 
-            studentAttempts : '3',
+            attempts : '3',
 
             archive : 'No',
 
-            licenseLeft : '15',
+            licenses : '15',
 
             startTime : new Date('2024-01-22T13:00:00'),
 
@@ -341,6 +345,38 @@ function InstructorHome() {
             // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
         },
     ]);
+
+    function convertIsoStringToObject(isoString) {
+        // Create a new Date object from the ISO string
+        const dateObject = new Date(isoString);
+      
+        // Check if the dateObject is valid
+        if (isNaN(dateObject.getTime())) {
+          console.error('Invalid ISO format');
+          return null;
+        }
+      
+        // Use toISOString() to get the ISO string representation
+        const formattedString = dateObject.toISOString();
+      
+        // Extract the date and time part from the ISO string
+        const desiredFormat = formattedString.slice(0, 19);
+      
+        // Create an array with the desired format
+        const resultArray = [dateObject];
+      
+        return resultArray;
+    }
+
+    // fetch all necessary details when page loads
+    useEffect(() => {
+        // const isoString = '2024-01-26T13:00:00';
+        // console.log(convertIsoStringToObject(isoString));
+
+        fetchAllCourses(username,setLoading,setErrors,setItems);
+
+
+    }, []);
 
     const tableColumnsDescription = [
         { // Course Code
@@ -397,13 +433,13 @@ function InstructorHome() {
         },
         { // Name
             header : 'Name',
-            dataKey: 'name', 
+            dataKey: 'courseName', 
             label: 'Name', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Name of the course','name']);
+                        setHoveredDetails([index,'Name of the course','courseName']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -417,14 +453,14 @@ function InstructorHome() {
                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                       hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'name'
+                      hoveredDetails[2] === 'courseName'
                         ? 'z-10'
                         : 'z-1'
                     }`}
                   >
                     {hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'name' && (
+                      hoveredDetails[2] === 'courseName' && (
                         <div
                           className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
@@ -520,13 +556,13 @@ function InstructorHome() {
         },
         { // Attempts
             header : 'Attempts',
-            dataKey: 'studentAttempts', 
+            dataKey: 'attempts', 
             label: 'Student Attempts', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Total number of times a student can attempt the course','studentAttempts']);
+                        setHoveredDetails([index,'Total number of times a student can attempt the course','attempts']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -540,14 +576,14 @@ function InstructorHome() {
                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                       hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'studentAttempts'
+                      hoveredDetails[2] === 'attempts'
                         ? 'z-10'
                         : 'z-1'
                     }`}
                   >
                     {hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'studentAttempts' && (
+                      hoveredDetails[2] === 'attempts' && (
                         <div
                           className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
@@ -648,14 +684,14 @@ function InstructorHome() {
             } 
         },
         { // License Left
-            header : 'License Left',
-            dataKey: 'licenseLeft', 
-            label: 'License Left', 
+            header : 'Licenses',
+            dataKey: 'licenses', 
+            label: 'Licenses', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Total number of licenses left for this course','licenseLeft']);
+                        setHoveredDetails([index,'Total number of licenses left for this course','licenses']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -669,14 +705,14 @@ function InstructorHome() {
                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                       hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'licenseLeft'
+                      hoveredDetails[2] === 'licenses'
                         ? 'z-10'
                         : 'z-1'
                     }`}
                   >
                     {hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'licenseLeft' && (
+                      hoveredDetails[2] === 'licenses' && (
                         <div
                           className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
@@ -830,13 +866,13 @@ function InstructorHome() {
         },
         { // Name
             header : 'Name',
-            dataKey: 'name', 
+            dataKey: 'courseName', 
             label: 'Name', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.courseCode,'Name of the course','name']);
+                        setHoveredDetails([index,currentItem.courseCode,'Name of the course','courseName']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -852,7 +888,7 @@ function InstructorHome() {
                         >
                             {hoveredDetails.length > 0 &&
                             hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-                            hoveredDetails[3] === 'name' && (
+                            hoveredDetails[3] === 'courseName' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
@@ -940,13 +976,13 @@ function InstructorHome() {
         },
         { // Attempts
             header : 'Attempts',
-            dataKey: 'studentAttempts', 
+            dataKey: 'attempts', 
             label: 'Student Attempts', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.courseCode,'Total number of times a student can attempt the course','studentAttempts']);
+                        setHoveredDetails([index,currentItem.courseCode,'Total number of times a student can attempt the course','attempts']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -962,7 +998,7 @@ function InstructorHome() {
                         >
                             {hoveredDetails.length > 0 &&
                             hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-                            hoveredDetails[3] === 'studentAttempts' && (
+                            hoveredDetails[3] === 'attempts' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
@@ -1060,14 +1096,14 @@ function InstructorHome() {
             } 
         },
         { // License Left
-            header : 'License Left',
-            dataKey: 'licenseLeft', 
-            label: 'License Left', 
+            header : 'Licenses',
+            dataKey: 'licenses', 
+            label: 'Licenses', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.courseCode,'Total number of licenses left for this course','licenseLeft']);
+                        setHoveredDetails([index,currentItem.courseCode,'Total number of licenses left for this course','licenses']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -1083,7 +1119,7 @@ function InstructorHome() {
                         >
                             {hoveredDetails.length > 0 &&
                             hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
-                            hoveredDetails[3] === 'licenseLeft' && (
+                            hoveredDetails[3] === 'licenses' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
@@ -1218,7 +1254,7 @@ function InstructorHome() {
 
             {/* search email section */}
             <div className="w-full flex flex-col justify-center items-center mt-2">
-                <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="name" width='lg:w-[35%]' />
+                <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="courseName" width='lg:w-[35%]' />
             </div>
 
             {displayFormat === 'Table' && 

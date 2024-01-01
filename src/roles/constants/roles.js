@@ -1,8 +1,8 @@
 
 export const ROLES = {
-    PARTICIPANT: 'participant',
-    INSTRUCTOR: 'instructor',
-    ADMIN: 'admin',
+    PARTICIPANT: 'PARTICIPANT',
+    INSTRUCTOR: 'INSTRUCTOR',
+    ADMIN: 'ADMIN',
 };
 
 export default ROLES;

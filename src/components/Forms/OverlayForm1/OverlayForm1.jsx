@@ -12,7 +12,7 @@ import moment from 'moment';
 
 function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
 
-    const { register, handleSubmit, setValue, watch, control, formState } = useForm();
+    const { register, handleSubmit, watch, control, formState } = useForm();
     const { errors } = formState;
     const id = useId();
 
@@ -45,6 +45,16 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                     <p className='pl-1 font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>
                     <div className='bg-pink-400 h-[1px]'></div>
+                </div>
+
+                {/* Errors Section */}
+                <div className='w-full mb-4 flex flex-col justify-center items-center'>
+                    {(formData.errors && formData.errors.length > 0) && <div className='flex flex-col'>
+                        {
+                            formData.errors.map((err,index) => 
+                            (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+                        }
+                    </div>}
                 </div>
 
                 <form
@@ -175,8 +185,8 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                                 }
                                                                 
                                                                 {input.options.map((option,index) => (
-                                                                    <option key={index} value={option}>
-                                                                        {option}
+                                                                    <option key={index} value={input.accessFieldName ? option[input.accessFieldName] : option}>
+                                                                        {input.accessFieldName ? option[input.accessFieldName] : option}
                                                                     </option>
                                                                 ))}
                                                             </select>

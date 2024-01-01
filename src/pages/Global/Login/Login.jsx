@@ -1,70 +1,41 @@
-import React, {useState} from 'react'
+import React, { useState, useId } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button1, Input1, Logo, Loading2 } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
-import { useDispatch } from 'react-redux';
-import { setUsername, setLoginStatus } from '../../../store/authSlice.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsername, setLoginStatus, setRole, setEmail } from '../../../store/authSlice.js'
 import { MdAutorenew } from 'react-icons/md';
 import { AUTH_ENDPOINTS } from '../../../apiEndpoints';
 import { config } from '../../../configurations'
-// import { IoIosRefresh, IoIosRefreshCircle, IoIosSync, IoMdRefresh  } from 'react-icons/io';
+import { ROLES } from '../../../roles/index.js';
+import { setTheme } from '../../../store/themeSlice.js';
+import { login } from '../../../apiFunctionalities'
 
 
 function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const {register, handleSubmit} = useForm()
-    const [error, setError] = useState("")
+    const {register, handleSubmit, watch, reset} = useForm();
+    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
+    const [step,setStep] = useState(1);
     const dispatch = useDispatch();
+    const email = useSelector(state => state.auth.email);
+    const [validateByOtp,setValidateByOtp] = useState(false);
 
-    const login = async(data) => {
-        setLoading(true);
-        // console.log(data);
-        setError("")
+    const [input,setInput] = useState({
+        // defaultValue : 'INSTRUCTOR',
+        options : [ROLES.INSTRUCTOR,ROLES.PARTICIPANT],
+        label: 'Login As ',
+        required : true,
+    });
+    const id = useId();
 
-        try{
-            const credentials = btoa(config.username + ':' + config.password);
-            const response = await fetch(AUTH_ENDPOINTS.LOGIN,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Specify the content type as JSON
-                    'Authorization': `Basic ${credentials}`,
-                    // Add any other headers if needed
-                },
-                body: JSON.stringify(data), // Convert the data to a JSON string
-            });
-            const data2 = await response.json();
-            
-            if(data2 === true){
-                dispatch(setUsername(data.username));
-                dispatch(setLoginStatus(true));
-                console.log("Login Successfull");
-                navigate('/');
-            }
-            else{
-                // console.log('Login Error -: ',data2);
-                setError(data2.message);
-                console.log("Login Failed");
-            }
+    const doLogin = async(data) => {
 
-        }
-        catch(error){
-            console.log("Login Error :",error);
-            // setError(error);
+        login(data, email, ROLES, validateByOtp, setValidateByOtp, dispatch, navigate, reset, setMessage, setUsername, setLoginStatus, setRole, setEmail, setStep, setLoading, setError);
 
-            const fakeError = new Error('Fetch API was not able to connect to the requested resource');
-
-            // Create an error event
-            const errorEvent = new Event('error');
-            errorEvent.error = fakeError;
-
-            // Dispatch the error event
-            window.dispatchEvent(errorEvent);
-
-            // throw new Error('Fetch API was not able to connect to the requested resource');
-        }
-        setLoading(false);
-    }
+    };
 
     return (
         <div
@@ -92,44 +63,125 @@ function Login() {
                         Sign Up
                     </Link>
                 </p>
+                {message && <p className="text-green-600 mt-8 text-center">{message}</p>}
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                <form onSubmit={handleSubmit(login)} className='mt-8'>
-                    <div className='space-y-7 '>
-                        <Input1
-                        // label = "Username"
-                        type="text"
-                        placeholder="Username"
-                        {...register("username", {
-                            required: true,
-                        })}
-                        
-                        />
+                <form onSubmit={handleSubmit(doLogin)} className='mt-5'>
+                    {step === 1 && 
+                        <div className='space-y-7 w-full flex flex-col justify-center items-center '>
+                            <div className="w-full flex flex-col justify-around items-center ">
+                                {input.label && (
+                                    <label className='w-full flex justify-center mb-5 items-center font-bold' htmlFor={id}>
+                                        <div className=''>
+                                            {input.label}
+            
+                                        </div>
+                                    </label>
+                                )}
+                                <div className='w-full flex justify-between items-center'>
+                                    {input.options.map((option, optionIndex) => (
+                                        <div key={optionIndex} className="flex items-center mb-2 sm:mb-0">
+                                            <input
+                                            type="radio"
+                                            id={`${optionIndex}`}
+                                            name="role"
+                                            value={option}
+                                            defaultChecked={input.defaultValue && option === input.defaultValue ? true : false}
+                                            className="hidden"
+                                            {...register('role', {
+                                                required: input.required,
+                                            })}
+                                            />
+                                            <label
+                                            htmlFor={`${optionIndex}`}
+                                            className={`cursor-pointer flex items-center space-x-2 p-2 border rounded-md transition duration-300 ${
+                                                watch('role') === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300 hover:bg-gray-100'
+                                            }`}
+                                            >
+                                            <div className={`w-5 h-5 flex items-center justify-center border rounded-full transition duration-300 ${watch('role') === option ? 'border-blue-500' : 'border-gray-400'}`}>
+                                                {watch('role') === option && <div className="w-3 h-3 bg-blue-500 rounded-full"></div>}
+                                            </div>
+                                            <span className="text-sm">{option.charAt(0).toUpperCase() + option.slice(1).toLowerCase()}</span>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
 
-                        <div className='relative'>
+                            <Button1 
+                            type="submit" 
+                            className="w-full h-[3rem] rounded-sm"
+                            onClick={(e) => {
+                                if(watch('role'))
+                                    setStep((prev) => prev + 1);
+                            }}
+                            >
+                                Next
+                            </Button1>
+                        </div>
+                    }
+
+                    {step === 2 && 
+                        <div className='space-y-7 '>
                             <Input1
-                                type='password'
-                                placeholder='Password'
-                                {...register('password', {
+                            // label = "Username"
+                            type="text"
+                            placeholder="Username"
+                            {...register("username", {
                                 required: true,
+                            })}
+                            
+                            />
+
+                            <div className='relative'>
+                                <Input1
+                                    type='password'
+                                    placeholder='Password'
+                                    {...register('password', {
+                                    required: true,
+                                    })}
+                                />
+                                
+                            </div>
+
+                            {validateByOtp && 
+                                <Input1
+                                type='text'
+                                placeholder='Enter OTP'
+                                {...register('otp', {
+                                required: validateByOtp,
                                 })}
                             />
-                            
+                            }
+
+                            <div className='w-full flex space-x-4'>
+
+                                <button
+                                onClick={() => setStep(prev => prev-1)}
+                                type="button"
+                                className="w-full rounded-none py-3 bg-blue-600 text-white  hover:bg-blue-500"
+                                >
+                                    Back
+
+                                </button>
+
+                                <button
+                                type="submit"
+                                className="w-full rounded-none py-3 bg-[#ed8d2d]  hover:bg-[#faa148]"
+                                >
+                                    {validateByOtp === true ? 'Submit OTP' : 'Log in'}
+
+                                </button>
+
+                            </div>
+
+                            {loading === true && (
+                                <Loading2 />
+                            )}
+                        
+
                         </div>
-
-                        <button
-                        type="submit"
-                        className="w-full rounded-none py-3 bg-[#ed8d2d] border-b-2 border-b-orange-700 hover:bg-[#faa148]"
-                        >
-                            Log in
-
-                        </button>
-
-                        {loading === true && (
-                            <Loading2 />
-                        )}
+                    }
                     
-
-                    </div>
                 </form>
 
                 <button 

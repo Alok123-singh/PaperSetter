@@ -6,7 +6,7 @@ import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from '
 import { Result, History } from './pages/Participant/index.js'
 import { Courses } from './pages/Admin/index.js'
 import { AuthLayout } from './components/index.js'
-import { InventoryManagement } from './games/index.js'
+import { InventoryManagement, SeatingAllocation } from './games/index.js'
 import App from './App.jsx'
 import store from './store/store.js'
 import { Home } from './roles/index.js'
@@ -30,6 +30,14 @@ const router = createBrowserRouter(
             <Route path='inventory-management'>
 
                 <Route index={true} element={<AuthLayout authentication> {""} <InventoryManagement /> </AuthLayout>}/>
+
+                <Route path='result' element={<AuthLayout authentication> {""} <Result /> </AuthLayout>} />
+
+            </Route>
+
+            <Route path='seating-allocation'>
+
+                <Route index={true} element={<AuthLayout authentication> {""} <SeatingAllocation /> </AuthLayout>}/>
 
                 <Route path='result' element={<AuthLayout authentication> {""} <Result /> </AuthLayout>} />
 

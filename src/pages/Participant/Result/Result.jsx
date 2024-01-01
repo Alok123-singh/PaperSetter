@@ -12,6 +12,7 @@ function Result() {
     const title = useSelector(state => state.result.title);
     const noOfQueries = useSelector(state => state.result.noOfQueries);
     const score = useSelector(state => state.result.score);
+    const resultDescription = useSelector(state => state.result.resultDescription);
 
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
@@ -45,7 +46,7 @@ function Result() {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Total number of rooms occupied in the exam','occupancy']);
+                        setHoveredDetails([index,resultDescription,'occupancy']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);

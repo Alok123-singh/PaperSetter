@@ -46,6 +46,16 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                     <div className='bg-pink-400 h-[1px]'></div>
                 </div>
 
+                {/* Errors Section */}
+                <div className='w-full mb-4 flex flex-col justify-center items-center'>
+                    {(formData.errors && formData.errors.length > 0) && <div className='flex flex-col'>
+                        {
+                            formData.errors.map((err,index) => 
+                            (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+                        }
+                    </div>}
+                </div>
+                
                 <form
                 onSubmit={handleSubmit(addCourse)}
                 className=" w-full flex flex-col justify-center items-center "
@@ -174,11 +184,14 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                                     </option>
                                                                 }
                                                                 
-                                                                {input.options.map((option,index) => (
-                                                                    <option key={index} value={option}>
-                                                                        {option}
+                                                                {input.options.map((option,index) => {
+                                                                    // console.log("Option",option);
+                                                                    // console.log("Input",input);
+                                                                    
+                                                                    return <option key={index} value={input.accessFieldName ? option[input.accessFieldName] : option}>
+                                                                         {input.accessFieldName ? option[input.accessFieldName] : option}
                                                                     </option>
-                                                                ))}
+                                                                })}
                                                             </select>
                                                             {errors[input.name] && (
                                                                 <p className="text-red-500 mt-3">{errors[input.name].message}</p>
@@ -218,7 +231,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                                 id={`${optionIndex}`}
                                                                 value={option}
                                                                 {...field}
-                                                                defaultChecked={option === parentData[input.defaultValue] ? true : false}
+                                                                defaultChecked={input.defaultValue && option === input.defaultValue ? true : false}
                                                                 className="appearance-none border border-gray-400 rounded-full h-5 w-5 checked:bg-blue-500 checked:border-transparent focus:outline-none"
                                                             />
                                                             <label
@@ -264,7 +277,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                                 id={`${optionIndex}`}
                                                                 value={option}
                                                                 {...field}
-                                                                defaultChecked={option === parentData[input.defaultValue] ? true : false}
+                                                                defaultChecked={input.defaultValue && option === input.defaultValue ? true : false}
                                                                 className="appearance-none border border-gray-400 rounded-full h-5 w-5 checked:bg-blue-500 checked:border-transparent focus:outline-none"
                                                             />
                                                             <label
