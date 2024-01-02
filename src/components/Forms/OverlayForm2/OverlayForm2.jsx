@@ -15,7 +15,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
     const { errors } = formState;
     const id = useId();
 
-    const addCourse = (data) => {
+    const doOnSubmit = (data) => {
         onSubmit(data);
         onClose();
     };
@@ -57,7 +57,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                 </div>
                 
                 <form
-                onSubmit={handleSubmit(addCourse)}
+                onSubmit={handleSubmit(doOnSubmit)}
                 className=" w-full flex flex-col justify-center items-center "
                 >
                     <div className={`grid md:grid-cols-${(formData.formDesign && formData.formDesign.cols) ? formData.formDesign.cols : 2} gap-8 w-full`}>

@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from './pages/Global/index.js'
-import { Result, History } from './pages/Participant/index.js'
-import { Courses } from './pages/Admin/index.js'
+import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from './pages/Global'
+import { Result, History, EnrollGame, EnrolledStudents } from './pages/Participant'
+import { StudentsEnrolled } from './pages/Instructor'
+import { Courses } from './pages/Admin'
 import { AuthLayout } from './components/index.js'
 import { InventoryManagement, SeatingAllocation } from './games/index.js'
 import App from './App.jsx'
@@ -42,6 +43,16 @@ const router = createBrowserRouter(
                 <Route path='result' element={<AuthLayout authentication> {""} <Result /> </AuthLayout>} />
 
             </Route>
+
+            <Route path='enroll'>
+
+                <Route index={true} element={<AuthLayout authentication> {""} <EnrollGame /> </AuthLayout>}/>
+
+                <Route path='students/*' element={<EnrolledStudents />} />
+
+            </Route>
+
+            <Route path='course/students-enrolled' element={<AuthLayout authentication> {""} <StudentsEnrolled /> </AuthLayout>} />
 
             <Route path='theme' element={<AuthLayout authentication> {""} <Theme /> </AuthLayout>} />
 

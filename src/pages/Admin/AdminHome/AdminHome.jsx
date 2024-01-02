@@ -5,7 +5,7 @@ import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, Ca
 import { useSelector } from 'react-redux';
 import { config } from '../../../configurations'
 import { ADMIN_ENDPOINTS, GAME_ENDPOINTS, AUTH_ENDPOINTS } from '../../../apiEndpoints'
-import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse } from '../../../apiFunctionalities'
+import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from '../../../apiFunctionalities'
 
 
 function AdminHome() {
@@ -27,8 +27,8 @@ function AdminHome() {
     const [allInstructorAccounts, setAllInstructorAccounts] = useState([]);
     const [allAvailaibleGames, setAllAvailaibleGames] = useState([]);
 
-    // const username = useSelector(state => state.auth.username);
-    const username = "anand12";
+    const username = useSelector(state => state.auth.username);
+    // const username = "anand12";
 
     let animationTimeout;
 
@@ -46,22 +46,15 @@ function AdminHome() {
         setLoading(false);
     };
 
-    const updatePassword = (data) => {
-        setLoading(true);
+    const doUpdatePassword = (data) => {
+        updatePassword(data,() => {},setLoading,setErrors);
 
-        let newItems = [...items];
-
-        newItems = newItems.map((item) => item.email === data['email'] ? {...item, password: data['newPassword']} : item);
-
-        setItems(newItems);
-        
-        setLoading(false);
     };
 
     const updateFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'email', required: true, defaultValue: 'email', },
+            { label: 'Instructor Username', type: 'text', placeholder: 'Instructor Username', name: 'username', required: true, defaultValue: 'username', },
             { label: 'New Password', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
@@ -168,7 +161,7 @@ function AdminHome() {
 
     const [items,setItems] = useState([
         {
-            name : 'Anand Pratap Singh Bais',
+            fullName : 'Anand Pratap Singh Bais',
 
             email : 'anandpsingh7@gmail.com',
             
@@ -186,7 +179,7 @@ function AdminHome() {
             ]
         },
         {
-            name : 'Chotu Don',
+            fullName : 'Chotu Don',
 
             email : 'chotudon@gmail.com',
             
@@ -225,17 +218,16 @@ function AdminHome() {
     }
 
 
-
     const tableColumnsDescription = [
         { // Instructor Name
             header : 'Instructor Name',
-            dataKey: 'name', 
+            dataKey: 'fullName', 
             label: 'Instructor name', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Name of the Instructor','instructorName']);
+                        setHoveredDetails([index,'Name of the Instructor','fullName']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -249,14 +241,14 @@ function AdminHome() {
                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
                       hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'instructorName'
+                      hoveredDetails[2] === 'fullName'
                         ? 'z-10'
                         : 'z-1'
                     }`}
                   >
                     {hoveredDetails.length > 0 &&
                       hoveredDetails[0] === index &&
-                      hoveredDetails[2] === 'instructorName' && (
+                      hoveredDetails[2] === 'fullName' && (
                         <div
                           className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                         >
@@ -382,7 +374,7 @@ function AdminHome() {
                     },
                 },
                 action: (currentItem,index) => {
-                    return showFormIndex2 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex2,updatePassword)
+                    return showFormIndex2 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex2,doUpdatePassword)
                 }
 
             },
@@ -612,13 +604,13 @@ function AdminHome() {
     const cardColumnsDescription = [
         { // Instructor Name
             header : 'Instructor Name',
-            dataKey: 'name', 
+            dataKey: 'fullName', 
             label: 'Instructor Name', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
                         // alert('Entered')
-                        setHoveredDetails([index,currentItem.email,'Name of the instructor','name']);
+                        setHoveredDetails([index,currentItem.email,'Name of the instructor','fullName']);
                     },
                     onMouseLeave: (index,value,currentItem) => {
                         setHoveredDetails([]);
@@ -634,7 +626,7 @@ function AdminHome() {
                         >
                             {hoveredDetails.length > 0 &&
                             hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
-                            hoveredDetails[3] === 'name' && (
+                            hoveredDetails[3] === 'fullName' && (
                                 <div
                                 className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
                                 >
@@ -769,7 +761,7 @@ function AdminHome() {
                     },
                 },
                 action: (currentItem,index) => {
-                    return showFormIndex1 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex1,updatePassword)
+                    return showFormIndex1 === index && overlayForm1(currentItem,updateFormData,setShowFormIndex1,doUpdatePassword)
                 }
 
             },
@@ -982,7 +974,8 @@ function AdminHome() {
 
     // create new course section starts
 
-    const [showForm, setShowForm] = useState(null);
+    const [showGameForm, setShowGameForm] = useState(null);
+    const [showCourseForm, setShowCourseForm] = useState(null);
 
     function convertTimeObjectToIsoString(isoString) {
         // Create a new Date object from the ISO string
@@ -1004,8 +997,24 @@ function AdminHome() {
     }
 
     const createNewCourseSubmit = async (data) => {
+        console.log("Create new course Data :-",data);
+        // console.log(data.assignToEmail);
 
-        createNewCourse(data,username,setRefreshData,setLoading,setErrors);
+        // include fullName also in data according to data.assignToEmail value
+        allInstructorAccounts.map((account) => {
+            if(account.email === data.assignToEmail){
+                data.fullName = account.fullName;
+                data.username = account.username;
+            }
+        });
+
+        createNewCourse(data,setRefreshData,setLoading,setErrors);
+    }
+
+    const createNewGameSubmit = async (data) => {
+        console.log("Create new game Data :-",data);
+
+        createNewGame(data,setRefreshData,setLoading,setErrors);
     }
 
     const [courseCode, setCourseCode] = useState(() => generateUniqueCourseCode());
@@ -1044,13 +1053,38 @@ function AdminHome() {
         errors : errors,
     }
 
+    const createNewGameFormData = {
+        inputs : [
+            // Define your form inputs here
+            { label: 'Name of Game', type: 'text', placeholder: 'Enter name', name: 'name', required: true,  },
+            { label: 'Type', type: 'text', placeholder: 'Enter type', name: 'type', required: true,  },
+            // Add more input configurations as needed
+        ],
+        buttons : [
+            // Define your form buttons here
+            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-sm' },
+            // Add more button configurations as needed
+        ],
+        title : 'Create Game',
+        desc : "You can create your game",
+        formHeight : "",
+        formWidth : "lg:w-3/4", // total width of the form
+        formDesign : {
+            start: 'justify-center', // define whether the form should appear in the start 
+            cols: 2, // define how many fields should be in 1 row
+        },
+        errors : errors,
+    }
+
+
     const overlayForm2 = (formData,setShowForm,onSubmit) => { 
 
-        // console.log("Clicked from", parentData);
+        // console.log("Clicked from", onSubmit);
 
         return <OverlayForm2
                     onClose={() => {
                         setShowForm(null);
+                        // setShowAddCourse(false);
                     }}
                     onSubmit={onSubmit}
                     formData={formData}
@@ -1099,22 +1133,30 @@ function AdminHome() {
             <div className='w-full flex flex-col lg:flex-row justify-between items-center '>
 
                 {/* Heading Section */}
-                <div className='w-full lg:w-[90%] flex justify-center items-center lg:ml-[8.4rem] '>
+                <div className='w-full  flex justify-center items-center '>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Admin Home</h1>
                 </div>
 
-                {/* Add new course form */}
-                <div className='w-full mt-4 mb-2 lg:mt-0 lg:w-[10%] flex justify-center lg:justify-end lg:mr-7 items-center'>
-                    {/* Create new course button section */}
+            </div>
+
+            {/* Crdate new game and Create new course form */}
+            <div className='w-[98%] md:w-[90%] my-6 flex justify-between items-center'>
+
+                <div className=''>
+                    {/* Create new game button section */}
                     <div className='flex flex-col justify-center items-center text-xl'>
-                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Course </p>
+                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Game </p>
 
                         <Button1
                         className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
                         onClick={() => {
-                            setShowAddCourse(prev => !prev);
-                            if(showForm === null)
-                                setShowForm(true);
+                            // setFormData(createNewGameFormData);
+                            // setOnSubmitFunction(() => createNewGameSubmit());
+                            // setShowAddCourse(prev => !prev);
+                            if(showGameForm === null)
+                                setShowGameForm(true);
+                            // else
+                            //     setShowForm(null);
                         }}
                         >
                             Add
@@ -1122,13 +1164,41 @@ function AdminHome() {
                         
                     </div>
 
-                    {showForm === true && ( 
-                        overlayForm2(createNewCourseFormData,setShowForm,createNewCourseSubmit)
+                    {showGameForm && ( 
+                        overlayForm2(createNewGameFormData,setShowGameForm,createNewGameSubmit)
                     
                     )}
-                    
-
                 </div>
+                
+                <div className=''>
+                    {/* Create new course button section */}
+                    <div className='flex flex-col justify-center items-center text-xl'>
+                        <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Course </p>
+
+                        <Button1
+                        className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
+                        onClick={() => {
+                            // setFormData(createNewCourseFormData);
+                            // setOnSubmitFunction(() => createNewCourseSubmit());
+                            // setShowAddCourse(true);
+                            if(showCourseForm === null)
+                                setShowCourseForm(true);
+                            // else
+                            //     setShowForm(null);
+                        }}
+                        >
+                            Add
+                        </Button1>
+                        
+                    </div>
+
+                    {showCourseForm && ( 
+                        overlayForm2(createNewCourseFormData,setShowCourseForm,createNewCourseSubmit)
+                    
+                    )}
+                </div>
+                
+
             </div>
 
             {/* Search Email Section */}

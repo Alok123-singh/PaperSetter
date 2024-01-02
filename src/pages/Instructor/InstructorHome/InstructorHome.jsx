@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
+import { MdDescription } from 'react-icons/md';
 import { config } from '../../../configurations'
 import { INSTRUCTOR_ENDPOINTS } from '../../../apiEndpoints'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCourses } from '../../../apiFunctionalities'
+import { setCourseEntity } from '../../../store/courseSlice'
+import { useNavigate } from 'react-router-dom';
 
 
 function InstructorHome() {
     const [loading, setLoading] = useState(false);
     const [errors,setErrors] = useState([]);
     // const username = useSelector(state => state.auth.username);
-    const username = "anand12";
+    const username = "admin";
     
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
@@ -23,6 +26,8 @@ function InstructorHome() {
     const [displayFormat,setDisplayFormat] = useState('Table');
 
     const [filteredItems, setFilteredItems] = useState([]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let animationTimeout;
 
@@ -368,6 +373,25 @@ function InstructorHome() {
         return resultArray;
     }
 
+    function convertTimeObjectToIsoString(isoString) {
+        // Create a new Date object from the ISO string
+        const dateObject = new Date(isoString);
+      
+        // Check if the dateObject is valid
+        if (isNaN(dateObject.getTime())) {
+          console.error('Invalid date format');
+          return null;
+        }
+      
+        // Use toISOString() to get the ISO string representation
+        const formattedString = dateObject.toISOString();
+      
+        // Extract the date and time part from the ISO string
+        const desiredFormat = formattedString.slice(0, 19);
+      
+        return desiredFormat;
+    }
+
     // fetch all necessary details when page loads
     useEffect(() => {
         // const isoString = '2024-01-26T13:00:00';
@@ -471,32 +495,39 @@ function InstructorHome() {
                         </div>
                     )}
                     {value}
+                    <MdDescription />
                   </div>
                 );
             },
             dataRender: (index, value, currentItem) => {
 
-                const props = {
-                    courseList: JSON.stringify(currentItem.courseList),
-                    instructorName: currentItem.instructorName,
-                }
+                // const props = {
+                //     courseList: JSON.stringify(currentItem.courseList),
+                //     instructorName: currentItem.instructorName,
+                // }
 
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
+                // const queryString = Object.keys(props)
+                //     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                //     .join('&');
                 
                 return  <div className='flex justify-center items-center'>
                             <div className='text-blue-700 font-bold '>
                                 {value}
                             </div>
 
-                            <a 
-                            href={``}
-                            target='_blank'
+                            <div
+                            onClick={() => {
+                                let item = currentItem;
+                                item.startTime = convertTimeObjectToIsoString(item.startTime);
+                                item.endTime = convertTimeObjectToIsoString(item.endTime);
+                                dispatch(setCourseEntity(item));
+                                // console.log("Item", item);
+                                navigate('/course/students-enrolled')
+                            }}
                             className={`h-[3rem] ml-1 cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
 
                                 <IoMdOpen />
-                            </a>
+                            </div>
                             
                         </div>
             } 
@@ -899,30 +930,37 @@ function InstructorHome() {
                                 </div>
                             )}
                             {value}
+                            <MdDescription />
                             
                         </div>;
             },
             dataRender: (index, value, currentItem) => {
 
-                const props = {
-                    courseList: JSON.stringify(currentItem.courseList),
-                    instructorName: currentItem.instructorName,
-                }
+                // const props = {
+                //     courseList: JSON.stringify(currentItem.courseList),
+                //     instructorName: currentItem.instructorName,
+                // }
 
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
+                // const queryString = Object.keys(props)
+                //     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                //     .join('&');
                 
                 return  <div className='flex flex-col w-full justify-end items-end'>
                             <textarea value={value} onChange={() => {}} className='w-[8rem] h-[3rem] text-center resize-none outline-none text-blue-700 font-bold ' />
 
-                            <a 
-                            href={``}
-                            target='_blank'
+                            <div
+                            onClick={() => {
+                                let item = currentItem;
+                                item.startTime = convertTimeObjectToIsoString(item.startTime);
+                                item.endTime = convertTimeObjectToIsoString(item.endTime);
+                                dispatch(setCourseEntity(item));
+                                // console.log("Item", item);
+                                navigate('/course/students-enrolled')
+                            }}
                             className={`cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
 
                                 <IoMdOpen />
-                            </a>
+                            </div>
                             
                         </div>
             } 
@@ -1203,13 +1241,13 @@ function InstructorHome() {
                 console.log("CurrentItem",currentItem);
                 return  <div className='w-full h-[3rem] sm:h-auto sm:w-[11.2rem] sm:ml-[-1.55rem] bg-[#f5f467] py-2 rounded-md  flex flex-col justify-center items-center'>
                             
-                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.startTime)} onChange={() => {}} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
 
                             <p className='text-xs hidden sm:flex bg-[#f5f467] '>
                                 to
                             </p>
 
-                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
+                            <input contentEditable={false} value={formatToCustomString(currentItem.endTime)} onChange={() => {}} className='bg-[#f5f467] hidden pl-1 cursor-pointer outline-none sm:flex w-full h-[2rem] justify-center items-center' />
 
                             <p 
                             onMouseEnter={() => handleMouseEnter([index,'editSchedule'])}

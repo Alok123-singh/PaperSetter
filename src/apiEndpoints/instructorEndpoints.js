@@ -8,6 +8,7 @@ const API_BASE_URL = BASE_URL;
 export const INSTRUCTOR_ENDPOINTS = {
     GET_COURSES : (username) => `${API_BASE_URL}/courses/${username}`,
     DELETE_INSTRUCTOR : (username) => `${API_BASE_URL}/instructor/${username}`,
+    ENROLL_GAME : (courseCode) => `${API_BASE_URL}/course/${courseCode}`,
 
 
     // ... other instructor endpoints

@@ -47,7 +47,7 @@ async function fetchAllCourses(
             // body: JSON.stringify(data), // Convert the data to a JSON string
         });
         let data = await response.json();
-        // console.log("Fetch all courses data :- ",data);
+        console.log("Fetch all courses data :- ",data);
 
         // convert startTime and endTime in data from ISO String format to required Date object
         const formatData = () => {

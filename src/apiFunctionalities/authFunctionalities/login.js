@@ -15,6 +15,7 @@ async function login(
     setLoginStatus = (...input) => {},
     setRole = (...input) => {},
     setEmail = (...input) => {},
+    setFullName = (...input) => {},
     setStep = (...input) => {},
 
     
@@ -41,11 +42,10 @@ async function login(
                 body: JSON.stringify(data), // Convert the data to a JSON string
             });
             data2 = await response.json();
-            // console.log("Data2",data2);
+            console.log("Data2",data2);
 
             if((data2.validateByEmailOTP === true) && validateByOtp === false){
                 setValidateByOtp(true);
-                dispatch(setEmail(data2.email));
                 setMessage('OTP has been sent to mail and is valid for 30 minutes');
                 // console.log('OTP sent to mail');
                 setLoading(false);
@@ -73,7 +73,9 @@ async function login(
             // console.log('Data type of data3',typeof data3);
 
             if(data3.message === undefined){
-                dispatch(setUsername(data.username));
+                dispatch(setFullName(data2.fullName));
+                dispatch(setEmail(data2.email));
+                dispatch(setUsername(data2.username));
                 dispatch(setLoginStatus(true));
                 dispatch(setRole(ROLES.ADMIN));
                 
@@ -90,10 +92,12 @@ async function login(
             }
         }
         else if(data2.message === undefined){
-            dispatch(setEmail(data.email));
-            dispatch(setUsername(data.username));
+            dispatch(setFullName(data2.fullName));
+            dispatch(setEmail(data2.email));
+            dispatch(setUsername(data2.username));
             dispatch(setLoginStatus(true));
             dispatch(setRole(data.role));
+
             console.log("Login Successfull");
             navigate('/');
         }

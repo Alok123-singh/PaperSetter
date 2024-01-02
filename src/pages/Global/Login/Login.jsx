@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button1, Input1, Logo, Loading2 } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername, setLoginStatus, setRole, setEmail } from '../../../store/authSlice.js'
+import { setUsername, setLoginStatus, setRole, setEmail, setFullName } from '../../../store/authSlice.js'
 import { MdAutorenew } from 'react-icons/md';
 import { AUTH_ENDPOINTS } from '../../../apiEndpoints';
 import { config } from '../../../configurations'
@@ -33,7 +33,7 @@ function Login() {
 
     const doLogin = async(data) => {
 
-        login(data, email, ROLES, validateByOtp, setValidateByOtp, dispatch, navigate, reset, setMessage, setUsername, setLoginStatus, setRole, setEmail, setStep, setLoading, setError);
+        login(data, email, ROLES, validateByOtp, setValidateByOtp, dispatch, navigate, reset, setMessage, setUsername, setLoginStatus, setRole, setEmail, setFullName, setStep, setLoading, setError);
 
     };
 

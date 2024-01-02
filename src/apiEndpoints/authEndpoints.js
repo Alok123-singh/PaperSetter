@@ -1,3 +1,4 @@
+
 const BASE_URL_DEV = 'http://localhost:8082/simlearn/authentication/api/v1';
 const BASE_URL_PROD = 'https://production-domain'; // Replace with your actual production domain
 
@@ -14,6 +15,7 @@ export const AUTH_ENDPOINTS = {
     CHECK_USERNAME : (username) => `${API_BASE_URL}/username/${username}`,
     CHECK_EMAIL : (email) => `${API_BASE_URL}/email/${email}`,
     RESET_PASSWORD : `${API_BASE_URL}/password`,
+    UPDATE_PASSWORD : `${API_BASE_URL}/password/update/direct`,
 
     GET_INSTRUCTORS_ACCOUNTS : `${API_BASE_URL}/account/all-instructors`,
     

@@ -1,5 +1,5 @@
 import { config } from "../../configurations";
-import { ADMIN_ENDPOINTS } from "../../apiEndpoints";
+import { AUTH_ENDPOINTS } from "../../apiEndpoints";
 
 function convertTimeObjectToIsoString(isoString) {
     // Create a new Date object from the ISO string
@@ -20,31 +20,29 @@ function convertTimeObjectToIsoString(isoString) {
     return desiredFormat;
 }
 
-async function createNewCourse(
+async function updatePassword(
     data,
     setRefreshData = (...input) => {},
     setLoading = (...input) => {}, 
     setErrors = (...input) => {},
 ) {
     
-    let error = [];
     setLoading(true);
+    console.log(data);
     setErrors([]);
 
-    
-    console.log("startTime :-", data.startTime);
-    data.startTime = convertTimeObjectToIsoString(data.startTime[0]);
-    data.endTime = convertTimeObjectToIsoString(data.endTime[0]);
-    // console.log("Type of startTime :-", typeof data.startTime);
-    console.log("startTime :-", data.startTime);
-    // console.log("Create new course form data :- ",data);
-    
+    let errors = [];
 
-    console.log("Create new course form data :- ",data);
-    
+    // if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
+    //     errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
+    //     setLoading(false);
+    //     setErrors(errors);
+    //     return;
+    // }
+
     try{
         const credentials = btoa(config.username + ':' + config.password);
-        const response = await fetch(ADMIN_ENDPOINTS.CREATE_COURSE,{
+        const response = await fetch(AUTH_ENDPOINTS.UPDATE_PASSWORD,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Specify the content type as JSON
@@ -53,27 +51,29 @@ async function createNewCourse(
             },
             body: JSON.stringify(data), // Convert the data to a JSON string
         });
-
+        // const data2 = await response.json();
+        console.log("Response",response);
         
         if(response.status === 200){
-            setRefreshData(prev =>!prev);
-            console.log("For submitted to backend");
+            alert('Password has been successfully updated');
+            console.log("Update Successfull");
         }
         else{
-            console.log("Form Submit to backend Error :- ");
+            errors.push('Invalid new password');
+            console.log("Update Failed");
         }
 
     }
-    catch(err){
-        console.log("Admin Home Error :",err);
-        error.push(err);
+    catch(error){
+        console.log("Update Password Error :",error);
+        errors.push(error);
     }
 
-    if(error.length > 0){
-        setErrors(error);
+    if (errors.length > 0) {
+        setErrors(errors);
     }
 
     setLoading(false);
 };
 
-export default createNewCourse;
+export default updatePassword;

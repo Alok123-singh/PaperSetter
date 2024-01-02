@@ -6,6 +6,7 @@ import { MdError } from 'react-icons/md';
 function TablePagination({ 
         columnsDescription, 
         items, 
+        title = '',
         defaultItemsPerPage = 5, 
         itemsPerPageOptions = [5, 10, 15, 20, 30],
         paginationEnable = true,
@@ -131,6 +132,8 @@ function TablePagination({
         currentItems && currentItems.length > 0 ? 
 
         <div className={`py-10 flex flex-wrap flex-col justify-center ${widthDesign} `}>
+            <p className='w-[94%] mx-auto mb-1 font-bold text-lg flex justify-start items-center'>{title}</p>
+
             <div className={`w-[95%] ${windowWidth < 1200 && 'overflow-x-auto'} mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
                 <table className=" min-w-full  bg-white ">
                     <thead>

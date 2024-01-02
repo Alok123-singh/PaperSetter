@@ -8,6 +8,7 @@ const API_BASE_URL = BASE_URL;
 export const ADMIN_ENDPOINTS = {
     CREATE_COURSE : `${API_BASE_URL}/course`,
     GET_INSTRUCTORS : `${API_BASE_URL}/all-instructors`,
+    ENROLL_COURSE : (courseCode,groupName) => `${API_BASE_URL}/join/${courseCode}/${groupName}`,
     
 
     // ... other admin endpoints
