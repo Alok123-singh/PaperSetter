@@ -500,6 +500,7 @@ function InstructorHome() {
                 );
             },
             dataRender: (index, value, currentItem) => {
+                // console.log("Current Item", currentItem);
 
                 // const props = {
                 //     courseList: JSON.stringify(currentItem.courseList),

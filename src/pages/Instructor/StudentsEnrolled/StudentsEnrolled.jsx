@@ -11,7 +11,7 @@ function StudentsEnrolled() {
     const [refreshData, setRefreshData] = useState(false);
 
     const courseEntity = useSelector(state => state.course.courseEntity);
-    console.log("Course Entity", courseEntity);
+    // console.log("Course Entity", courseEntity);
 
     const [filteredItems1, setFilteredItems1] = useState(() => {
         let items = [];
@@ -33,6 +33,9 @@ function StudentsEnrolled() {
 
     const [displayFormat,setDisplayFormat] = useState('Table');
     const [hoveredDetails, setHoveredDetails] = useState([]);
+
+    let animationTimeout;
+
 
     const formatToCustomString = (dateTimeString) => {
         // Try to parse the input string into a Date object
@@ -177,15 +180,41 @@ function StudentsEnrolled() {
             },
             dataRender: (index, value, currentItem) => {
 
-                return  <div className='flex justify-center items-center'>
-                            <div className='text-blue-700 font-bold '>
-                                {value}
-                            </div>
-                        </div>
+                const props = {
+                    students: JSON.stringify(currentItem),
+                }
+
+                const queryString = Object.keys(props)
+                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                    .join('&');
+
+                return  <a 
+                        onMouseEnter={() => handleMouseEnter([index,'info'])}
+                        onMouseLeave={handleMouseLeave} 
+                        href={`/course/students-enrolled/students-list?${queryString}`}
+                        target='_blank'
+                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                            {<FaInfoCircle size={14} className=' cursor-pointer' /> }
+                        </a>
             } 
         },
         
     ];
+
+    const handleMouseEnter = (details) => {
+        clearTimeout(animationTimeout);
+
+        animationTimeout = setTimeout(() => {
+            setHoveredDetails(details);
+        }, 400);
+        // setHoveredDetails(details);
+    };
+    
+    const handleMouseLeave = () => {
+        clearTimeout(animationTimeout);
+
+        setHoveredDetails([]);
+    };
 
     return loading ? (
         <Loading1 />

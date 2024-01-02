@@ -6,7 +6,7 @@ const initialState = {
     username: 'admin',
     email : 'aloksinghbais02@gmail.com',
     fullName : 'Alok Singh Bais',
-    role : ROLES.ADMIN,
+    role : ROLES.INSTRUCTOR,
 };
 
 const authSlice = createSlice({

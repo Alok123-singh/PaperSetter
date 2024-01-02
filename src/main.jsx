@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from './pages/Global'
 import { Result, History, EnrollGame, EnrolledStudents } from './pages/Participant'
-import { StudentsEnrolled } from './pages/Instructor'
+import { StudentsEnrolled, StudentsInGroup } from './pages/Instructor'
 import { Courses } from './pages/Admin'
 import { AuthLayout } from './components/index.js'
 import { InventoryManagement, SeatingAllocation } from './games/index.js'
@@ -49,6 +49,14 @@ const router = createBrowserRouter(
                 <Route index={true} element={<AuthLayout authentication> {""} <EnrollGame /> </AuthLayout>}/>
 
                 <Route path='students/*' element={<EnrolledStudents />} />
+
+            </Route>
+
+            <Route path='course/students-enrolled'>
+
+                <Route index={true} element={<AuthLayout authentication> {""} <StudentsEnrolled /> </AuthLayout>}/>
+
+                <Route path='students-list/*' element={<StudentsInGroup />} />
 
             </Route>
 
