@@ -60,6 +60,8 @@ async function createNewCourse(
             console.log("For submitted to backend");
         }
         else{
+            const data1 = await response.json();
+            error.push(data1.message);
             console.log("Form Submit to backend Error :- ");
         }
 

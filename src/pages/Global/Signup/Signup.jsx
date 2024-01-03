@@ -3,10 +3,8 @@ import {Link ,useNavigate} from 'react-router-dom'
 import {Button1, Input1, Logo, Loading1} from '../../../components/index'
 import {useForm, Controller} from 'react-hook-form'
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Import icons for check and cross marks
-import { AUTH_ENDPOINTS } from '../../../apiEndpoints/index';
-import { config } from '../../../configurations'
 import { ROLES } from '../../../roles/index'
-import { RiMailCheckLine } from 'react-icons/ri'; // Assuming you have the appropriate icon installed
+// import { RiMailCheckLine } from 'react-icons/ri'; // Assuming you have the appropriate icon installed
 import { checkUsernameAvailability, checkEmailAvailability, sendOTP, verifyOTP, createAccount } from '../../../apiFunctionalities'
 
 

@@ -5,6 +5,7 @@ const initialState = {
     title : '',
     score : '0',
     resultDescription : '',
+    courseCode: '',
 }
 
 const resultSlice = createSlice({
@@ -17,10 +18,13 @@ const resultSlice = createSlice({
             state.score = action.payload.score;
             state.resultDescription = action.payload.resultDescription;
         },
+        setCourseCode: (state,action) => {
+            state.courseCode = action.payload;
+        },
     }
 
 })
 
-export const { setResult } = resultSlice.actions;
+export const { setResult, setCourseCode } = resultSlice.actions;
 
 export default resultSlice.reducer;

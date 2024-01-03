@@ -4,6 +4,7 @@ import { Loading1, Button1, Card1, OverlayForm2 } from '../../../components/inde
 import { enrollInGame, fetchEnrolledGames } from '../../../apiFunctionalities'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourseEntity } from '../../../store/courseSlice'
+import { setCourseCode } from '../../../store/resultSlice'
 
 
 function ParticipantHome() {
@@ -70,6 +71,30 @@ function ParticipantHome() {
 
     },[refreshData]);
 
+    const createUrl = (inputString) => {
+        // Convert to lowercase and replace spaces with dashes
+        const urlFriendlyString = inputString.toLowerCase().replace(/\s+/g, '-');
+      
+        // Return the formatted URL
+        return `/${urlFriendlyString}`;
+    };
+
+    const showGames = () => {
+        return  <div className='w-full flex flex-wrap justify-around items-center'>
+                    {games.map((game,index) => (
+                        <div 
+                        key={index} 
+                        onClick={() => {
+                            console.log("Course Code clicked",game.courseCode);
+                            dispatch(setCourseCode(game.courseCode))
+                        }}
+                        >
+                            <Card1  imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link={createUrl(game.gameName)} title={game.gameName} />
+                        </div>
+                    ))}
+                </div>
+    }
+
     return loading ? (
         <Loading1 />
     ) : 
@@ -110,15 +135,11 @@ function ParticipantHome() {
 
             </div>
 
-            {games.map((game, index) => (
-                <div key={index}>
-                    {game.gameName}
-                </div>
-            ))}
+            {showGames()}
 
-            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' />
+            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' /> */}
 
-            <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/seating-allocation' title='Seating Allocation' /> */}
+            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/seating-allocation' title='Seating Allocation' /> */}
         </div>
     )
 }

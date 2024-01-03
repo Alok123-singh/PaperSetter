@@ -10,48 +10,16 @@ import { fetchHistory } from '../../../apiFunctionalities'
 function History() {
 
     const [history,setHistory] = useState([]);
-    const username = useSelector(state => state.auth.username);
+    // const username = useSelector(state => state.auth.username);
+    const email = useSelector(state => state.auth.email);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState([]);
 
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
 
-    // const fetchHistory = async (username) => {
-    //     setLoading(true);
-    //     setError('');
-
-    //     let errors = [];
-
-    //     try{
-    //         const credentials = btoa(config.username + ':' + config.password);
-    //         const response = await fetch(GAME_ENDPOINTS.FETCH_HISTORY(username), {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Basic ${credentials}`,
-    //             },
-    //         });
-    //         const data = await response.json();
-
-    //         if(data.length !== 0)
-    //             setHistory(data.reverse());
-
-    //     }
-    //     catch(err){
-    //         errors.push(err);
-    //         console.log("History error :",err);
-    //     }
-
-    //     if(errors.length > 0){
-    //         setError(errors);
-    //     }
-
-    //     setLoading(false);
-    // }
-
     useEffect(() => {
-        fetchHistory(username, setHistory, setLoading, setError);
+        fetchHistory(email, setHistory, setLoading, setError);
 
     }, []);
 

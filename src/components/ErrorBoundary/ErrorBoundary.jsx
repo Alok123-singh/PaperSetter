@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { TablePagination } from '../index';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoMdAlert } from 'react-icons/io';
-import { useSpring, animated } from 'react-spring';
 
 function ErrorBoundary(props) {
     const [hasError, setHasError] = useState(false);
@@ -18,15 +17,6 @@ function ErrorBoundary(props) {
         const parts = currentUrl.split('/');
         return parts[parts.length - 1] || 'Unknown Component';
     };
-
-    const errorIconProps = useSpring({
-        to: async (next, cancel) => {
-        await next({ opacity: 1, color: '#ff0000', transform: 'scale(1.2)' });
-        await next({ opacity: 0.8, color: '#ff4c4c', transform: 'scale(1)' });
-        },
-        from: { opacity: 0, color: '#ff4c4c', transform: 'scale(1)' },
-        reset: true,
-    });
 
     useEffect(() => {
         const componentDidCatch = (event) => {
@@ -110,9 +100,7 @@ function ErrorBoundary(props) {
         <div className="w-full h-screen flex justify-center items-center error-page">
             <div className="flex flex-wrap space-y-3 justify-center items-center pt-8">
             <div className="w-full flex flex-col justify-center items-center font-bold text-lg">
-                <animated.div style={errorIconProps}>
                 <IoMdAlert size={70} className="" />
-                </animated.div>
                 <h1 className="mt-4 mb-2 flex justify-center items-center text-center text-xl">Oops something went wrong. Please try again</h1>
                 <button onClick={handleGoToComponent} className="bg-rose-600 border-2 border-red-700 hover:bg-blue-500 hover:border-2 hover:border-black text-white font-bold mt-4 py-2 px-4 rounded-md">
                 Go to {getComponentName()}

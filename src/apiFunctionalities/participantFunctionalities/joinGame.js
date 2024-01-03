@@ -42,7 +42,7 @@ async function joinGame(
                     'Authorization': `Basic ${credentials}`,
                     // Add any other headers if needed
                 },
-                body: JSON.stringify({gameId : data.gameId, gameName: data.courseName, attempts : data.attempts}), // Convert the data to a JSON string
+                body: JSON.stringify({gameId : data.gameId, gameName: data.courseName, attempts : data.attempts, courseCode: data.courseCode}), // Convert the data to a JSON string
             });
 
             if(response1.status === 200){

@@ -9,6 +9,7 @@ import { setResult } from '../../../store/resultSlice';
 import { queries2 } from '../../../queries'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { saveResult } from '../../../apiFunctionalities'
 
 
 
@@ -17,7 +18,9 @@ function SeatingAllocation() {
     const [step,setStep] = useState(1);
     const [loading,setLoading] = useState(false);
 
-    const username = useSelector(state => state.auth.username);
+    const email = useSelector(state => state.auth.email);
+    const courseCode = useSelector(state => state.result.courseCode);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [error,setError] = useState('');
@@ -67,38 +70,6 @@ function SeatingAllocation() {
         return (result.toString());
     };
 
-    const saveResult = async (data) => {
-        setLoading(true);
-        console.log("Result Data",JSON.stringify(data));
-        
-        try{
-            const credentials = btoa(config.username + ':' + config.password);
-            const response = await fetch(GAME_ENDPOINTS.SAVE_RESULT,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Specify the content type as JSON
-                    'Authorization': `Basic ${credentials}`,
-                    // Add any other headers if needed
-                },
-                body: JSON.stringify(data), // Convert the data to a JSON string
-            });
-
-            if(response.status === 201){
-                console.log("Result saved");
-                dispatch(setResult({noOfQueries: queries.length, score: data.score, title: data.examType, resultDescription: data.resultDescription}))
-                navigate('/seating-allocation/result');
-            }
-
-        }
-        catch(err){
-            dispatch(setResult({noOfQueries: queries.length, score: data.score, title: data.examType, resultDescription: data.resultDescription}))
-            navigate('/seating-allocation/result');
-            console.log("Seating Allocation save result error :",err);
-        }
-
-        setLoading(false);
-    }
-
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -146,9 +117,8 @@ function SeatingAllocation() {
                     if(index === queries.length){
                         console.log("Game Ended !");
                         const result = calculateResult();
-                        saveResult({score: result, examType: 'SEATING_ALLOCATION', username: username, time: '', resultDescription : 'Total number of seats that got reserved in the test to total capacity of all seats in the hotel.'});
 
-                        saveResult({score: result, examType: 'INVENTORY_MANAGEMENT', username: username, time: '', resultDescription : 'Total number of seats that got reserved in the test to total capacity of all seats in the hotel.'},queries.length,'/seating-allocation/result', dispatch, navigate, setResult, setLoading, setError);
+                        saveResult({score: result, examType: 'SEATING_ALLOCATION', courseCode: courseCode, email: email, time: '', resultDescription : 'Total number of seats that got reserved in the test to total capacity of all seats in the hotel.'},queries.length,'/seating-allocation/result', dispatch, navigate, setResult, setLoading, setError);
 
                     }
                 }

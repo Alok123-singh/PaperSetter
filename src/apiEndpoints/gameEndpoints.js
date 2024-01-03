@@ -7,6 +7,7 @@ const API_BASE_URL = BASE_URL;
 
 export const GAME_ENDPOINTS = {
     FETCH_HISTORY: (username) => `${API_BASE_URL}/score/find/${username}`,
+    FETCH_HISTORY_BASED_ON_COURSE_CODE : (courseCode) => `${API_BASE_URL}/score/course/${courseCode}`,
     SAVE_RESULT: `${API_BASE_URL}/score`,
     CREATE_NEW_GAME : `${API_BASE_URL}/game`,
     FETCH_ALL_GAMES : `${API_BASE_URL}/game`,

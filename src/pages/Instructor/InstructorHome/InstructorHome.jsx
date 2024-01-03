@@ -3,8 +3,6 @@ import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1 }
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
-import { config } from '../../../configurations'
-import { INSTRUCTOR_ENDPOINTS } from '../../../apiEndpoints'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCourses } from '../../../apiFunctionalities'
 import { setCourseEntity } from '../../../store/courseSlice'
@@ -14,8 +12,8 @@ import { useNavigate } from 'react-router-dom';
 function InstructorHome() {
     const [loading, setLoading] = useState(false);
     const [errors,setErrors] = useState([]);
-    // const username = useSelector(state => state.auth.username);
-    const username = "ins";
+    const username = useSelector(state => state.auth.username);
+    // const username = "";
     
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
@@ -581,7 +579,7 @@ function InstructorHome() {
                 return  <div
                             className={`w-full h-full text-lg font-bold flex text-slate-500 flex-wrap justify-center items-center`}
                         >
-                            {value}
+                            {currentItem.enrolledStudentsList && currentItem.enrolledStudentsList.length}
                             
                         </div>;
             }

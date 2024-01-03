@@ -1,5 +1,5 @@
 import React,{ useRef, useState, useEffect } from 'react'
-import {Link, NavLink} from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Logo, Container } from '../index.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStatus } from '../../store/authSlice'

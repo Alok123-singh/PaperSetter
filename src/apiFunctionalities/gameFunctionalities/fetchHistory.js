@@ -2,7 +2,7 @@ import { GAME_ENDPOINTS } from '../../apiEndpoints'
 import { config } from '../../configurations';
 
 async function fetchHistory( 
-    username,
+    email,
     setData = (...input) => {},
     setLoading = (...input) => {}, 
     setErrors = (...input) => {},
@@ -15,7 +15,7 @@ async function fetchHistory(
 
     try{
         const credentials = btoa(config.username + ':' + config.password);
-        const response = await fetch(GAME_ENDPOINTS.FETCH_HISTORY(username), {
+        const response = await fetch(GAME_ENDPOINTS.FETCH_HISTORY(email), {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,6 +24,7 @@ async function fetchHistory(
         });
         const data = await response.json();
 
+        console.log("Successfully fetch history");
         if(data.length !== 0)
         setData(data.reverse());
 

@@ -3,10 +3,10 @@ import { ROLES } from '../roles/index'
 
 const initialState = {
     loginStatus: true,
-    username: 'ins',
+    username: 'alok20',
     email : 'aloksinghbais02ins@gmail.com',
-    fullName : 'Alok Singh Bais',
-    role : ROLES.INSTRUCTOR,
+    fullName : 'Alok Singh',
+    role : ROLES.PARTICIPANT,
 };
 
 const authSlice = createSlice({

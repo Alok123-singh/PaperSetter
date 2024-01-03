@@ -4,11 +4,8 @@ import { Button1, Input1, Logo, Loading2 } from "../../../components/index.js"
 import {useForm} from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsername, setLoginStatus, setRole, setEmail, setFullName } from '../../../store/authSlice.js'
-import { MdAutorenew } from 'react-icons/md';
-import { AUTH_ENDPOINTS } from '../../../apiEndpoints';
-import { config } from '../../../configurations'
+// import { MdAutorenew } from 'react-icons/md';
 import { ROLES } from '../../../roles/index.js';
-import { setTheme } from '../../../store/themeSlice.js';
 import { login } from '../../../apiFunctionalities'
 
 

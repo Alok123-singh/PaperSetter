@@ -1,10 +1,8 @@
 import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
-import { IoIosAdd } from 'react-icons/io';
+// import { IoIosAdd } from 'react-icons/io';
 import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1 } from '../../../components/index'
 import { useSelector } from 'react-redux';
-import { config } from '../../../configurations'
-import { ADMIN_ENDPOINTS, GAME_ENDPOINTS, AUTH_ENDPOINTS } from '../../../apiEndpoints'
 import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from '../../../apiFunctionalities'
 
 
@@ -1146,6 +1144,14 @@ function AdminHome() {
                 </div>
 
             </div>
+
+            {/* Error section */}
+            {(errors && errors.length > 0) && <div className='flex flex-col'>
+                    {
+                        errors.map((err,index) => 
+                        (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+                    }
+            </div>}
 
             {/* Crdate new game and Create new course form */}
             <div className='w-[98%] md:w-[90%] my-6 flex justify-between items-center'>

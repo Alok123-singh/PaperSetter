@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
 import { MdError } from 'react-icons/md';
 
 
@@ -97,12 +96,6 @@ function TablePagination({
     // styling for no records found section starts
 
     const [showNoRecords, setShowNoRecords] = useState(false);
-
-    const iconAnimation = useSpring({
-        opacity: showNoRecords ? 1 : 0,
-        transform: `scale(${showNoRecords ? 1 : 0.8})`,
-        config: { tension: 300, friction: 7 },
-    });
 
     useEffect(() => {
         setShowNoRecords(items.length === 0);
@@ -294,12 +287,10 @@ function TablePagination({
         </div> : 
         <div className='flex flex-col justify-center items-center h-[15rem] space-y-5'>
 
-            <animated.div style={iconAnimation}>
-                <div className="flex flex-col items-center justify-center">
-                    <MdError style={{ fontSize: '3rem', marginRight: '0.5rem' }} />
-                    <span className="font-bold text-lg">No Records Found!</span>
-                </div>
-            </animated.div>
+            <div className="flex flex-col items-center justify-center">
+                <MdError style={{ fontSize: '3rem', marginRight: '0.5rem' }} />
+                <span className="font-bold text-lg">No Records Found!</span>
+            </div>
 
         </div>
     );

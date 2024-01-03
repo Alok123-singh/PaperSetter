@@ -20,11 +20,14 @@ function InventoryManagement() {
     const [step,setStep] = useState(1);
     const [error,setError] = useState('');
 
+    const courseCode = useSelector(state => state.result.courseCode);
+    // console.log("Course Code :- ",courseCode);
+
     const [text, setText] = useState('');
     const [counter, setCounter] = useState(cnt);
     const [index,setIndex] = useState(0);
     const [loading,setLoading] = useState(false);
-    const username = useSelector(state => state.auth.username);
+    const email = useSelector(state => state.auth.email);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const [change, setChange] = useState(false);
@@ -170,7 +173,7 @@ function InventoryManagement() {
             
             const result = calculateResult();
 
-            saveResult({score: result, examType: 'INVENTORY_MANAGEMENT', username: username, time: '', resultDescription : 'Total number of rooms occupied in the exam'},queries.length,'/inventory-management/result', dispatch, navigate, setResult, setLoading, setError);
+            saveResult({score: result, examType: 'INVENTORY_MANAGEMENT', courseCode: courseCode, email: email, time: '', resultDescription : 'Total number of rooms occupied in the exam'},queries.length,'/inventory-management/result', dispatch, navigate, setResult, setLoading, setError);
 
             console.log("Game Ended");
 
