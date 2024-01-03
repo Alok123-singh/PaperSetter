@@ -19,6 +19,9 @@ export const AUTH_ENDPOINTS = {
 
     GET_INSTRUCTORS_ACCOUNTS : `${API_BASE_URL}/account/all-instructors`,
     
+    SAVE_ENROLLED_GAME : (username) => `${API_BASE_URL}/account/games/${username}`,
+    GET_ENROLLED_GAMES : (username) => `${API_BASE_URL}/account/games/${username}`,
+
     DELETE_ACCOUNT : (username) => `${API_BASE_URL}/account/${username}`,
     // ... other auth endpoints
 };

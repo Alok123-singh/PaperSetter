@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { Loading1, Button1, Card1, OverlayForm2 } from '../../../components/index'
-import { enrollInGame } from '../../../apiFunctionalities'
-import { useDispatch } from 'react-redux';
+import { enrollInGame, fetchEnrolledGames } from '../../../apiFunctionalities'
+import { useDispatch, useSelector } from 'react-redux';
 import { setCourseEntity } from '../../../store/courseSlice'
 
 
@@ -11,8 +11,12 @@ function ParticipantHome() {
     const [errors, setErrors] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
 
+    const username = useSelector(state => state.auth.username);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [games, setGames] = useState([]);
     
     const [showEnrollGameForm,setShowEnrollGameForm] = useState(null);
 
@@ -20,6 +24,7 @@ function ParticipantHome() {
         console.log("Enroll game form Data :-",data);
 
         enrollInGame(data,navigate,dispatch,setCourseEntity,'/enroll',setLoading,setErrors);
+        setRefreshData(prev => !prev);
     }
 
     const enrollGameFormData = {
@@ -59,6 +64,12 @@ function ParticipantHome() {
                 />
     };
 
+    useEffect(() => {
+
+        fetchEnrolledGames(username,setLoading,setErrors,setGames);
+
+    },[refreshData]);
+
     return loading ? (
         <Loading1 />
     ) : 
@@ -76,11 +87,11 @@ function ParticipantHome() {
             <div className='w-[90%] flex flex-col justify-end items-end'>
                 
                 {/* Create new game button section */}
-                <div className='flex flex-col justify-center items-center text-xl'>
+                <div className='flex flex-col justify-center items-center'>
                     {/* <p className='mb-1 text-center text-sm font-bold md:text-md'> Enroll Game </p> */}
 
                     <Button1
-                    className="w-[12rem] h-[2rem] rounded-sm flex justify-center hover:bg-blue-400  items-center"
+                    className="w-[9rem] h-[2rem] text-sm rounded-md flex justify-center hover:bg-blue-400  items-center"
                     onClick={() => {
 
                         if(showEnrollGameForm === null)
@@ -98,6 +109,12 @@ function ParticipantHome() {
                 )}
 
             </div>
+
+            {games.map((game, index) => (
+                <div key={index}>
+                    {game.gameName}
+                </div>
+            ))}
 
             {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' />
 

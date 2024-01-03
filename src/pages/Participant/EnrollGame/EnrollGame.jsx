@@ -15,10 +15,11 @@ function EnrollGame() {
     const enrollData = useSelector(state => state.course.courseEntity);
     const email = useSelector(state => state.auth.email);
     const fullName = useSelector(state => state.auth.fullName);
+    const username = useSelector(state => state.auth.username);
 
     const navigate = useNavigate();
 
-    // console.log("Enroll Data", enrollData);
+    console.log("Enroll Data", enrollData);
 
     const [filteredItems1, setFilteredItems1] = useState(() => {
         let items = [];
@@ -50,7 +51,8 @@ function EnrollGame() {
 
 
     const doJoinGame = async () => {
-        joinGame(enrollData.courseCode,selectedGroup,email,fullName,navigate,'/',setLoading,setErrors);
+
+        joinGame(enrollData,selectedGroup,email,fullName,username,navigate,'/',setLoading,setErrors);
     }
 
 
@@ -250,22 +252,30 @@ function EnrollGame() {
             dataRender: (index, value, currentItem) => {
                 // console.log("Current Item",currentItem);
 
-                const props = {
-                    students: JSON.stringify(currentItem),
-                }
+                // const props = {
+                //     students: JSON.stringify(currentItem),
+                // }
 
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
+                // const queryString = Object.keys(props)
+                //     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                //     .join('&');
 
-                return  <a 
-                    onMouseEnter={() => handleMouseEnter([index,'info'])}
-                    onMouseLeave={handleMouseLeave} 
-                    href={`/enroll/students?${queryString}`}
-                    target='_blank'
-                    className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
-                        {<FaInfoCircle size={14} className=' cursor-pointer' /> }
-                    </a>
+                return  <div className='flex flex-col space-y-3 justify-center items-center'>
+                            {currentItem.students !== null && currentItem.students.map((student,index) => (
+                                <div key={index}>
+                                    {student.fullName}
+                                </div>
+                            ))}
+                        </div>
+
+                // return  <a 
+                //     onMouseEnter={() => handleMouseEnter([index,'info'])}
+                //     onMouseLeave={handleMouseLeave} 
+                //     href={`/enroll/students?${queryString}`}
+                //     target='_blank'
+                //     className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                //         {<FaInfoCircle size={14} className=' cursor-pointer' /> }
+                //     </a>
             } 
         },
         
@@ -384,22 +394,30 @@ function EnrollGame() {
             dataRender: (index, value, currentItem) => {
                 // console.log("Current Item",currentItem);
 
-                const props = {
-                    students: JSON.stringify(currentItem),
-                }
+                // const props = {
+                //     students: JSON.stringify(currentItem),
+                // }
 
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
+                // const queryString = Object.keys(props)
+                //     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                //     .join('&');
 
-                return  <a 
-                    onMouseEnter={() => handleMouseEnter([index,'info'])}
-                    onMouseLeave={handleMouseLeave} 
-                    href={`/enroll/students?${queryString}`}
-                    target='_blank'
-                    className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
-                        {<FaInfoCircle size={14} className=' cursor-pointer' /> }
-                    </a>
+                return <div className='flex flex-col space-y-3 justify-center items-center'>
+                            {currentItem.students !== null && currentItem.students.map((student,index) => (
+                                <div key={index}>
+                                    {student.fullName}
+                                </div>
+                            ))}
+                        </div>
+
+                // return  <a 
+                //     onMouseEnter={() => handleMouseEnter([index,'info'])}
+                //     onMouseLeave={handleMouseLeave} 
+                //     href={`/enroll/students?${queryString}`}
+                //     target='_blank'
+                //     className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                //         {<FaInfoCircle size={14} className=' cursor-pointer' /> }
+                //     </a>
             } 
         },
         

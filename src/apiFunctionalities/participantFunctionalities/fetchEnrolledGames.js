@@ -1,21 +1,21 @@
-import { GAME_ENDPOINTS } from '../../apiEndpoints'
-import { config } from '../../configurations';
+import { config } from "../../configurations";
+import { AUTH_ENDPOINTS } from "../../apiEndpoints";
 
-async function fetchAllAvailaibleGames( 
-    setData = (...input) => {},
+
+// function to fetch all the instructors from the backend
+async function fetchEnrolledGames(
+    username, 
     setLoading = (...input) => {}, 
     setErrors = (...input) => {},
+    setData = (...input) => {},
 ) {
-
     let error = [];
     setLoading(true);
     setErrors([]);
 
-    // console.log("Fetch all availaible games from backend data :- ",data);
-    
     try{
         const credentials = btoa(config.username + ':' + config.password);
-        const response = await fetch(GAME_ENDPOINTS.FETCH_ALL_GAMES,{
+        const response = await fetch(AUTH_ENDPOINTS.GET_ENROLLED_GAMES(username),{
             method: 'GET',
             headers: {
                 // 'Content-Type': 'application/json', // Specify the content type as JSON
@@ -24,21 +24,22 @@ async function fetchAllAvailaibleGames(
             },
             // body: JSON.stringify(data), // Convert the data to a JSON string
         });
-        const data = await response.json();
-        
-        
-        if(data.message === undefined){
+        let data = await response.json();
+        console.log("Fetch all games data :- ",data);
+
+
+        if(response.status === 200){
+            console.log("Successfully fetched games from backend");
             setData(data);
-            console.log("Fetch all games data :- ",data);
-            console.log("Successfully fetched all games from backend");
+            // console.log("Fetch all courses data after formatting :- ",items);
         }
         else{
-            console.log("Failed fetching all availaible games from backend Error :- ");
+            console.log("Fetched Games from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Admin Home Fetch all games Error :",err);
+        console.log("Participant Home Error :",err);
         error.push(err);
     }
 
@@ -49,4 +50,4 @@ async function fetchAllAvailaibleGames(
     setLoading(false);
 };
 
-export default fetchAllAvailaibleGames;
+export default fetchEnrolledGames;

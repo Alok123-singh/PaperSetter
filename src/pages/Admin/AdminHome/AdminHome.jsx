@@ -1000,6 +1000,13 @@ function AdminHome() {
         console.log("Create new course Data :-",data);
         // console.log(data.assignToEmail);
 
+        // include gameId also in data according to data.courseName value
+        allAvailaibleGames.map((game) => {
+            if(game.name === data.courseName){
+                data.gameId = game.gameId;
+            }
+        });
+
         // include fullName also in data according to data.assignToEmail value
         allInstructorAccounts.map((account) => {
             if(account.email === data.assignToEmail){
@@ -1058,6 +1065,7 @@ function AdminHome() {
             // Define your form inputs here
             { label: 'Name of Game', type: 'text', placeholder: 'Enter name', name: 'name', required: true,  },
             { label: 'Type', type: 'text', placeholder: 'Enter type', name: 'type', required: true,  },
+            { label: 'Game Id', type: 'text', placeholder: 'Enter game id', name: 'gameId', required: true,  },
             // Add more input configurations as needed
         ],
         buttons : [
@@ -1109,7 +1117,7 @@ function AdminHome() {
     // generating unique code everytime form opens
     useEffect(() => {
         setCourseCode(generateUniqueCourseCode());
-    }, [showAddCourse]);
+    }, [showCourseForm]);
 
     // fetch all necessary data from backend when page loads
     useEffect(() => {

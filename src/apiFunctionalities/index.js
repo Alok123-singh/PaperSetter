@@ -2,7 +2,7 @@ import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccoun
 import { fetchAllCourses } from './instructorFunctionalities'
 import { fetchHistory, saveResult } from './gameFunctionalities'
 import { login, resetPassword, checkUsernameAvailability, checkEmailAvailability, sendOTP, verifyOTP, createAccount } from './authFunctionalities'
-import { enrollInGame, joinGame } from './participantFunctionalities'
+import { enrollInGame, joinGame, fetchEnrolledGames } from './participantFunctionalities'
 
 export {
 
@@ -34,5 +34,6 @@ export {
     // participant functionalities
     enrollInGame,
     joinGame,
+    fetchEnrolledGames,
 
 };

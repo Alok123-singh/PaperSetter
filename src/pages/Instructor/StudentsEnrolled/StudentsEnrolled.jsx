@@ -180,22 +180,30 @@ function StudentsEnrolled() {
             },
             dataRender: (index, value, currentItem) => {
 
-                const props = {
-                    students: JSON.stringify(currentItem),
-                }
+                // const props = {
+                //     students: JSON.stringify(currentItem),
+                // }
 
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
+                // const queryString = Object.keys(props)
+                //     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
+                //     .join('&');
 
-                return  <a 
-                        onMouseEnter={() => handleMouseEnter([index,'info'])}
-                        onMouseLeave={handleMouseLeave} 
-                        href={`/course/students-enrolled/students-list?${queryString}`}
-                        target='_blank'
-                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
-                            {<FaInfoCircle size={14} className=' cursor-pointer' /> }
-                        </a>
+                return  <div className='flex flex-col space-y-3 justify-center items-center'>
+                            {currentItem.students !== null && currentItem.students.map((student,index) => (
+                                <div key={index}>
+                                    {student.fullName}
+                                </div>
+                            ))}
+                        </div>
+
+                // return  <a 
+                //         onMouseEnter={() => handleMouseEnter([index,'info'])}
+                //         onMouseLeave={handleMouseLeave} 
+                //         href={`/course/students-enrolled/students-list?${queryString}`}
+                //         target='_blank'
+                //         className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                //             {<FaInfoCircle size={14} className=' cursor-pointer' /> }
+                //         </a>
             } 
         },
         

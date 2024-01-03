@@ -15,7 +15,7 @@ function InstructorHome() {
     const [loading, setLoading] = useState(false);
     const [errors,setErrors] = useState([]);
     // const username = useSelector(state => state.auth.username);
-    const username = "admin";
+    const username = "ins";
     
     const [hoveredDetails, setHoveredDetails] = useState([]);
 

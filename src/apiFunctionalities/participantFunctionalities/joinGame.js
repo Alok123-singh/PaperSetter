@@ -1,12 +1,13 @@
 import { config } from "../../configurations";
-import { ADMIN_ENDPOINTS } from "../../apiEndpoints";
+import { ADMIN_ENDPOINTS, AUTH_ENDPOINTS } from "../../apiEndpoints";
 
 
 async function joinGame(
-    courseCode,
+    data,
     groupName,
     email,
     fullName,
+    username,
     navigate = (...input) => {},
     url = '',
     setLoading = (...input) => {}, 
@@ -21,7 +22,7 @@ async function joinGame(
 
     try{
         const credentials = btoa(config.username + ':' + config.password);
-        const response = await fetch(ADMIN_ENDPOINTS.ENROLL_COURSE(courseCode,groupName),{
+        const response = await fetch(ADMIN_ENDPOINTS.ENROLL_COURSE(data.courseCode,groupName),{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Specify the content type as JSON
@@ -33,8 +34,27 @@ async function joinGame(
 
         
         if(response.status === 200){
+
+            const response1 = await fetch(AUTH_ENDPOINTS.SAVE_ENROLLED_GAME(username),{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type as JSON
+                    'Authorization': `Basic ${credentials}`,
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify({gameId : data.gameId, gameName: data.courseName, attempts : data.attempts}), // Convert the data to a JSON string
+            });
+
+            if(response1.status === 200){
+                alert("You have successfully enrolled in the game!");
+                console.log("Sucessfully joined game");
+            }
+            else{
+                alert("Failed to enroll");
+                console.log("Failed to enroll");
+            }
+
             navigate(url);
-            console.log("Sucessfully joined game");
         }
         else{
             errors.push('Student is already enrolled in this course');
