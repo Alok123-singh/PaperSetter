@@ -9,7 +9,7 @@ async function fetchHistory(
 ) {
 
     setLoading(true);
-    setErrors('');
+    // setErrors('');
 
     let errors = [];
 

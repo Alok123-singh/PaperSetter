@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Contact, Login, MyAccount, ResetPassword, Signup, Theme } from './pages/Global'
+import { About, Contact, Login, MyAccount, ResetPassword, Signup, Settings } from './pages/Global'
 import { Result, History, EnrollGame } from './pages/Participant'
 import { StudentsEnrolled } from './pages/Instructor'
 import { Courses } from './pages/Admin'
@@ -58,7 +58,7 @@ const router = createBrowserRouter(
 
             <Route path='course/students-enrolled' element={<AuthLayout authentication> {""} <StudentsEnrolled /> </AuthLayout>} />
 
-            <Route path='theme' element={<AuthLayout authentication> {""} <Theme /> </AuthLayout>} />
+            <Route path='settings' element={<AuthLayout authentication> {""} <Settings /> </AuthLayout>} />
 
             <Route path='history' element={<AuthLayout authentication> {""} <History /> </AuthLayout>} />
 

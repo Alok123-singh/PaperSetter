@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 function Card1({
     imageSource = '#',
     link = '#',
-    title = 'Title'
+    title = 'Title',
+    bottomTitle = '',
 }) {
     return (
-        <div className = 'py-10 flex justify-around items-center dark:bg-gray-40  flex-wrap'>
+        <div className = 'py-5 flex flex-col justify-around items-center dark:bg-gray-40  flex-wrap'>
 
             <Link to={link}>
                 <div className="w-[195px] h-[235px] rounded-md border-2 bg-gray-100 dark:bg-gray-200 border-gray-300 dark:border-gray-500 flex flex-col justify-center items-center">
@@ -27,6 +28,15 @@ function Card1({
                     </div>
                 </div>
             </Link>
+
+            <div className='flex cursor-default flex-col mt-2 justify-center items-center'>
+                <p className='text-xl text-orange-600'>
+                    Course Code
+                </p>
+                <p className=' text-blue-600'>
+                    {bottomTitle}
+                </p>
+            </div>
 
         </div>
     )

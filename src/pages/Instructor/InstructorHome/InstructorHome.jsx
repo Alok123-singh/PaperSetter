@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1 } from '../../../components/index'
+import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1, Messages } from '../../../components/index'
 import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllCourses } from '../../../apiFunctionalities'
+import { fetchAllCourses, updateArchive, updateAttempts, updateSchedule } from '../../../apiFunctionalities'
 import { setCourseEntity } from '../../../store/courseSlice'
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,11 @@ import { useNavigate } from 'react-router-dom';
 function InstructorHome() {
     const [loading, setLoading] = useState(false);
     const [errors,setErrors] = useState([]);
+    const [messages,setMessages] = useState([]);
+    const [refreshData, setRefreshData] = useState(false);
+
     const username = useSelector(state => state.auth.username);
+    const email = useSelector(state => state.auth.email);
     // const username = "";
     
     const [hoveredDetails, setHoveredDetails] = useState([]);
@@ -29,46 +33,28 @@ function InstructorHome() {
 
     let animationTimeout;
 
-    const editAttempts = (data) => {
-        setLoading(true);
-
-        // console.log('Edited number of attempts',data);
-
-        let newItems = [...items];
-
-        newItems = newItems.map((item) => item.courseCode === data['courseCode'] ? {...item, studentAttempts : data['studentAttempts']} : item);
-
-        setItems(newItems);
-
-        setLoading(false);
+    const editAttempts = async (data) => {
+        
+        const response = await updateAttempts(data,email,setLoading,setErrors,setMessages);
+        if(response === true){
+            setRefreshData(prev => !prev);
+        }
     };
 
-    const editArchive = (data) => {
-        setLoading(true);
-
-        // console.log('Edited number of attempts',data);
-
-        let newItems = [...items];
-
-        newItems = newItems.map((item) => item.courseCode === data['courseCode'] ? {...item, archive : data['archive']} : item);
-
-        setItems(newItems);
-
-        setLoading(false);
+    const editArchive = async (data) => {
+        
+        const response = await updateArchive(data,email,setLoading,setErrors,setMessages);
+        if(response === true){
+            setRefreshData(prev => !prev);
+        }
     };
 
-    const editSchedule = (data) => {
-        setLoading(true);
-
-        // console.log('Schedule edited');
-
-        let newItems = [...items];
-
-        newItems = newItems.map((item) => item.courseCode === data['courseCode'] ? {...item, startTime : data['startTime'], endTime : data['endTime']} : item);
-
-        setItems(newItems);
-
-        setLoading(false);
+    const editSchedule = async (data) => {
+        
+        const response = await updateSchedule(data,email,setLoading,setErrors,setMessages);
+        if(response === true){
+            setRefreshData(prev => !prev);
+        }
     };
 
     const editAttemptsFormData = {
@@ -398,7 +384,7 @@ function InstructorHome() {
         fetchAllCourses(username,setLoading,setErrors,setItems);
 
 
-    }, []);
+    }, [refreshData]);
 
     const tableColumnsDescription = [
         { // Course Code
@@ -709,7 +695,7 @@ function InstructorHome() {
                 return <p 
                         className={`w-full h-[3rem] flex text-lg font-bold text-slate-500 justify-center items-center`}>
 
-                            {value}
+                            {value === true ? 'Yes' : 'No'}
                         </p>
             } 
         },
@@ -1128,7 +1114,7 @@ function InstructorHome() {
                 return <p 
                         className={`w-full h-[3rem] bg-blue-400 rounded-md flex font-bold justify-center items-center`}>
 
-                            {value}
+                            {value === true ? 'Yes' : 'No'}
                         </p>
             } 
         },
@@ -1283,14 +1269,30 @@ function InstructorHome() {
     (
         <div className='w-full h-auto mt-7 flex flex-col justify-center items-center'>
             {/* Heading section */}
-            <div className='w-full flex justify-center items-center '>
+            <div className='w-full mb-7 flex justify-center items-center '>
                 <div>
                     <h1 className="text-4xl font-bold hover:text-gray-600 cursor-default">Instructor Home</h1>
                 </div>
             </div>
 
+            <div className={`w-full ${(messages.length > 0 || errors.length > 0) && 'mb-9'}`}>
+                {/* Messages section */}
+                {messages.length > 0 && 
+                    <div className='w-full flex justify-center items-center'>
+                        <Messages messages={messages} messageType='success' setMessages={setMessages} />
+                    </div>
+                }
+                
+                {/* Errors section */}
+                {errors.length > 0 && 
+                    <div className='w-full flex justify-center items-center mt-4'>
+                        <Messages messages={errors} messageType='error' setMessages={setErrors} />
+                    </div>
+                }
+            </div>
+
             {/* search email section */}
-            <div className="w-full flex flex-col justify-center items-center mt-2">
+            <div className="w-full flex flex-col justify-center items-center">
                 <SearchEngine items={items} setFilteredItems={setFilteredItems} enableSuggestion enableContinuousSearching={false} searchProperty="courseName" width='lg:w-[35%]' />
             </div>
 

@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 // import { IoIosAdd } from 'react-icons/io';
-import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1 } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1, Messages } from '../../../components/index'
 import { useSelector } from 'react-redux';
 import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from '../../../apiFunctionalities'
 
@@ -11,6 +11,7 @@ function AdminHome() {
     const [loading, setLoading] = useState(false);
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [errors,setErrors] = useState([]);
+    const [messages,setMessages] = useState([]);
 
     const [refreshData, setRefreshData] = useState(false);
 
@@ -45,8 +46,8 @@ function AdminHome() {
     };
 
     const doUpdatePassword = (data) => {
-        updatePassword(data,() => {},setLoading,setErrors);
-
+        updatePassword(data,() => {},setLoading,setMessages,setErrors);
+        
     };
 
     const updateFormData = {
@@ -433,14 +434,14 @@ function AdminHome() {
                 
                 event: {
                     onClick: (index, item) => {
-                        console.log();
+                        console.log("Item",item);
                         // Display a confirmation dialog
                         const confirmDelete = window.confirm('Are you sure you want to remove this instructor from organization?');
 
                         // Check if the user clicked "OK"
                         if (confirmDelete) {
 
-                            deleteInstructorAccount(item.username, setRefreshData, setLoading, setErrors);
+                            deleteInstructorAccount(item, setRefreshData, setLoading, setMessages, setErrors);
                             // // Create a copy of the array
                             // const newData = [...items];
 
@@ -529,72 +530,6 @@ function AdminHome() {
                         </a>
             } 
         },
-        // { // Assign
-        //     header : 'Assign',
-        //     dataKey: 'add', 
-        //     label: 'Add', 
-        //     columnFunctionality : {
-        //         event: {
-        //             onMouseEnter: (index,item) => {
-        //                 // alert('Entered')
-        //                 setHoveredDetails([index,'Assign a new course to the Instructor','add']);
-        //             },
-        //             onMouseLeave: (index,item) => {
-        //                 setHoveredDetails([]);
-        //             }
-        //         },
-    
-        //     },
-        //     columnRender: (index,value) => {
-        //         return <div
-        //                     className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
-        //                         hoveredDetails.length > 0 &&
-        //                         hoveredDetails[0] === index &&
-        //                         hoveredDetails[2] === 'add'
-        //                             ? 'z-10'
-        //                             : 'z-1'
-        //                     }`}
-        //                 >
-        //                     {hoveredDetails.length > 0 &&
-        //                     hoveredDetails[0] === index &&
-        //                     hoveredDetails[2] === 'add' && (
-        //                         <div
-        //                         className={`hidden lg:flex w-[10rem]  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-        //                         >
-        //                         <div className='flex flex-col justify-center items-center'>
-        //                             <FaInfoCircle size={16} className="text-blue-500" />
-        //                             {hoveredDetails[1]}
-        //                         </div>
-        //                         </div>
-        //                     )}
-        //                     {value}
-        //                     <FaPencilAlt size={9} className='mb-3 ml-1' />
-                            
-        //                 </div>;
-        //     },
-        //     rowFunctionality: {
-                
-        //         event: {
-        //             onClick : (index) => {
-        //                 if(showFormIndex1 === null)
-        //                     setShowFormIndex1(index);
-        //             },
-        //         },
-        //         action: (currentItem,index) => {
-        //             return showFormIndex1 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex1,assignCourse)
-        //         }
-
-        //     },
-        //     dataRender: (index, value, currentItem) => {
-        //         return <p 
-        //                 onMouseEnter={() => handleMouseEnter([index,'add'])}
-        //                 onMouseLeave={handleMouseLeave} 
-        //                 className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'add' ? ' animate-bounce' : ''}`}>
-
-        //                     {<IoIosAdd size={25} className=' cursor-pointer' />}
-        //                 </p>
-        //     } 
-        // },
     ];
 
     // cardColumnsDescription starts here
@@ -821,7 +756,7 @@ function AdminHome() {
                         // Check if the user clicked "OK"
                         if (confirmDelete) {
 
-                            deleteInstructorAccount(item.username, setRefreshData, setLoading, setErrors);
+                            deleteInstructorAccount(item, setRefreshData, setLoading, setMessages, setErrors);
 
                         }
                     },
@@ -904,68 +839,6 @@ function AdminHome() {
                         </div>;
             }
         },
-        // { // Assign
-        //     header : 'Assign',
-        //     dataKey: 'assign', 
-        //     label: 'Assign', 
-        //     columnFunctionality : {
-        //         event: {
-        //             onMouseEnter: (index,value,currentItem) => {
-        //                 // alert('Entered')
-        //                 setHoveredDetails([index,currentItem.email,'Update password of Instructor','assign']);
-        //             },
-        //             onMouseLeave: (index,value,currentItem) => {
-        //                 setHoveredDetails([]);
-        //             }
-        //         },
-    
-        //     },
-        //     columnRender: (index,value,currentItem) => {
-        //         return <div
-        //                     // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
-        //                     onMouseLeave={handleMouseLeave} 
-        //                     className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
-        //                 >
-        //                     {hoveredDetails.length > 0 &&
-        //                     hoveredDetails[0] === index && hoveredDetails[1] === currentItem.email &&
-        //                     hoveredDetails[3] === 'assign' && (
-        //                         <div
-        //                         className={`hidden lg:flex w-[10rem] text-center  justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
-        //                         >
-        //                         <div className='flex flex-col justify-center items-center'>
-        //                             <FaInfoCircle size={16} className="text-blue-500" />
-        //                             {hoveredDetails[2]}
-        //                         </div>
-        //                         </div>
-        //                     )}
-        //                     {value}
-                            
-        //                     {/* <FaPencilAlt size={9} className='mb-3 ml-1' /> */}
-                            
-        //                 </div>;
-        //     },
-        //     rowFunctionality: {
-                
-        //         event: {
-        //             onClick : (index) => {
-        //                 if(showFormIndex2 === null)
-        //                     setShowFormIndex2(index);
-        //             },
-        //         },
-        //         action: (currentItem,index) => {
-        //             return showFormIndex2 === index && overlayForm1(currentItem,assignFormData,setShowFormIndex2,assignCourse)
-        //         }
-
-        //     },
-        //     dataRender: (index, value, currentItem) => {
-        //         return <p 
-        //                 onMouseEnter={() => handleMouseEnter([index,'assign'])}
-        //                 onMouseLeave={handleMouseLeave} 
-        //                 className={`w-full h-[3rem] bg-emerald-400 rounded-md   text-gray-900 font-bold text-lg flex justify-center items-center `}>
-        //                     {<IoIosAdd size={25} className={`h-full cursor-pointer ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'assign' ? ' animate-bounce' : ''}`} />}
-        //                 </p>
-        //     } 
-        // },
     ];
 
     // cardColumnsDescription ends here 
@@ -1013,13 +886,13 @@ function AdminHome() {
             }
         });
 
-        createNewCourse(data,setRefreshData,setLoading,setErrors);
+        const response = createNewCourse(data,setRefreshData,setLoading,setErrors,setMessages);
     }
 
     const createNewGameSubmit = async (data) => {
         console.log("Create new game Data :-",data);
 
-        createNewGame(data,setRefreshData,setLoading,setErrors);
+        createNewGame(data,setRefreshData,setLoading,setMessages,setErrors);
     }
 
     const [courseCode, setCourseCode] = useState(() => generateUniqueCourseCode());
@@ -1145,13 +1018,27 @@ function AdminHome() {
 
             </div>
 
+            <div className={`w-full ${(messages.length > 0 || errors.length > 0) && ''}`}>
+                {messages.length > 0 && 
+                    <div className='w-full flex justify-center items-center mt-4'>
+                        <Messages messages={messages} messageType='success' setMessages={setMessages} appearanceTime={30} />
+                    </div>
+                }
+
+                {errors.length > 0 && 
+                    <div className='w-full flex justify-center items-center mt-4'>
+                        <Messages messages={errors} messageType='errors' setMessages={setErrors} appearanceTime={10} />
+                    </div>
+                }
+            </div>
+
             {/* Error section */}
-            {(errors && errors.length > 0) && <div className='flex flex-col'>
+            {/* {(errors && errors.length > 0) && <div className='flex flex-col'>
                     {
                         errors.map((err,index) => 
                         (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
                     }
-            </div>}
+            </div>} */}
 
             {/* Crdate new game and Create new course form */}
             <div className='w-[98%] md:w-[90%] my-6 flex justify-between items-center'>

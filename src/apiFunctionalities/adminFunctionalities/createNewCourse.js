@@ -20,16 +20,40 @@ function convertTimeObjectToIsoString(isoString) {
     return desiredFormat;
 }
 
+function formatToCustomString(dateTimeString) {
+    // Try to parse the input string into a Date object
+    const dateObject = new Date(dateTimeString);
+  
+    // Check if the parsing was successful and it's a valid Date object
+    if (!isNaN(dateObject.getTime())) {
+      // If it's a valid Date object, return the custom formatted string
+      const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      };
+      return dateObject.toLocaleString('en-US', options);
+    } else {
+      // If parsing fails, return the original input (or handle it as needed)
+      return dateTimeString;
+    }
+}
+
 async function createNewCourse(
     data,
     setRefreshData = (...input) => {},
     setLoading = (...input) => {}, 
     setErrors = (...input) => {},
+    setMessages = (...input) => {},
 ) {
     
-    let error = [];
+    let messages = [];
+    let errors = [];
     setLoading(true);
-    setErrors([]);
+    let status = false;
 
     
     console.log("startTime :-", data.startTime);
@@ -57,25 +81,35 @@ async function createNewCourse(
         
         if(response.status === 200){
             setRefreshData(prev =>!prev);
+            messages.push(`Successfully create new course and assigned ${data.courseName} with course code ${data.courseCode} having course duration from ${formatToCustomString(data.startTime)} to ${formatToCustomString(data.endTime)}, to Instructor ${data.fullName} with email id ${data.assignToEmail} with number of licenses ${data.licenses}`)
             console.log("For submitted to backend");
+            status = true;
         }
         else{
             const data1 = await response.json();
-            error.push(data1.message);
+            errors.push(data1.message);
             console.log("Form Submit to backend Error :- ");
+            status = false;
         }
 
     }
     catch(err){
         console.log("Admin Home Error :",err);
-        error.push(err);
+        errors.push(err);
+        status = false;
     }
 
-    if(error.length > 0){
-        setErrors(error);
+    if(messages.length > 0){
+        setMessages(messages);
+    }
+
+    if(errors.length > 0){
+        setErrors(errors);
     }
 
     setLoading(false);
+
+    return (status);
 };
 
 export default createNewCourse;

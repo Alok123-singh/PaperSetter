@@ -18,6 +18,7 @@ import CardPagination from './Pagination/CardPagination/CardPagination'
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 import Card1 from './Cards/Card1/Card1'
 import OverlayFormat from './DisplayFormats/OverlayFormat/OverlayFormat'
+import Messages from './Messages/Messages'
 
 export  {
     Button1,
@@ -40,7 +41,7 @@ export  {
     ErrorBoundary,
     Card1,
     OverlayFormat,
-    
+    Messages,
     
 
 };

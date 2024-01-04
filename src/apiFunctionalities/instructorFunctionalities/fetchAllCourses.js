@@ -33,7 +33,7 @@ async function fetchAllCourses(
 ) {
     let error = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     try{
         const credentials = btoa(config.username + ':' + config.password);

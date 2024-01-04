@@ -16,7 +16,7 @@ async function joinGame(
     
     let errors = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     
 

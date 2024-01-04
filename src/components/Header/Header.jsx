@@ -13,6 +13,7 @@ function Header() {
     const [show,setShow] = useState(false);
     const loginStatus = useSelector(state => state.auth.loginStatus);
     const role = useSelector(state => state.auth.role);
+    const fullName = useSelector(state => state.auth.fullName);
     const accountRef = useRef(null);
     
     
@@ -71,6 +72,27 @@ function Header() {
         };
     }, []);
 
+    function getConcatenatedString(fullName) {
+        // Split the full name into an array of words
+        const words = fullName.split(" ");
+        let firstLetter, secondLetter;
+
+        if(words.length >= 2){
+            firstLetter = words[0][0].toUpperCase();
+            secondLetter = words[1][0].toUpperCase();
+        }
+        else{
+            firstLetter = '0';
+            secondLetter = words[0][0].toUpperCase();
+        }
+    
+        // Concatenate the first and second letters
+        const result = firstLetter + secondLetter;
+    
+        return result;
+    }
+    
+
     return (
         <header className='w-full py-1  dark:bg-slate-700 dark:text-white shadow-md dark:shadow-2xl dark:shadow-zinc-400'>
             <Container>
@@ -107,7 +129,7 @@ function Header() {
                                         // onClick={() => setShowAccountOptions(prev => !prev)}
                                         
                                         >
-                                            AB
+                                            {getConcatenatedString(fullName)}
                                         </div>
                                     </div>
 
@@ -128,14 +150,14 @@ function Header() {
                                         </Link>
 
                                         <Link
-                                        to={"/theme"}
+                                        to={"/settings"}
                                         >
                                             <div 
                                             className='p-2' 
                                             onClick={() => {
                                                 setShowAccountOptions(false);
                                             }}>
-                                                Theme
+                                                Settings
                                             </div>
                                         </Link>
                                         
@@ -283,7 +305,7 @@ function Header() {
                                             className='AccountClass text-sm w-[3rem] h-[3rem] cursor-default flex justify-center items-center text-center duration-200 bg-slate-300 hover:bg-slate-400 dark:hover:bg-slate-500 rounded-full z-50'
                                             
                                             >
-                                                AB
+                                                {getConcatenatedString(fullName)}
                                             </div>
                                         )}
 
@@ -302,14 +324,14 @@ function Header() {
                                                 </Link>
 
                                                 <Link
-                                                to={"/theme"}
+                                                to={"/settings"}
                                                 >
                                                     <div 
                                                     className='p-2' 
                                                     onClick={() => {
                                                         setShowAccountOptions(false);
                                                     }}>
-                                                        Theme
+                                                        Settings
                                                     </div>
                                                 </Link>
 

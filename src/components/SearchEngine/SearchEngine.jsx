@@ -407,7 +407,7 @@ const SearchEngine = (
     
 
     return (
-        <div className='w-[98%] relative flex justify-center items-center mt-5' >
+        <div className='w-[98%] relative flex justify-center items-center' >
             <div ref={searchRef} className={`flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ${width}`}>
                 {/* Input field section */}
                 <div className='w-full relative'>

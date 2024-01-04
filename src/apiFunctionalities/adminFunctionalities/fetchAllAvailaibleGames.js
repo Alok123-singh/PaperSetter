@@ -9,7 +9,7 @@ async function fetchAllAvailaibleGames(
 
     let error = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     // console.log("Fetch all availaible games from backend data :- ",data);
     

@@ -24,14 +24,16 @@ async function updatePassword(
     data,
     setRefreshData = (...input) => {},
     setLoading = (...input) => {}, 
+    setMessages = (...input) => {},
     setErrors = (...input) => {},
 ) {
     
     setLoading(true);
     console.log(data);
-    setErrors([]);
+    // setErrors([]);
 
     let errors = [];
+    let messages = [];
 
     // if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
     //     errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
@@ -55,11 +57,13 @@ async function updatePassword(
         console.log("Response",response);
         
         if(response.status === 200){
-            alert('Password has been successfully updated');
+            
+            // alert('Password has been successfully updated');
+            messages.push(`Successfully updated password of ${data.username} with ${data.newPassword}.`);
             console.log("Update Successfull");
         }
         else{
-            errors.push('Invalid new password');
+            errors.push('Password updation failed.');
             console.log("Update Failed");
         }
 
@@ -71,6 +75,10 @@ async function updatePassword(
 
     if (errors.length > 0) {
         setErrors(errors);
+    }
+
+    if (messages.length > 0) {
+        setMessages(messages);
     }
 
     setLoading(false);

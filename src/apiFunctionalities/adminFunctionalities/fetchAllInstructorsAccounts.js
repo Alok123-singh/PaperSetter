@@ -9,7 +9,7 @@ async function fetchAllInstructorsAccounts(
 
     let error = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     // console.log("Fetch all instructor accounts data :- ",data);
     

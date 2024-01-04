@@ -14,7 +14,7 @@ async function enrollInGame(
     
     let error = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     try{
         const credentials = btoa(config.username + ':' + config.password);
@@ -36,7 +36,7 @@ async function enrollInGame(
             console.log("Sucessfully enrolled in game");
         }
         else{
-            error.push('Invalid Course Code');
+            error.push('Invalid course code');
             console.log("Entroll Game backend Error :- ");
         }
 

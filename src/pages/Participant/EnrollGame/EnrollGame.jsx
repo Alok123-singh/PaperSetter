@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { TablePagination, Loading1, OverlayForm1, Button1 } from '../../../components'
+import { TablePagination, Loading1, OverlayForm1, Button1, Messages } from '../../../components'
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdDescription } from 'react-icons/md';
 import { joinGame } from '../../../apiFunctionalities'
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function EnrollGame() {
     const [loading, setLoading] = useState(false);
     const [errors,setErrors] = useState([]);
+    const [messages,setMessages] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
 
     const enrollData = useSelector(state => state.course.courseEntity);
@@ -444,14 +445,22 @@ function EnrollGame() {
     (
         <div className='my-5 w-full h-auto flex flex-col justify-center items-center'>
 
-            {/* Error section */}
-            {(errors && errors.length > 0) && <div className='flex flex-col'>
-                {
-                    errors.map((err,index) => 
-                    (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
+            <div className={`w-full ${(messages.length > 0 || errors.length > 0) && 'mb-9'}`}>
+                {/* Messages section */}
+                {messages.length > 0 && 
+                    <div className='w-full flex justify-center items-center'>
+                        <Messages messages={messages} messageType='success' setMessages={setMessages} />
+                    </div>
                 }
-            </div>}
-            
+                
+                {/* Errors section */}
+                {errors.length > 0 && 
+                    <div className='w-full flex justify-center items-center mt-4'>
+                        <Messages messages={errors} messageType='error' setMessages={setErrors} />
+                    </div>
+                }
+            </div>
+
             {/* Heading section */}
             <div className='w-full flex flex-col sm:flex-row justify-evenly items-center'>
 

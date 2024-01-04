@@ -1,6 +1,6 @@
-import React,{ useId } from 'react';
+import React,{ useId, useState } from 'react';
 import { Controller, useForm, useFormState  } from 'react-hook-form';
-import { Input1, Button1, Logo } from '../../index';
+import { Input1, Button1, Logo, Messages } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import Flatpickr from 'react-flatpickr';
@@ -12,8 +12,9 @@ import moment from 'moment';
 
 function OverlayForm2({ onClose, onSubmit, formData }) {
     const { register, handleSubmit, watch, control, formState } = useForm();
-    const { errors } = formState;
+    // const { errors } = formState;
     const id = useId();
+    const [errors, setErrors] = useState(formData.errors);
 
     const doOnSubmit = (data) => {
         onSubmit(data);
@@ -46,16 +47,15 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                     <div className='bg-pink-400 h-[1px]'></div>
                 </div>
 
-                {/* Errors Section */}
-                <div className='w-full mb-4 flex flex-col justify-center items-center'>
-                    {(formData.errors && formData.errors.length > 0) && <div className='flex flex-col'>
-                        {
-                            formData.errors.map((err,index) => 
-                            (<p key={index} className="text-red-600 mt-4 text-center">{err}</p>))
-                        }
-                    </div>}
+                <div className={`w-full ${errors.length > 0 && 'mb-2'}`}>
+                    {/* Errors section */}
+                    {errors.length > 0 && 
+                        <div className='w-full flex justify-center items-center mt-4'>
+                            <Messages messages={errors} messageType='error' setMessages={setErrors} autoClose={false} />
+                        </div>
+                    }
                 </div>
-                
+
                 <form
                 onSubmit={handleSubmit(doOnSubmit)}
                 className=" w-full flex flex-col justify-center items-center "

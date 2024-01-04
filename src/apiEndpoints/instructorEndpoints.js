@@ -9,6 +9,9 @@ export const INSTRUCTOR_ENDPOINTS = {
     GET_COURSES : (username) => `${API_BASE_URL}/courses/${username}`,
     DELETE_INSTRUCTOR : (username) => `${API_BASE_URL}/instructor/${username}`,
     ENROLL_GAME : (courseCode) => `${API_BASE_URL}/course/${courseCode}`,
+    UPDATE_ARCHIVE : (archive,email,courseCode) => `${API_BASE_URL}/course/archive/${archive}/${email}/${courseCode}`,
+    UPDATE_ATTEMPTS : (attempts,email,courseCode) => `${API_BASE_URL}/course/attempts/${attempts}/${email}/${courseCode}`,
+    UPDATE_SCHEDULE : (startTime,endTime,email,courseCode) => `${API_BASE_URL}/course/schedule/${startTime}/${endTime}/${email}/${courseCode}`,
 
 
     // ... other instructor endpoints

@@ -91,16 +91,17 @@ function StudentsEnrolled() {
     }
 
     const [displayDesign, setDisplayDesign] = useState({
-      design : {
-        start : 'justify-center',
-      },
-      title : 'Student Result',
-      height : '',
-      width : '',
+        design : {
+            start : 'justify-center',
+        },
+        title : 'Student Result',
+        height : '',
+        width : '',
     });
 
     const filterHistory = (email) => {
-        setLoading(true);
+        
+        // setLoading(true);
         
         let filteredHistory = [];
 
@@ -110,7 +111,7 @@ function StudentsEnrolled() {
             }
         });
 
-        setLoading(false);
+        // setLoading(false);
 
         return filteredHistory;
     };

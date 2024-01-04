@@ -5,12 +5,14 @@ async function createNewGame(
     data,
     setRefreshData = (...input) => {},
     setLoading = (...input) => {}, 
+    setMessages = (...input) => {},
     setErrors = (...input) => {},
 ) {
     
-    let error = [];
+    let errors = [];
+    let messages = [];
     setLoading(true);
-    setErrors([]);
+    // setErrors([]);
 
     try{
         const credentials = btoa(config.username + ':' + config.password);
@@ -28,21 +30,27 @@ async function createNewGame(
         if(response.status === 200){
             setRefreshData(prev =>!prev);
             console.log("Form submitted to backend");
+            messages.push(`Successfully created game ${data.name} with game Id ${data.gameId} and type ${data.type}`);
+
         }
         else{
             const data1 = await response.json();
-            error.push(data1.message);
+            errors.push(data1.message);
             console.log("Form Submit to backend Error :- ");
         }
 
     }
     catch(err){
         console.log("Admin Home Error :",err);
-        error.push(err);
+        errors.push(err);
     }
 
-    if(error.length > 0){
-        setErrors(error);
+    if(errors.length > 0){
+        setErrors(errors);
+    }
+
+    if(messages.length > 0){
+        setMessages(messages);
     }
 
     setLoading(false);

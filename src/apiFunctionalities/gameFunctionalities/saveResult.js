@@ -13,7 +13,7 @@ async function saveResult(
 ) {
 
     setLoading(true);
-    setErrors('');
+    // setErrors('');
     console.log("Result Data",JSON.stringify(data));
     
     try{

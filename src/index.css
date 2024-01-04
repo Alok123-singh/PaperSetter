@@ -14,5 +14,17 @@ body {
     padding: 0;
 }
 
-  
-  
+
+@keyframes circleAnimation {
+    0% {
+      stroke-dasharray: 125.664; /* Full circumference of the circle */
+      stroke-dashoffset: 125.664;
+    }
+    100% {
+      stroke-dasharray: 125.664;
+      stroke-dashoffset: 0;
+    }
+}
+
+
+

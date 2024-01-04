@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { Loading1, Button1, Card1, OverlayForm2 } from '../../../components/index'
+import { Loading1, Button1, Card1, OverlayForm2, Messages } from '../../../components/index'
 import { enrollInGame, fetchEnrolledGames } from '../../../apiFunctionalities'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourseEntity } from '../../../store/courseSlice'
@@ -10,6 +10,7 @@ import { setCourseCode } from '../../../store/resultSlice'
 function ParticipantHome() {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
 
     const username = useSelector(state => state.auth.username);
@@ -80,16 +81,16 @@ function ParticipantHome() {
     };
 
     const showGames = () => {
-        return  <div className='w-full flex flex-wrap justify-around items-center'>
+        return  <div className='w-full flex flex-wrap justify-evenly items-center'>
                     {games.map((game,index) => (
                         <div 
                         key={index} 
                         onClick={() => {
-                            console.log("Course Code clicked",game.courseCode);
+                            // console.log("Course Code clicked",game.courseCode);
                             dispatch(setCourseCode(game.courseCode))
                         }}
                         >
-                            <Card1  imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link={createUrl(game.gameName)} title={game.gameName} />
+                            <Card1  imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link={createUrl(game.gameName)} title={game.gameName} bottomTitle={game.courseCode} />
                         </div>
                     ))}
                 </div>
@@ -99,17 +100,25 @@ function ParticipantHome() {
         <Loading1 />
     ) : 
     (
-        <div className = 'py-10 flex justify-evenly items-center dark:bg-gray-40  flex-wrap'>
+        <div className = 'py-10 flex space-x-5 justify-evenly items-center dark:bg-gray-40  flex-wrap'>
 
-            {/* Error section */}
-            {(errors && errors.length > 0) && <div className='flex flex-col'>
-                {
-                    errors.map((err,index) => 
-                    (<p key={index} className="text-red-600 mb-2 text-center">{err}</p>))
+            <div className={`w-full ${(messages.length > 0 || errors.length > 0) && 'mb-9'}`}>
+                {/* Messages section */}
+                {messages.length > 0 && 
+                    <div className='w-full flex justify-center items-center'>
+                        <Messages messages={messages} messageType='success' setMessages={setMessages} autoClose={true} />
+                    </div>
                 }
-            </div>}
-            
-            <div className='w-[90%] flex flex-col justify-end items-end'>
+                
+                {/* Errors section */}
+                {errors.length > 0 && 
+                    <div className='w-full flex justify-center items-center mt-4'>
+                        <Messages messages={errors} messageType='error' setMessages={setErrors} />
+                    </div>
+                }
+            </div>
+
+            <div className='w-[90%] mb-4 flex flex-col justify-end items-end'>
                 
                 {/* Create new game button section */}
                 <div className='flex flex-col justify-center items-center'>
@@ -137,9 +146,9 @@ function ParticipantHome() {
 
             {showGames()}
 
-            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' /> */}
+            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/inventory-management' title='Inventory Management' />
 
-            {/* <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/seating-allocation' title='Seating Allocation' /> */}
+            <Card1 imageSource='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEXB-pdC3jlinrQ5Y9rLgR6F_gtPgk1W0ejT-laLKGbEDsllFqvFw39r0mExvLPHnK-7w&usqp=CAU' link='/seating-allocation' title='Seating Allocation' /> */}
         </div>
     )
 }
