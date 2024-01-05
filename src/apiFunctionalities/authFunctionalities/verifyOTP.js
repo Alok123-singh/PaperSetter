@@ -17,6 +17,8 @@ async function verifyOTP(
     setMessages([]);
     setLoading(true);
 
+    let status = false;
+
     if(otp.length === 0){
         errors.push("Enter OTP");
         error.map((err) => {
@@ -30,13 +32,7 @@ async function verifyOTP(
         return;
     }
 
-    error.map((err) => {
-        if(err !== 'Invalid OTP. Click on verify to send the OTP again' && err !== 'Enter OTP')
-            errors.push(err);
-
-        return (err);
-    })
-    setError(errors);
+    setError(prev => prev.filter(err => err !== 'Invalid OTP. Click on verify to send the OTP again' && err !== 'Enter OTP' && err !== 'Due to some reason, OTP was not sent to your mail' && err !== 'Username is not availaible'));
 
     try{
         const credentials = btoa(config.username + ':' + config.password);
@@ -56,6 +52,7 @@ async function verifyOTP(
             setValidated(true);
             setValidateByOtp(false);
             message.push('Email has been verified');
+            status = true;
             // console.log("OTP validated");
         }
         else{
@@ -78,6 +75,8 @@ async function verifyOTP(
     }
 
     setLoading(false);
+
+    return (status);
 };
 
 export default verifyOTP;

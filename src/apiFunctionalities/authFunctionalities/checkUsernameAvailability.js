@@ -9,6 +9,7 @@ async function checkUsernameAvailability(
 ) {
 
     if(username === '') return;
+    let status = false;
 
     let errors = [];
     
@@ -33,6 +34,7 @@ async function checkUsernameAvailability(
             setError(prev => prev.filter(err => err !== 'Username is not availaible'));
             setUsernameAvailability(true);
             console.log("Username is availaible");
+            status = true;
         }
     }
     catch (error) {
@@ -51,6 +53,8 @@ async function checkUsernameAvailability(
         errors = removeDuplicates(errors);
         setError(errors);
     }
+
+    return (status);
 };
 
 export default checkUsernameAvailability;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 
-const Messages = ({ messages, messageType, setMessages, appearanceTime = 10, autoClose = true}) => {
+const Messages = ({ messages, messageType, setMessages, appearanceTime = 10, autoClose = true, width='', height = ''}) => {
     const [visibleMessages, setVisibleMessages] = useState(messages);
     const [showCloseButton, setShowCloseButton] = useState(!autoClose);
 
@@ -28,7 +28,7 @@ const Messages = ({ messages, messageType, setMessages, appearanceTime = 10, aut
             };
         }
     
-    }, [visibleMessages, appearanceTime]);
+    }, [visibleMessages, messages]);
 
     //use this useEffect if you want messages to disappear one by one
     // useEffect(() => {
@@ -47,31 +47,33 @@ const Messages = ({ messages, messageType, setMessages, appearanceTime = 10, aut
     // }, [visibleMessages]);
 
     const removeMessage = (index) => {
-        const updatedMessages = [...visibleMessages];
-        updatedMessages.splice(index, 1);
-        setVisibleMessages(updatedMessages);
-        setMessages(updatedMessages);
+        setVisibleMessages(prevMessages => {
+            const updatedMessages = [...prevMessages];
+            updatedMessages.splice(index, 1);
+            setMessages(updatedMessages); // Update the state based on the previous state
+            return updatedMessages;
+        });
     };
 
     return (
         <div 
         onMouseEnter={() => autoClose === true && setShowCloseButton(true)}
         onMouseLeave={() => autoClose === true && setShowCloseButton(false)}
-        className="w-[98%] md:w-[90%] cursor-default space-y-4"
+        className={`w-[98%] md:w-[90%] cursor-default space-y-4 ${width}`}
         >
             {visibleMessages.map((message, index) => (
                 <div
                 key={index}
-                className={`w-full px-2 ${autoClose === false && 'p-3'} rounded-md flex justify-between items-center ${
+                className={`w-full h-auto ${height} px-2 ${autoClose === false && 'p-3'} rounded-md flex justify-between items-center ${
                     messageType === 'success'
                     ? ' border border-green-700 hover:bg-green-100 hover:text-green-700'
                     : 'border border-red-700 hover:bg-red-100 hover:text-red-700'
                 } relative`}
                 >
-                    <div className={`w-[90%] md:w-[90%] ${messageType === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className={`w-[90%] md:w-[90%] flex justify-start items-center ${messageType === 'success' ? 'text-green-600' : 'text-red-600'}`}>
                         {message}
                     </div>
-                    <div className={`${showCloseButton === true ? 'w-[15%]' : 'w-[10%]'} md:w-[10%] flex justify-end items-center`}>
+                    <div className={`${showCloseButton === true ? 'w-[15%]' : 'w-[10%]'} md:w-[10%] h-full flex justify-end items-center`}>
                         {showCloseButton === true && 
                             <button 
                             className='flex cursor-pointer justify-end items-center'

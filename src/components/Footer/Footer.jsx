@@ -69,7 +69,7 @@ function Footer() {
                                 <li className="mb-4">
                                     <Link
                                         className=" text-sm font-medium text-gray-900 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500 cursor-pointer"
-                                        to="/my-account"
+                                        to="/profile"
                                     >
                                         Account
                                     </Link>

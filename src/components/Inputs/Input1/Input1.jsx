@@ -22,7 +22,7 @@ const Input1 = React.forwardRef(function Input(
             return (
                 <div className='relative'>
                     {label && (
-                        <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                        <label className='mb-1 pl-1 flex justify-start items-center ' htmlFor={id}>
                             <div className=''>
                                 {label}
 
@@ -43,7 +43,7 @@ const Input1 = React.forwardRef(function Input(
                     />
 
                     <div
-                        className={`absolute ${label && 'translate-y-1/4 '} top-1/2 right-2 transform -translate-y-1/2 cursor-pointer`}
+                        className={`absolute ${label && 'translate-y-[1px] '} top-1/2 right-2 transform -translate-y-1/2 cursor-pointer`}
                         onClick={() => setShowPassword((prev) => !prev)}
                     >
                         {showPassword ? (
@@ -63,7 +63,7 @@ const Input1 = React.forwardRef(function Input(
         return (
             <div className='flex flex-col justify-start items-start'>
                 {label && (
-                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                    <label className='mb-1 ml-1 flex justify-start items-center ' htmlFor={id}>
                         <div className=''>
                             {label}
 

@@ -5,6 +5,7 @@ import checkEmailAvailability from "./checkEmailAvailability";
 import sendOTP from "./sendOTP";
 import verifyOTP from "./verifyOTP";
 import createAccount from "./createAccount";
+import checkEmailForUsernameAndSendOTP from "./checkEmailForUsernameAndSendOTP";
 
 export {
     login,
@@ -14,6 +15,7 @@ export {
     sendOTP,
     verifyOTP,
     createAccount,
+    checkEmailForUsernameAndSendOTP,
 
     
 };

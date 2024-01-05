@@ -3,8 +3,8 @@ import { ROLES } from '../roles/index'
 
 const initialState = {
     loginStatus: true,
-    username: 'alok12',
-    email : 'aloksinghbais02par@gmail.com',
+    username: 'alok20',
+    email : 'aloksinghbais02ins@gmail.com',
     fullName : 'Alok Singh',
     role : ROLES.PARTICIPANT,
 };

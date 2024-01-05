@@ -512,7 +512,7 @@ function AdminHome() {
 
                 const props = {
                     courseEntities: JSON.stringify(currentItem.courseEntities),
-                    instructorName: currentItem.name,
+                    instructorName: currentItem.fullName,
                 }
 
                 const queryString = Object.keys(props)
@@ -816,7 +816,7 @@ function AdminHome() {
             dataRender: (index, value, currentItem) => {
                 const props = {
                     courseEntities: JSON.stringify(currentItem.courseEntities),
-                    instructorName: currentItem.name,
+                    instructorName: currentItem.fullName,
                 }
 
                 const queryString = Object.keys(props)

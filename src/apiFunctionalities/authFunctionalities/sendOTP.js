@@ -15,14 +15,7 @@ async function sendOTP(
 
     setLoading(true);
     
-
-    error.map((err) => {
-        if(err !== 'Invalid OTP. Click on verify to send the OTP again' && err !== 'Enter OTP')
-            errors.push(err);
-
-        return (err);
-    })
-    setError(errors);
+    setError(prev => prev.filter(err => err !== 'Invalid OTP. Click on verify to send the OTP again' && err !== 'Enter OTP' && err !== 'Due to some reason, OTP was not sent to your mail' && err !== 'Username is not availaible'));
 
     // console.log("Inside SendOTP");
     // console.log("Username", username);

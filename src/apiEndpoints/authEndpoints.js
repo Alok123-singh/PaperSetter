@@ -14,6 +14,7 @@ export const AUTH_ENDPOINTS = {
     SIGNUP: `${API_BASE_URL}/account`,
     CHECK_USERNAME : (username) => `${API_BASE_URL}/username/${username}`,
     CHECK_EMAIL : (email) => `${API_BASE_URL}/email/${email}`,
+    CHECK_EMAIL_FOR_USERNAME : (username,email) => `${API_BASE_URL}/password/forget/${username}/${email}`,
     RESET_PASSWORD : `${API_BASE_URL}/password`,
     UPDATE_PASSWORD : `${API_BASE_URL}/password/update/direct`,
 

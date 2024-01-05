@@ -138,7 +138,7 @@ function Header() {
                                 {showAccountOptions && (
                                     <div className='absolute right-[-1rem] mt-[0.1rem] w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
                                         <Link
-                                        to={"/my-account"}
+                                        to={"/profile"}
                                         >
                                             <div className='p-2'
                                             onClick={() => {
@@ -312,7 +312,7 @@ function Header() {
                                         {showAccountOptions && (
                                             <div className='absolute text-sm right-[-1rem] mt-[0.4rem] w-1/2 md:w-1/6 bg-white dark:bg-slate-700 border dark:border-gray-400 rounded-md shadow-md z-10'>
                                                 <Link
-                                                to={"/my-account"}
+                                                to={"/profile"}
                                                 >
                                                     <div className='p-2'
                                                     onClick={() => {

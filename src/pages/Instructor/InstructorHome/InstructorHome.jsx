@@ -565,7 +565,7 @@ function InstructorHome() {
                 return  <div
                             className={`w-full h-full text-lg font-bold flex text-slate-500 flex-wrap justify-center items-center`}
                         >
-                            {currentItem.enrolledStudentsList && currentItem.enrolledStudentsList.length}
+                            {currentItem.enrolledStudentsList ? currentItem.enrolledStudentsList.length : '0'}
                             
                         </div>;
             }
@@ -992,7 +992,7 @@ function InstructorHome() {
                 return  <div
                             className={` w-full h-full text-lg font-bold flex text-slate-500 flex-wrap justify-end items-center`}
                         >
-                            {value}
+                            {currentItem.enrolledStudentsList ? currentItem.enrolledStudentsList.length : '0'}
                             
                         </div>;
             }

@@ -103,7 +103,7 @@ async function login(
         }
         else{
             console.log('Login Error -: ',data2.message);
-            setError(data2.message);
+            setError("Invalid username or password");
             console.log("Login Failed");
         }
 

@@ -24,14 +24,15 @@ async function checkEmailAvailability(
         });
         const data = await response.json();
         
-        if (data.message !== undefined) {
+        if (data === false) {
             
             errors.push('Email is not availaible');
             setEmailAvailability(false);
             setShowVerifyEmail(false);
             console.log("Email is not availaible");
 
-        } else {
+        } 
+        else {
             setError(prev => prev.filter(err => err !== 'Email is not availaible'));
             setEmailAvailability(true);
             setShowVerifyEmail(true);

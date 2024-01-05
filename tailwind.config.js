@@ -6,7 +6,11 @@ export default {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      // minHeight: {
+      //   '128': '32rem',
+      // }
+    },
   },
   plugins: [],
 }

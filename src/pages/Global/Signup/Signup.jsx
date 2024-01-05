@@ -245,24 +245,34 @@ function Signup() {
                                         //     setValidated(false);
                                         checkEmail(e.target.value);
                                         if(emailAvailability === true)
-                                            setShowVerifyEmail(true);
+                                        {
+                                            setTimeout(() => {
+                                                setShowVerifyEmail(true);
+
+                                            },1000);
+                                        }
                                     }}
                                     onClick={() => {
                                         // if(emailAvailability === true)
                                         //     setShowVerifyEmail(true);
+                                        setShowVerifyEmail(false);
                                     }}
                                     placeholder="Email"
                                     type="text"
                                     className={`${validateByOtp === true ? 'pr-[5.4rem]' : 'pr-[5.4rem]'} ${emailAvailability ? 'text-green-600' : 'text-red-500'}`}
-                                    disabled={validated}
+                                    disabled={validated || validateByOtp}
                                     
                                     />
                                     {field.value && (
                                         <span className={`absolute top-1/2 right-2 transform -translate-y-1/2`}>
+                                            {emailAvailability === false && 
+                                                <FaTimes className='text-red-500' />
+                                            }
+                                            
                                             {validated === true ? 
                                                 <FaCheck className='text-green-500' />
                                                 :
-                                                (showVerifyEmail === true && validateByOtp === false) && 
+                                                (emailAvailability === true && showVerifyEmail === true && validateByOtp === false) && 
 
                                                 <div onClick={() => sendOtp()} className='cursor-pointer flex flex-col justify-center items-center ml-2'>
                                                     {/* <RiMailCheckLine className='text-red-500 mr-1' /> */}

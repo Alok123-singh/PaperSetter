@@ -31,40 +31,53 @@ async function updatePassword(
     setLoading(true);
     console.log(data);
     // setErrors([]);
+    let status = false;
 
     let errors = [];
     let messages = [];
 
-    // if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
-    //     errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
-    //     setLoading(false);
-    //     setErrors(errors);
-    //     return;
-    // }
+    setErrors(prev => prev.filter(err => err !== "Password and confirm password does not match" && err !== "New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long"));
+
+    if(data.confirmPassword !== undefined && data.newPassword !== data.confirmPassword){
+        errors.push("Password and confirm password does not match");
+        setLoading(false);
+        setErrors(errors);
+        // return (status);
+    }
+
+    if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
+        errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
+        setLoading(false);
+        setErrors(errors);
+        // return status;
+    }
 
     try{
-        const credentials = btoa(config.username + ':' + config.password);
-        const response = await fetch(AUTH_ENDPOINTS.UPDATE_PASSWORD,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Specify the content type as JSON
-                'Authorization': `Basic ${credentials}`,
-                // Add any other headers if needed
-            },
-            body: JSON.stringify(data), // Convert the data to a JSON string
-        });
-        // const data2 = await response.json();
-        console.log("Response",response);
-        
-        if(response.status === 200){
+        if(errors.length === 0){
+            const credentials = btoa(config.username + ':' + config.password);
+            const response = await fetch(AUTH_ENDPOINTS.UPDATE_PASSWORD,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type as JSON
+                    'Authorization': `Basic ${credentials}`,
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify(data), // Convert the data to a JSON string
+            });
+            // const data2 = await response.json();
+            console.log("Response",response);
             
-            // alert('Password has been successfully updated');
-            messages.push(`Successfully updated password of ${data.username} with ${data.newPassword}.`);
-            console.log("Update Successfull");
-        }
-        else{
-            errors.push('Password updation failed.');
-            console.log("Update Failed");
+            if(response.status === 200){
+                
+                // alert('Password has been successfully updated');
+                messages.push(`Successfully updated password of ${data.username} with ${data.newPassword}.`);
+                console.log("Update Successfull");
+                status = true;
+            }
+            else{
+                errors.push('Password updation failed.');
+                console.log("Update Failed");
+            }
         }
 
     }
@@ -82,6 +95,8 @@ async function updatePassword(
     }
 
     setLoading(false);
+
+    return (status);
 };
 
 export default updatePassword;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { FaCircleNotch } from 'react-icons/fa';
 
-function Loading2() {
+function Loading2({
+    message = 'Loading',
+}) {
 
 
     return (
@@ -9,7 +11,7 @@ function Loading2() {
             <div className='flex flex-col justify-center items-center bg-slate-700 opacity-95 py-[2rem] px-[3rem] rounded-lg'>
                 <FaCircleNotch size={30} className='animate-spin text-gray-400' />
                 <p className='text-white text-lg'>
-                    Verifying Account...
+                    {`${message}...`}
                 </p>
             </div>
         </div>

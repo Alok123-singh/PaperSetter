@@ -95,7 +95,7 @@ async function createAccount(
         setError(errors);
     }
 
-    reset();
+    // reset();
     setMessages([]);
     setValidateByOtp(false);
     setShowVerifyEmail(false);

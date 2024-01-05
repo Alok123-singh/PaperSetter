@@ -5,26 +5,28 @@ async function resetPassword(
     data,
     navigate = (...input) => {},
     setLoading = (...input) => {}, 
-    setError = (...input) => {},
+    setErrors = (...input) => {},
 ) {
 
     setLoading(true);
-    console.log(data);
-    setError([]);
+    // console.log(data);
+    setErrors([]);
+
+    let status = false;
 
     let errors = [];
 
     if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_])[A-Za-z\d@$!%*?&^#(){}[\]:;<>,.?/~_+\-=|\\\"'`!^&*()$%^,{}?<>_ ]{5,}$/.test(data.newPassword)) {
         errors.push("New password must have at least 1 special character, 1 small alphabet, 1 capital alphabet, 1 digit, and at least 5 characters long");
         setLoading(false);
-        setError(errors);
+        setErrors(errors);
         return;
     }
 
     if(data.newPassword === data.oldPassword){
-        errors.push("Enter new password")
+        errors.push("Enter a new password")
         setLoading(false);
-        setError(errors);
+        setErrors(errors);
         return;
     }
 
@@ -43,9 +45,10 @@ async function resetPassword(
         console.log("Response",response);
         
         if(response.status === 200){
-            alert('Password has been reset');
-            console.log("Reset Successfull");
-            navigate('/login');
+            alert('Password has been reset successfully');
+            // console.log("Reset Successfull");
+            navigate('/profile');
+            status = true;
         }
         else{
             errors.push('Invalid username or password');
@@ -59,10 +62,12 @@ async function resetPassword(
     }
 
     if (errors.length > 0) {
-        setError(errors);
+        setErrors(errors);
     }
 
     setLoading(false);
+
+    return (status);
 };
 
 export default resetPassword;

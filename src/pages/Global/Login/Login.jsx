@@ -60,8 +60,8 @@ function Login() {
                         Sign Up
                     </Link>
                 </p>
-                {message && <p className="text-green-600 mt-8 text-center">{message}</p>}
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                {message && <p className="text-green-600 mt-3 text-center">{message}</p>}
+                {error && <p className="text-red-600 mt-3 text-center">{error}</p>}
                 <form onSubmit={handleSubmit(doLogin)} className='mt-5'>
                     {step === 1 && 
                         <div className='space-y-7 w-full flex flex-col justify-center items-center '>
@@ -172,7 +172,7 @@ function Login() {
                             </div>
 
                             {loading === true && (
-                                <Loading2 />
+                                <Loading2 message='Verifying Account' />
                             )}
                         
 
@@ -184,7 +184,7 @@ function Login() {
                 <button 
                 className='text-blue mt-7 pl-1 text-red-600'
                 type='button'
-                onClick={() => navigate('/reset-password')}
+                onClick={() => navigate('/forgot-password')}
                 >
                     Forgot password &#63;
                 </button>

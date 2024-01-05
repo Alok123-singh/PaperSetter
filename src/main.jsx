@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Contact, Login, MyAccount, ResetPassword, Signup, Settings } from './pages/Global'
+import { About, Contact, Login, MyProfile, NameSection, UsernameSection, PictureSection, EmailSection, ResetPassword, ForgotPassword, Signup, Settings } from './pages/Global'
 import { Result, History, EnrollGame } from './pages/Participant'
 import { StudentsEnrolled } from './pages/Instructor'
 import { Courses } from './pages/Admin'
@@ -26,7 +26,14 @@ const router = createBrowserRouter(
 
             <Route path='contact' element={<Contact />} />
 
-            <Route path='my-account' element={<AuthLayout authentication> {""} <MyAccount /> </AuthLayout>} />
+            <Route path='profile'>
+
+                <Route index={true} element={<AuthLayout authentication> {""} <MyProfile /> </AuthLayout>}/>
+
+                <Route path='reset-password' element={<AuthLayout authentication> {""} <ResetPassword /> </AuthLayout>} />
+
+            </Route>
+
 
             <Route path='inventory-management'>
 
@@ -67,7 +74,9 @@ const router = createBrowserRouter(
 
             <Route path='signup' element={<AuthLayout authentication={false}> <Signup /> </AuthLayout>} />
 
-            <Route path='reset-password' element={<AuthLayout authentication={false}> <ResetPassword /> </AuthLayout>} />
+            {/* <Route path='/reset-password' element={<AuthLayout authentication={false}> <ResetPassword /> </AuthLayout>} /> */}
+            
+            <Route path='forgot-password' element={<AuthLayout authentication={false}> <ForgotPassword /> </AuthLayout>} />
 
         </Route>
     )

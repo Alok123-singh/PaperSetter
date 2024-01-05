@@ -1,17 +1,28 @@
 import React, { useState } from 'react'
-import { ThemeButton, Loading1, Button1 } from '../../../components/index';
+import { useSelector } from 'react-redux';
+import { Loading1 } from '../../../../components/index';
+import { NameSection, EmailSection, UsernameSection, PictureSection } from '../index'
 import { useNavigate } from 'react-router-dom';
 
-function Settings() {
+
+function MyProfile() {
+
+    const username = useSelector(state => state.auth.username);
+    const email = useSelector(state => state.auth.email);
+    const fullName = useSelector(state => state.auth.fullName);
+    const [picture, setPicture] = useState('https://unsplash.com/photos/grayscale-photo-of-man-c_GmwfHBDzk');
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const [selectedOption, setSelectedOption] = useState('theme');
+    const [selectedOption, setSelectedOption] = useState('name');
 
     const profileOptions = [
-        { id: 'theme', label: 'Theme', },
-        { id: 'enableNotifications', label: 'Enable Notifications', },
+        { id: 'name', label: 'Name', },
+        { id: 'email', label: 'Email', },
+        { id: 'username', label: 'Username', },
+        { id: 'password', label: 'Reset Password', },
+        // { id: 'picture', label: 'Picture', },
     ];
 
     return loading ? (
@@ -37,7 +48,7 @@ function Settings() {
                         >
                             <div
                             className={`absolute left-0 top-0 h-full w-1 bg-white transition-all transition-transfor ${
-                                selectedOption === option.id ? 'w-4' : 'w-0 '
+                                selectedOption === option.id ? 'w-4 ' : 'w-0'
                             }`}
                             />
                             {option.label}
@@ -48,22 +59,31 @@ function Settings() {
                 {/* Right-hand side with selected option details */}
                 <div className="w-[96%] sm:w-2/3 p-1">
 
-                    {selectedOption === 'theme' && 
+                    {selectedOption === 'name' && 
                         <div 
                         >
-                            <ThemeButton activate={false} />
+                            <NameSection data={fullName} />
                         </div>
                     }
 
-                    {selectedOption === 'enableNotifications' && 
+                    {selectedOption === 'email' && 
                         <div 
-                        className='w-full flex justify-center items-center'
                         >
-                            <Button1
-                                className='bg-blue-500 hover:bg-blue-400 rounded-md'
-                            >
-                                Enable
-                            </Button1>
+                            <EmailSection data={email} />
+                        </div>
+                    }
+
+                    {selectedOption === 'username' && 
+                        <div 
+                        >
+                            <UsernameSection data={username} />
+                        </div>
+                    }
+
+                    {selectedOption === 'picture' && 
+                        <div 
+                        >
+                            <PictureSection data={picture} />
                         </div>
                     }
 
@@ -73,4 +93,4 @@ function Settings() {
     )
 };
 
-export default Settings;
+export default MyProfile;

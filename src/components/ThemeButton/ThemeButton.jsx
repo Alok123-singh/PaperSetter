@@ -3,14 +3,17 @@ import '../../index.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../../store/themeSlice';
 
-function ThemeButton() {
+function ThemeButton( {
+    activate = true,
+} ) {
     
     const themeMode = useSelector(state => state.theme.themeMode);
 
     const dispatch = useDispatch();
 
     const changeTheme = (e) => {
-        dispatch(setTheme(themeMode === 'dark' ? 'light' : 'dark'));
+        if(activate === true)
+            dispatch(setTheme(themeMode === 'dark' ? 'light' : 'dark'));
     };
 
     useEffect(() => {
