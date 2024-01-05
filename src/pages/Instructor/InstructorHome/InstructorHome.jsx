@@ -61,7 +61,7 @@ function InstructorHome() {
         inputs : [
             // Define your form inputs here
             { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', },
-            { label: 'No of Attempts', type: 'text', placeholder: 'Student Course Attempts', name: 'studentAttempts', required: true, defaultValue: 'studentAttempts', },
+            { label: 'No of Attempts', type: 'text', placeholder: 'Student Course Attempts', name: 'studentAttempts', required: true, defaultValue: 'attempts', },
             // Add more input configurations as needed
         ],
         buttons : [
