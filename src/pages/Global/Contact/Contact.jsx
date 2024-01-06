@@ -7,7 +7,7 @@ function Contact() {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = (data) => {
-        console.log("Form Submitted");
+        // console.log("Form Submitted");
 
 
     }
@@ -26,7 +26,7 @@ function Contact() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Submit', style: 'w-[6rem]' },
+            { type: 'submit', text: 'Submit', style: '' },
             // Add more button configurations as needed
         ],
         title : 'Contact Form',

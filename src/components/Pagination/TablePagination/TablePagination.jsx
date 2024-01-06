@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdError } from 'react-icons/md';
+import { ExcelDownload, Loading2 } from '../../index'
 
 
 function TablePagination({ 
@@ -14,7 +15,12 @@ function TablePagination({
         roundedDesign='',
         columnsDesign='',
         rowsDesign='',
+        enableExcelDownload=false,
+        excludedFields = ["id"],
+        filename='',
     }) {
+
+    const [loading, setLoading] = useState(false);
 
     const updatedColumns = showRowNumbers
     ? [{ header: '#', dataKey: 'rowNumber' }, ...columnsDescription]
@@ -124,8 +130,20 @@ function TablePagination({
     return (
         currentItems && currentItems.length > 0 ? 
 
-        <div className={`py-10 flex flex-wrap flex-col justify-center ${widthDesign} `}>
+        <div className={`py-10 ${enableExcelDownload === true && 'py-4'} flex flex-wrap flex-col justify-center ${widthDesign} `}>
             <p className='w-[94%] mx-auto mb-1 font-bold text-lg flex justify-start items-center'>{title}</p>
+
+            {enableExcelDownload === true && 
+                <div className='w-full mb-4 flex flex-col justify-center items-center'>
+                    <div className='w-full sm:w-[95%] flex-end items-center'>
+                        <ExcelDownload data={items} filename={filename} excludedFields={excludedFields} setLoading={setLoading} />
+                    </div>
+
+                    {loading === true && 
+                        <Loading2 message='Preparing Download' />
+                    }
+                </div>
+            }
 
             <div className={`w-[95%] ${windowWidth < 1200 && 'overflow-x-auto'} mx-auto shadow-lg shadow-slate-300 border border-gray-300 ${roundedDesign}`}>
                 <table className=" min-w-full  bg-white ">

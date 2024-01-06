@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Loading1, TablePagination } from '../../../components/index'
 import { FaInfoCircle } from 'react-icons/fa';
-import { GAME_ENDPOINTS } from '../../../apiEndpoints/index';
-import { config } from '../../../configurations'
 import { fetchHistory } from '../../../apiFunctionalities'
 
 

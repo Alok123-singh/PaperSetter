@@ -67,7 +67,7 @@ function InstructorHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Update', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Update', style: 'bg-green-500 border-green-400 hover:bg-green-400 rounded-md' },
             // Add more button configurations as needed
         ],
         title : "Update",
@@ -88,7 +88,7 @@ function InstructorHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Update', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Update', style: 'bg-green-500 border-green-400 hover:bg-green-400 rounded-md' },
             // Add more button configurations as needed
         ],
         title : "Update",
@@ -108,13 +108,13 @@ function InstructorHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Update', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Update', style: 'bg-green-500 border-green-400 hover:bg-green-400 rounded-md' },
             // Add more button configurations as needed
         ],
         title : "Time Schedule",
         desc : "You can update with respective details",
         formHeight : "",
-        formWidth : "md:h-[90%]",
+        formWidth : "md:h-[80%]",
     }
 
     const form = (parentData,formData,setShowFormIndex,onSubmit) => { 
@@ -137,17 +137,18 @@ function InstructorHome() {
       
         // Check if the parsing was successful and it's a valid Date object
         if (!isNaN(dateObject.getTime())) {
-          // If it's a valid Date object, return the custom formatted string
-          const options = {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-          };
-          return dateObject.toLocaleString('en-US', options);
-        } else {
+            // If it's a valid Date object, return the custom formatted string
+            const options = {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            };
+            return dateObject.toLocaleString('en-US', options);
+        } 
+        else {
           // If parsing fails, return the original input (or handle it as needed)
           return dateTimeString;
         }
@@ -341,7 +342,7 @@ function InstructorHome() {
       
         // Check if the dateObject is valid
         if (isNaN(dateObject.getTime())) {
-          console.error('Invalid ISO format');
+        //   console.error('Invalid ISO format');
           return null;
         }
       
@@ -363,7 +364,7 @@ function InstructorHome() {
       
         // Check if the dateObject is valid
         if (isNaN(dateObject.getTime())) {
-          console.error('Invalid date format');
+        //   console.error('Invalid date format');
           return null;
         }
       
@@ -1301,7 +1302,7 @@ function InstructorHome() {
             }
             
             {displayFormat === 'Card' && 
-                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  />
+                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign='' />
             }
             
             {/* Select display format as Table or Card */}

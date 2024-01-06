@@ -24,14 +24,14 @@ async function fetchHistory(
         });
         const data = await response.json();
 
-        console.log("Successfully fetch history");
+        // console.log("Successfully fetch history");
         if(data.length !== 0)
         setData(data.reverse());
 
     }
     catch(err){
         errors.push(err);
-        console.log("History error :",err);
+        // console.log("History error :",err);
     }
 
     if(errors.length > 0){

@@ -47,23 +47,23 @@ async function joinGame(
 
             if(response1.status === 200){
                 alert("You have successfully enrolled in the game!");
-                console.log("Sucessfully joined game");
+                // console.log("Sucessfully joined game");
             }
             else{
                 alert("Failed to enroll");
-                console.log("Failed to enroll");
+                // console.log("Failed to enroll");
             }
 
             navigate(url);
         }
         else{
             errors.push('Student is already enrolled in this course');
-            console.log("Join Game backend Error :- ");
+            // console.log("Join Game backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Participant Home Error :",err);
+        // console.log("Participant Home Error :",err);
         // errors.push(err);
     }
 

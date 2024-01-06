@@ -13,7 +13,7 @@ function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState([]);
     const [messages, setMessages] = useState([]);
-    const {control, register, handleSubmit, watch, reset} = useForm();
+    const {control, register, handleSubmit, watch, setValue, reset} = useForm();
     const [usernameAvailability, setUsernameAvailability] = useState(true);
     const [emailAvailability, setEmailAvailability] = useState(true);
     const [step,setStep] = useState(1);
@@ -50,7 +50,12 @@ function Signup() {
         const email = watch('email');
         const otp = watch('otp');
 
-        verifyOTP(email,otp,error,setValidateByOtp,setValidated,setMessages,setLoading,setError);
+        const response = await verifyOTP(email,otp,error,setValidateByOtp,setValidated,setMessages,setLoading,setError);
+
+        if(response === false){
+            // setStep(step+1);
+            setValue('otp','');
+        }
     }
 
     const create = async (data) => {
@@ -174,7 +179,7 @@ function Signup() {
 
                                 <Button1 
                                 type="submit" 
-                                className="w-full h-[3rem] rounded-sm"
+                                className="w-full"
                                 onClick={(e) => {
                                     if(watch('roleName'))
                                         setStep((prev) => prev + 1);
@@ -259,7 +264,7 @@ function Signup() {
                                     }}
                                     placeholder="Email"
                                     type="text"
-                                    className={`${validateByOtp === true ? 'pr-[5.4rem]' : 'pr-[5.4rem]'} ${emailAvailability ? 'text-green-600' : 'text-red-500'}`}
+                                    className={`${showVerifyEmail === true ? 'pr-[5.4rem]' : ''} ${emailAvailability ? 'text-green-600' : 'text-red-500'}`}
                                     disabled={validated || validateByOtp}
                                     
                                     />
@@ -276,7 +281,7 @@ function Signup() {
 
                                                 <div onClick={() => sendOtp()} className='cursor-pointer flex flex-col justify-center items-center ml-2'>
                                                     {/* <RiMailCheckLine className='text-red-500 mr-1' /> */}
-                                                    <Button1 className='bg-green-500 hover:bg-green-400 rounded-md text-sm font-bold'>Verify</Button1>
+                                                    <Button1 className='bg-green-500 border-green-400 hover:bg-green-400 rounded-md text-sm'>Verify</Button1>
                                                 </div>
                                             }
                                             
@@ -300,13 +305,13 @@ function Signup() {
                                         onBlur={(e) => (setShowVerifyEmail(true))}
                                         placeholder="Enter OTP"
                                         type="text"
-                                        className={`${validateByOtp === true ? 'pr-[5.4rem]' : 'pr-[5.4rem]'}`}
+                                        className={`${showVerifyEmail === true ? 'pr-[5.4rem]' : ''}`}
                                         
                                         />
                                         {field.value && (
                                             <span className='absolute top-1/2 right-2 transform -translate-y-1/2'>
                                                 <div onClick={() => verifyOtp()} className='cursor-pointer flex flex-col justify-center items-center ml-2'>
-                                                <Button1 className='bg-green-500 hover:bg-green-400 rounded-md text-sm font-bold'>Submit</Button1>
+                                                <Button1 className='bg-green-500 border-green-400 hover:bg-green-400 rounded-md text-sm'>Submit</Button1>
                                                 </div>
                                             </span>
                                         )}
@@ -331,14 +336,14 @@ function Signup() {
                             <div className='flex justify-between'>
                                 <Button1 
                                 type="button" 
-                                className="rounded-sm w-1/2 mr-2 "
+                                className="w-1/2 mr-2 "
                                 onClick={() => setStep(prev => prev-1)}
                                 >
                                     Prev
                                 </Button1>
 
                                 <Button1 type="submit" 
-                                className="rounded-sm w-1/2 bg-green-500 hover:bg-green-400"
+                                className=" w-1/2 bg-green-500 border-green-400 hover:bg-green-400 "
                                 >
                                     Submit
                                 </Button1>

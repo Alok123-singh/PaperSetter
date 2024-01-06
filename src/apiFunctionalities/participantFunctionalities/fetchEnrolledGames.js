@@ -25,21 +25,21 @@ async function fetchEnrolledGames(
             // body: JSON.stringify(data), // Convert the data to a JSON string
         });
         let data = await response.json();
-        console.log("Fetch all games data :- ",data);
+        // console.log("Fetch all games data :- ",data);
 
 
         if(response.status === 200){
-            console.log("Successfully fetched games from backend");
+            // console.log("Successfully fetched games from backend");
             setData(data);
             // console.log("Fetch all courses data after formatting :- ",items);
         }
         else{
-            console.log("Fetched Games from backend Error :- ");
+            // console.log("Fetched Games from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Participant Home Error :",err);
+        // console.log("Participant Home Error :",err);
         error.push(err);
     }
 

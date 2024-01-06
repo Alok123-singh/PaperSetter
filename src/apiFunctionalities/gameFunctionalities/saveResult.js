@@ -14,7 +14,7 @@ async function saveResult(
 
     setLoading(true);
     // setErrors('');
-    console.log("Result Data",JSON.stringify(data));
+    // console.log("Result Data",JSON.stringify(data));
     
     try{
         const credentials = btoa(config.username + ':' + config.password);
@@ -29,7 +29,7 @@ async function saveResult(
         });
 
         if(response.status === 201){
-            console.log("Result saved");
+            // console.log("Result saved");
             dispatch(setData({noOfQueries: length, score: data.score, title: data.examType, resultDescription: data.resultDescription}))
             navigate(url);
         }
@@ -38,7 +38,7 @@ async function saveResult(
     catch(err){
         dispatch(setData({noOfQueries: length, score: data.score, title: data.examType, resultDescription: data.resultDescription}))
         navigate(url);
-        console.log("Save result error :",err);
+        // console.log("Save result error :",err);
     }
 
     setLoading(false);

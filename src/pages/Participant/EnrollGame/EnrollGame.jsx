@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { TablePagination, Loading1, OverlayForm1, Button1, Messages } from '../../../components'
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdDescription } from 'react-icons/md';
+import { AiOutlineProfile } from 'react-icons/ai';
 import { joinGame } from '../../../apiFunctionalities'
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ function EnrollGame() {
 
     const navigate = useNavigate();
 
-    console.log("Enroll Data", enrollData);
+    // console.log("Enroll Data", enrollData);
 
     const [filteredItems1, setFilteredItems1] = useState(() => {
         let items = [];
@@ -102,7 +103,7 @@ function EnrollGame() {
     }
 
     const selectGroup = async (data) => {
-        console.log("Group ", data);
+        // console.log("Group ", data);
 
         setSelectedGroup(data.groupName);
 
@@ -117,12 +118,12 @@ function EnrollGame() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Select', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Select', style: 'bg-green-500 border-green-400 hover:bg-green-400 rounded-md' },
             // Add more button configurations as needed
         ],
         title : "Select Group",
         desc : "You can select this group to enroll in the course",
-        formHeight : "md:h-[70%] lg:h-[50%]",
+        formHeight : "md:h-[70%] lg:h-[55%]",
         // formWidth : "md:h-[90%]",
     }
 
@@ -247,6 +248,7 @@ function EnrollGame() {
                         </div>
                     )}
                     {value}
+                    <AiOutlineProfile size={17} className='ml-1' />
                   </div>
                 );
             },
@@ -389,6 +391,7 @@ function EnrollGame() {
                         </div>
                     )}
                     {value}
+                    <AiOutlineProfile size={17} className='ml-1' />
                   </div>
                 );
             },

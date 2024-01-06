@@ -47,7 +47,7 @@ async function fetchAllCourses(
             // body: JSON.stringify(data), // Convert the data to a JSON string
         });
         let data = await response.json();
-        console.log("Fetch all courses data :- ",data);
+        // console.log("Fetch all courses data :- ",data);
 
         // convert startTime and endTime in data from ISO String format to required Date object
         const formatData = () => {
@@ -63,18 +63,18 @@ async function fetchAllCourses(
 
         
         if(data.message === undefined){
-            console.log("Successfully fetched courses from backend");
+            // console.log("Successfully fetched courses from backend");
             formatData();
             setData(data.courseEntities);
             // console.log("Fetch all courses data after formatting :- ",items);
         }
         else{
-            console.log("Fetched Courses from backend Error :- ");
+            // console.log("Fetched Courses from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Instructor Home Error :",err);
+        // console.log("Instructor Home Error :",err);
         error.push(err);
     }
 

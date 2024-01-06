@@ -62,7 +62,7 @@ async function verifyOTP(
         }
     }
     catch(error){
-        console.log("Create Account Error :",error);
+        // console.log("Create Account Error :",error);
         errors.push(error);
     }
 

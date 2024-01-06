@@ -26,7 +26,7 @@ async function createAccount(
         data.role = [ROLES.PARTICIPANT];
     }
 
-    console.log("Data",data);
+    // console.log("Data",data);
 
     const errors = [];
 
@@ -76,7 +76,7 @@ async function createAccount(
 
             
             if(response.status === 201){
-                console.log("Account Created");
+                // console.log("Account Created");
                 alert('Your account has been created');
                 navigate('/login');
             }
@@ -87,7 +87,7 @@ async function createAccount(
 
     }
     catch(error){
-        console.log("Create Account Error :",error);
+        // console.log("Create Account Error :",error);
         errors.push(error);
     }
 

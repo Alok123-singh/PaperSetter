@@ -469,7 +469,7 @@ const SearchEngine = (
             {/* Search button section */}
             {enableContinuousSearching === false && 
                 <Button1
-                    className="w-[4.3rem] ml-1 sm:ml-2 my-1 h-[2.3rem] flex justify-center hover:bg-blue-500  items-center rounded-md"
+                    className="ml-1 sm:ml-2 my-1 text-sm"
                     onClick={() => {
                         setStartSearching(true);
                     }}

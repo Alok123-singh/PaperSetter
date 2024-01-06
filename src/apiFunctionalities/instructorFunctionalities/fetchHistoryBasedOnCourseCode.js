@@ -7,7 +7,7 @@ function convertIsoStringToObject(isoString) {
   
     // Check if the dateObject is valid
     if (isNaN(dateObject.getTime())) {
-      console.error('Invalid ISO format');
+    //   console.log('Invalid ISO format');
       return null;
     }
   
@@ -29,7 +29,7 @@ function convertTimeObjectToIsoString(isoString) {
   
     // Check if the dateObject is valid
     if (isNaN(dateObject.getTime())) {
-      console.error('Invalid date format');
+    //   console.log('Invalid date format');
       return null;
     }
   
@@ -79,21 +79,21 @@ async function fetchHistoryBasedOnCourseCode(
         
         if(response.status === 200){
             let data = await response.json();
-            console.log("Fetch all history based on course code data :- ",data);
+            // console.log("Fetch all history based on course code data :- ",data);
 
             
-            console.log("Successfully fetched complete history based on course code from backend");
+            // console.log("Successfully fetched complete history based on course code from backend");
             formatData(data);
             setData(data);
             // console.log("Fetch all courses data after formatting :- ",items);
         }
         else{
-            console.log("Fetched All History from backend Error :- ");
+            // console.log("Fetched All History from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Enrolled Students Page Error :",err);
+        // console.log("Enrolled Students Page Error :",err);
         error.push(err);
     }
 

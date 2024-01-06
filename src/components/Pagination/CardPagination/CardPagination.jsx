@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdError } from 'react-icons/md';
+import { ExcelDownload, Loading2 } from '../../index'
 
 
 function CardPagination({
@@ -13,7 +14,13 @@ function CardPagination({
     roundedDesign = '',
     columnsDesign = '',
     rowsDesign = '',
-    }) {
+    enableExcelDownload=false,
+    excludedFields = ["id"],
+    filename='',
+}) {
+
+    const [loading, setLoading] = useState(false);
+
     const [highlightedIndex,setHiglightIndex] = useState(-1);
 
     const updatedColumns = showRowNumbers
@@ -105,7 +112,20 @@ function CardPagination({
 
     return (
         currentItems && currentItems.length > 0 ? (
-        <div className={`py-10 w-full flex flex-wrap flex-col justify-center items-center ${widthDesign} `}>
+        <div className={`py-10 ${enableExcelDownload === true && 'py-4'} w-full flex flex-wrap flex-col justify-center items-center ${widthDesign} `}>
+
+            {enableExcelDownload === true && 
+                <div className='w-full mb-6 flex flex-col justify-center items-center'>
+                    <div className='w-full sm:w-[95%] flex-end items-center'>
+                        <ExcelDownload data={items} filename={filename} excludedFields={excludedFields} setLoading={setLoading} />
+                    </div>
+
+                    {loading === true && 
+                        <Loading2 message='Preparing Download' />
+                    }
+                </div>
+            }
+
             <div className='w-[90%] bg-orange-100 rounded-md shadow-lg flex flex-col flex-wrap justify-between items-center'>
                 <div className={`flex flex-wrap my-5 flex-col md:flex-row w-full justify-center items-center ${roundedDesign}`}>
                 {currentItems.map((item, index) => (

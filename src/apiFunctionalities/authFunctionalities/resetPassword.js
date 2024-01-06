@@ -42,7 +42,7 @@ async function resetPassword(
             body: JSON.stringify(data), // Convert the data to a JSON string
         });
         // const data2 = await response.json();
-        console.log("Response",response);
+        // console.log("Response",response);
         
         if(response.status === 200){
             alert('Password has been reset successfully');
@@ -52,12 +52,12 @@ async function resetPassword(
         }
         else{
             errors.push('Invalid username or password');
-            console.log("Reset Failed");
+            // console.log("Reset Failed");
         }
 
     }
     catch(error){
-        console.log("Reset Password Error :",error);
+        // console.log("Reset Password Error :",error);
         errors.push(error);
     }
 

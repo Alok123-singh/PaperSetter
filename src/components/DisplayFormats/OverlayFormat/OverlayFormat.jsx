@@ -7,6 +7,7 @@ function OverlayFormat({
     columnsDescription,
     onClose = (...input) => {},
     displayDesign,
+    enableExcelDownload = false,
 }) {
 
     const [loading,setLoading] = useState(false);
@@ -41,7 +42,7 @@ function OverlayFormat({
                     }
                 </div>}
 
-                <TablePagination columnsDescription={columnsDescription} items={items} showRowNumbers={true} columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' />
+                <TablePagination columnsDescription={columnsDescription} items={items} showRowNumbers={true} columnsDesign='cursor-default' rowsDesign='hover:bg-gray-200 cursor-default' enableExcelDownload={enableExcelDownload} filename='Students_details' excludedFields={["_id"]} />
                 
             </div>
                 

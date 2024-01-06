@@ -56,15 +56,15 @@ async function createNewCourse(
     let status = false;
 
     
-    console.log("startTime :-", data.startTime);
+    // console.log("startTime :-", data.startTime);
     data.startTime = convertTimeObjectToIsoString(data.startTime[0]);
     data.endTime = convertTimeObjectToIsoString(data.endTime[0]);
     // console.log("Type of startTime :-", typeof data.startTime);
-    console.log("startTime :-", data.startTime);
+    // console.log("startTime :-", data.startTime);
     // console.log("Create new course form data :- ",data);
     
 
-    console.log("Create new course form data :- ",data);
+    // console.log("Create new course form data :- ",data);
     
     try{
         const credentials = btoa(config.username + ':' + config.password);
@@ -82,19 +82,20 @@ async function createNewCourse(
         if(response.status === 200){
             setRefreshData(prev =>!prev);
             messages.push(`Successfully create new course and assigned ${data.courseName} with course code ${data.courseCode} having course duration from ${formatToCustomString(data.startTime)} to ${formatToCustomString(data.endTime)}, to Instructor ${data.fullName} with email id ${data.assignToEmail} with number of licenses ${data.licenses}`)
-            console.log("For submitted to backend");
+
+            // console.log("For submitted to backend");
             status = true;
         }
         else{
             const data1 = await response.json();
             errors.push(data1.message);
-            console.log("Form Submit to backend Error :- ");
+            // console.log("Form Submit to backend Error :- ");
             status = false;
         }
 
     }
     catch(err){
-        console.log("Admin Home Error :",err);
+        // console.log("Admin Home Error :",err);
         errors.push(err);
         status = false;
     }

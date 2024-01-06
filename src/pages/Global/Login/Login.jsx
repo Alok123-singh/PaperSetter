@@ -106,7 +106,7 @@ function Login() {
 
                             <Button1 
                             type="submit" 
-                            className="w-full h-[3rem] rounded-sm"
+                            className="w-full"
                             onClick={(e) => {
                                 if(watch('role'))
                                     setStep((prev) => prev + 1);
@@ -152,18 +152,18 @@ function Login() {
 
                             <div className='w-full flex space-x-4'>
 
-                                <button
+                                <Button1
                                 onClick={() => setStep(prev => prev-1)}
                                 type="button"
-                                className="w-full rounded-none py-3 bg-blue-600 text-white  hover:bg-blue-500"
+                                className="w-[85%] "
                                 >
                                     Back
 
-                                </button>
+                                </Button1>
 
                                 <button
                                 type="submit"
-                                className="w-full rounded-none py-3 bg-[#ed8d2d]  hover:bg-[#faa148]"
+                                className="w-full rounded-md py-3 bg-[#ed8d2d]  hover:bg-[#faa148]"
                                 >
                                     {validateByOtp === true ? 'Submit OTP' : 'Log in'}
 

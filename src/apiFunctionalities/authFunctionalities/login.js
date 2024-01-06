@@ -98,18 +98,18 @@ async function login(
             dispatch(setLoginStatus(true));
             dispatch(setRole(data.role));
 
-            console.log("Login Successfull");
+            // console.log("Login Successfull");
             navigate('/');
         }
         else{
-            console.log('Login Error -: ',data2.message);
+            // console.log('Login Error -: ',data2.message);
             setError("Invalid username or password");
-            console.log("Login Failed");
+            // console.log("Login Failed");
         }
 
     }
     catch(error){
-        console.log("Login Error :",error);
+        // console.log("Login Error :",error);
         // setError(error);
 
         const fakeError = new Error('Fetch API was not able to connect to the requested resource');

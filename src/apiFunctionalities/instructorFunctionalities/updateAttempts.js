@@ -27,19 +27,19 @@ async function updateAttempts(
         });
 
         if(response.status === 200){
-            console.log("Successfully updated attempts value");
+            // console.log("Successfully updated attempts value");
             messages.push(`Successfully updated attempts to '${data.studentAttempts}' for Course Code '${data.courseCode}'`);
             status = true;
         }
         else{
-            console.log("Failed updating attempts value");
+            // console.log("Failed updating attempts value");
             errors.push("Attempts updation failed");
             status = false;
         }
 
     }
     catch(err){
-        console.log("Update attempts error :",err);
+        // console.log("Update attempts error :",err);
         errors.push("Attempts updation failed");
         status = false;
     }

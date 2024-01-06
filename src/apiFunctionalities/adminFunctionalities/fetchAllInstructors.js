@@ -45,7 +45,7 @@ async function fetchAllInstructors(
             // body: JSON.stringify(data), // Convert the data to a JSON string
         });
         let data = await response.json();
-        console.log("Fetch all instructors data :- ",data);
+        // console.log("Fetch all instructors data :- ",data);
 
         // convert startTime and endTime in data from ISO String format to required Date object
         const formatData = () => {
@@ -60,18 +60,18 @@ async function fetchAllInstructors(
 
         
         if(data.message === undefined){
-            console.log("Successfully fetched instructor data");
+            // console.log("Successfully fetched instructor data");
             // formatData();
             setData(data);
             
         }
         else{
-            console.log("Failed fetching All Instructors from backend Error :- ");
+            // console.log("Failed fetching All Instructors from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Admin Home Fetch all instructors Error :",err);
+        // console.log("Admin Home Fetch all instructors Error :",err);
         error.push(err);
     }
 

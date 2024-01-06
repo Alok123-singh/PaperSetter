@@ -28,15 +28,15 @@ async function deleteInstructorAccount(
         if(response.status === 200){
             setRefreshData(prev => !prev);
             messages.push(`Sucessfully deleted instructor with name ${data.fullName} and email Id ${data.email}`)
-            console.log("Successfully Deleted user");
+            // console.log("Successfully Deleted user");
         }
         else{
-            console.log("Failed on deleting user");
+            // console.log("Failed on deleting user");
         }
 
     }
     catch(err){
-        console.log("Admin Home Delete user Error :",err);
+        // console.log("Admin Home Delete user Error :",err);
         error.push(err);
     }
 

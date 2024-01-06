@@ -35,21 +35,21 @@ async function checkEmailForUsernameAndSendOTP(
         if (response.status === 202) {
             
             status = true;
-            console.log("OTP sent successfully");
+            // console.log("OTP sent successfully");
 
             messages.push("An OTP has been sent to your email and is valid for 30 minutes. Please verify your email");
 
         } 
         else {
             const data = await response.json();
-            console.log("Account not found");
+            // console.log("Account not found");
             errors.push("Account not found");
         }
     }
     catch (error) {
         setErrors(prev => prev.filter(err => err !== error));
         errors.push(error);
-        console.error('Error checking account and sending otp:', error);
+        // console.log('Error checking account and sending otp:', error);
     }
 
     if(errors.length > 0){

@@ -50,19 +50,19 @@ async function updateSchedule(
         });
 
         if(response.status === 200){
-            console.log("Successfully updated archive value");
+            // console.log("Successfully updated archive value");
             messages.push(`Successfully updated schedule to (Start time : '${formatToCustomString(data.startTime)}' and End time : '${formatToCustomString(data.endTime)}' for Course Code '${data.courseCode}'`);
             status = true;
         }
         else{
-            console.log("Failed updating schedule value");
+            // console.log("Failed updating schedule value");
             errors.push("Schedule updation failed");
             status = false;
         }
 
     }
     catch(err){
-        console.log("Update schedule error :",err);
+        // console.log("Update schedule error :",err);
         errors.push("Schedule updation failed");
         status = false;
     }

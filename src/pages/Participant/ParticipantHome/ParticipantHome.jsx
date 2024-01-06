@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Loading1, Button1, Card1, OverlayForm2, Messages } from '../../../components/index'
 import { enrollInGame, fetchEnrolledGames } from '../../../apiFunctionalities'
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ function ParticipantHome() {
     const [showEnrollGameForm,setShowEnrollGameForm] = useState(null);
 
     const enrollGameSubmit = async (data) => {
-        console.log("Enroll game form Data :-",data);
+        // console.log("Enroll game form Data :-",data);
 
         enrollInGame(data,navigate,dispatch,setCourseEntity,'/enroll',setLoading,setErrors);
         setRefreshData(prev => !prev);
@@ -38,7 +38,7 @@ function ParticipantHome() {
         ],
         buttons : [
             // Define your form buttons here
-            { type: 'submit', text: 'Enroll', style: 'w-[6rem] rounded-sm' },
+            { type: 'submit', text: 'Enroll', style: '' },
             // Add more button configurations as needed
         ],
         title : 'Enroll Game',
@@ -125,7 +125,7 @@ function ParticipantHome() {
                     {/* <p className='mb-1 text-center text-sm font-bold md:text-md'> Enroll Game </p> */}
 
                     <Button1
-                    className="w-[9rem] h-[2rem] text-sm rounded-md flex justify-center hover:bg-blue-400  items-center"
+                    className="text-sm"
                     onClick={() => {
 
                         if(showEnrollGameForm === null)

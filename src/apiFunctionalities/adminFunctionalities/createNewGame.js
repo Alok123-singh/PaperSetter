@@ -29,19 +29,19 @@ async function createNewGame(
         
         if(response.status === 200){
             setRefreshData(prev =>!prev);
-            console.log("Form submitted to backend");
+            // console.log("Form submitted to backend");
             messages.push(`Successfully created game ${data.name} with game Id ${data.gameId} and type ${data.type}`);
 
         }
         else{
             const data1 = await response.json();
             errors.push(data1.message);
-            console.log("Form Submit to backend Error :- ");
+            // console.log("Form Submit to backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Admin Home Error :",err);
+        // console.log("Admin Home Error :",err);
         errors.push(err);
     }
 

@@ -29,20 +29,20 @@ async function checkEmailAvailability(
             errors.push('Email is not availaible');
             setEmailAvailability(false);
             setShowVerifyEmail(false);
-            console.log("Email is not availaible");
+            // console.log("Email is not availaible");
 
         } 
         else {
             setError(prev => prev.filter(err => err !== 'Email is not availaible'));
             setEmailAvailability(true);
             setShowVerifyEmail(true);
-            console.log("Email is availaible");
+            // console.log("Email is availaible");
         }
     }
     catch (error) {
         
         setEmailAvailability(true);
-        console.error('Error checking email availability:', error);
+        // console.error('Error checking email availability:', error);
     }
 
     if(errors.length > 0){

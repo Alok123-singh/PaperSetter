@@ -28,16 +28,16 @@ async function fetchAllInstructorsAccounts(
         
         if(data.message === undefined){
             setData(data);
-            console.log("Fetch all instructors accounts data :- ",data);
-            console.log("Successfully fetched all instructors accounts from backend");
+            // console.log("Fetch all instructors accounts data :- ",data);
+            // console.log("Successfully fetched all instructors accounts from backend");
         }
         else{
-            console.log("Failed fetching all instructor account from backend Error :- ");
+            // console.log("Failed fetching all instructor account from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Admin Home Fetch all instructor accounts Error :",err);
+        // console.log("Admin Home Fetch all instructor accounts Error :",err);
         error.push(err);
     }
 

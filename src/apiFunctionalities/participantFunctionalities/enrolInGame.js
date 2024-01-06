@@ -33,16 +33,16 @@ async function enrollInGame(
         if(data2.message === undefined){
             dispatch(setData(data2));
             navigate(url);
-            console.log("Sucessfully enrolled in game");
+            // console.log("Sucessfully enrolled in game");
         }
         else{
             error.push('Invalid course code');
-            console.log("Entroll Game backend Error :- ");
+            // console.log("Entroll Game backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Participant Home Error :",err);
+        // console.log("Participant Home Error :",err);
         error.push(err);
     }
 

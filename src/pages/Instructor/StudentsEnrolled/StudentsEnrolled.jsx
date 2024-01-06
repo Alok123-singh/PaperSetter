@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { TablePagination, Loading1, OverlayFormat } from '../../../components'
 import { FaInfoCircle } from 'react-icons/fa';
+import { AiOutlineProfile } from 'react-icons/ai';
 import { MdDescription } from 'react-icons/md';
 import { fetchHistoryBasedOnCourseCode } from '../../../apiFunctionalities'
 
@@ -12,7 +13,7 @@ function StudentsEnrolled() {
     const [refreshData, setRefreshData] = useState(false);
 
     const courseEntity = useSelector(state => state.course.courseEntity);
-    console.log("Course Entity", courseEntity);
+    // console.log("Course Entity", courseEntity);
 
     const [filteredItems1, setFilteredItems1] = useState(() => {
         let items = [];
@@ -128,6 +129,7 @@ function StudentsEnrolled() {
                   items={items}
                   columnsDescription={columnsDescription}
                   displayDesign={displayDesign}
+                  enableExcelDownload={true}
               />
     };
 
@@ -352,7 +354,7 @@ function StudentsEnrolled() {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Students enrolled in this group','students']);
+                        setHoveredDetails([index,`Students enrolled in this group. Click on student's name to see their result`,'students']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -384,6 +386,7 @@ function StudentsEnrolled() {
                         </div>
                     )}
                     {value}
+                    <AiOutlineProfile size={17} className='ml-1' />
                   </div>
                 );
             },
@@ -488,7 +491,7 @@ function StudentsEnrolled() {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Students enrolled in this group','students1']);
+                        setHoveredDetails([index,`Students enrolled in this group. Click on student's name to see their result`,'students1']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -520,6 +523,7 @@ function StudentsEnrolled() {
                         </div>
                     )}
                     {value}
+                    <AiOutlineProfile size={17} className='ml-1' />
                   </div>
                 );
             },

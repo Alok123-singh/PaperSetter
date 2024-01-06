@@ -29,7 +29,7 @@ async function updatePassword(
 ) {
     
     setLoading(true);
-    console.log(data);
+    // console.log(data);
     // setErrors([]);
     let status = false;
 
@@ -65,24 +65,24 @@ async function updatePassword(
                 body: JSON.stringify(data), // Convert the data to a JSON string
             });
             // const data2 = await response.json();
-            console.log("Response",response);
+            // console.log("Response",response);
             
             if(response.status === 200){
                 
                 // alert('Password has been successfully updated');
                 messages.push(`Successfully updated password of ${data.username} with ${data.newPassword}.`);
-                console.log("Update Successfull");
+                // console.log("Update Successfull");
                 status = true;
             }
             else{
                 errors.push('Password updation failed.');
-                console.log("Update Failed");
+                // console.log("Update Failed");
             }
         }
 
     }
     catch(error){
-        console.log("Update Password Error :",error);
+        // console.log("Update Password Error :",error);
         errors.push(error);
     }
 

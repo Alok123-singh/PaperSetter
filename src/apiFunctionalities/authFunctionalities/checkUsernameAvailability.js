@@ -28,19 +28,19 @@ async function checkUsernameAvailability(
             
             errors.push('Username is not availaible');
             setUsernameAvailability(false);
-            console.log("Username is not availaible");
+            // console.log("Username is not availaible");
 
         } else {
             setError(prev => prev.filter(err => err !== 'Username is not availaible'));
             setUsernameAvailability(true);
-            console.log("Username is availaible");
+            // console.log("Username is availaible");
             status = true;
         }
     }
     catch (error) {
         
         setUsernameAvailability(true);
-        console.error('Error checking username availability:', error);
+        // console.log('Error checking username availability:', error);
     }
 
     if(errors.length > 0){

@@ -143,7 +143,7 @@ function ForgotPassword() {
                                 disabled={validatedAccount || validateByOtp}
                                 placeholder="Email"
                                 type="text"
-                                className={`${validateByOtp === true ? 'pr-[5.4rem]' : 'pr-[5.4rem]'} ${validatedAccount ? 'text-green-600' : ''}`}
+                                className={`${showVerifyEmail === true ? 'pr-[5.4rem]' : ''} ${validatedAccount ? 'text-green-600' : ''}`}
                                 
                                 />
                                 {field.value && (
@@ -155,7 +155,7 @@ function ForgotPassword() {
 
                                             <div onClick={() => verifyAccount()} className='cursor-pointer flex flex-col justify-center items-center ml-2'>
                                                 {/* <RiMailCheckLine className='text-red-500 mr-1' /> */}
-                                                <Button1 className='bg-green-500 hover:bg-green-400 rounded-md text-sm font-bold'>Verify</Button1>
+                                                <Button1 className='bg-green-500 border-green-400 hover:bg-green-400 rounded-md text-sm'>Verify</Button1>
                                             </div>
                                         }
                                         
@@ -179,13 +179,13 @@ function ForgotPassword() {
                                     onBlur={(e) => (setShowVerifyEmail(true))}
                                     placeholder="Enter OTP"
                                     type="text"
-                                    className={`${validateByOtp === true ? 'pr-[5.4rem]' : 'pr-[5.4rem]'}`}
+                                    className={`${showVerifyEmail === true ? 'pr-[5.4rem]' : ''}`}
                                     
                                     />
                                     {field.value && (
                                         <span className='absolute top-1/2 right-2 transform -translate-y-[4px]'>
                                             <div onClick={() => verifyOtp()} className='cursor-pointer flex flex-col justify-center items-center ml-2'>
-                                            <Button1 className='bg-green-500 hover:bg-green-400 rounded-md text-sm font-bold'>Submit</Button1>
+                                            <Button1 className='bg-green-500 border-green-400 hover:bg-green-400 rounded-md text-sm'>Submit</Button1>
                                             </div>
                                         </span>
                                     )}
@@ -196,7 +196,7 @@ function ForgotPassword() {
 
                         <Button1 
                         type="submit" 
-                        className="w-full h-[3rem] rounded-sm"
+                        className="w-full"
                         onClick={(e) => {
                             if(validatedAccount){
                                 setStep((prev) => prev + 1);
@@ -243,7 +243,7 @@ function ForgotPassword() {
                         <div className='w-full flex space-x-4'>
                             <Button1 
                             type="button" 
-                            className="rounded-sm w-1/2 mr-2 "
+                            className="w-1/2 mr-2 "
                             onClick={() => setStep(prev => prev-1)}
                             >
                                 Prev
@@ -251,7 +251,7 @@ function ForgotPassword() {
 
                             <button
                             type="submit"
-                            className="w-1/2 rounded-none py-3 bg-[#ed8d2d]  hover:bg-[#faa148]"
+                            className="w-1/2 rounded-md py-3 bg-[#ed8d2d]  hover:bg-[#faa148]"
                             >
                                 Update
                             </button>

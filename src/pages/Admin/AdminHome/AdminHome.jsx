@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
 // import { IoIosAdd } from 'react-icons/io';
-import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1, Messages } from '../../../components/index'
+import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1, Button3, Messages } from '../../../components/index'
 import { useSelector } from 'react-redux';
 import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from '../../../apiFunctionalities'
 
@@ -61,7 +61,7 @@ function AdminHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Update', style: 'w-[6rem] bg-green-500 rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Update', style: 'bg-green-500 border-green-400 hover:bg-green-400 rounded-md' },
             // Add more button configurations as needed
         ],
         title : "Update Password",
@@ -82,7 +82,7 @@ function AdminHome() {
         buttons : [
             // Define your form buttons here
             // { type: 'text', text: 'Prev', style: 'w-full' },
-            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-md hover:bg-white hover:border-2  hover:text-black' },
+            { type: 'submit', text: 'Create', style: '' },
             // Add more button configurations as needed
         ],
         title : "Course Assign",
@@ -200,7 +200,7 @@ function AdminHome() {
       
         // Check if the dateObject is valid
         if (isNaN(dateObject.getTime())) {
-          console.error('Invalid ISO format');
+        //   console.error('Invalid ISO format');
           return null;
         }
       
@@ -322,7 +322,7 @@ function AdminHome() {
             }
         },
         { // Update Password
-            header : 'Update Password',
+            header : 'Update',
             dataKey: 'update', 
             label: 'Update', 
             columnFunctionality : {
@@ -646,9 +646,9 @@ function AdminHome() {
             }
         },
         { // Update Password
-            header : 'Update Password',
+            header : 'Update',
             dataKey: 'update', 
-            label: 'Update Password', 
+            label: 'Update', 
             columnFunctionality : {
                 event: {
                     onMouseEnter: (index,value,currentItem) => {
@@ -917,13 +917,13 @@ function AdminHome() {
         ],
         buttons : [
             // Define your form buttons here
-            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-sm' },
+            { type: 'submit', text: 'Create', style: '' },
             // Add more button configurations as needed
         ],
         title : 'Create Course',
         desc : "You can create your course",
         formHeight : "",
-        formWidth : "lg:w-3/4", // total width of the form
+        formWidth : "lg:w-[65%]", // total width of the form
         formDesign : {
             start: 'justify-center', // define whether the form should appear in the start 
             cols: 2, // define how many fields should be in 1 row
@@ -941,13 +941,13 @@ function AdminHome() {
         ],
         buttons : [
             // Define your form buttons here
-            { type: 'submit', text: 'Create', style: 'w-[6rem] rounded-sm' },
+            { type: 'submit', text: 'Create', style: '' },
             // Add more button configurations as needed
         ],
         title : 'Create Game',
         desc : "You can create your game",
         formHeight : "",
-        formWidth : "lg:w-3/4", // total width of the form
+        formWidth : "", // total width of the form
         formDesign : {
             start: 'justify-center', // define whether the form should appear in the start 
             cols: 2, // define how many fields should be in 1 row
@@ -1048,8 +1048,8 @@ function AdminHome() {
                     <div className='flex flex-col justify-center items-center text-xl'>
                         <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Game </p>
 
-                        <Button1
-                        className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
+                        <Button3
+                        className=""
                         onClick={() => {
                             // setFormData(createNewGameFormData);
                             // setOnSubmitFunction(() => createNewGameSubmit());
@@ -1061,7 +1061,7 @@ function AdminHome() {
                         }}
                         >
                             Add
-                        </Button1>
+                        </Button3>
                         
                     </div>
 
@@ -1076,8 +1076,8 @@ function AdminHome() {
                     <div className='flex flex-col justify-center items-center text-xl'>
                         <p className='mb-1 text-center text-sm font-bold md:text-md'> Create New Course </p>
 
-                        <Button1
-                        className="w-[5rem] h-[2rem] flex justify-center hover:bg-white hover:border-4 hover:text-slate-600 items-center"
+                        <Button3
+                        className=""
                         onClick={() => {
                             // setFormData(createNewCourseFormData);
                             // setOnSubmitFunction(() => createNewCourseSubmit());
@@ -1089,7 +1089,7 @@ function AdminHome() {
                         }}
                         >
                             Add
-                        </Button1>
+                        </Button3>
                         
                     </div>
 
@@ -1108,12 +1108,12 @@ function AdminHome() {
             </div>
 
             {displayFormat === 'Table' && 
-                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' widthDesign='w-full lg:w-[90%]' rowsDesign='hover:bg-gray-200 cursor-default border' enableExcelDownload={true} filename='Instructor_details' excludedFields={["_id", "startTime", "limit"]} />
             }
             
 
             {displayFormat === 'Card' && 
-                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign=''  />
+                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign='' enableExcelDownload={true} filename='Instructor_details' excludedFields={["_id"]}  />
             }
             
             {/* Select display format as Table or Card */}

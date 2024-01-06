@@ -1,4 +1,4 @@
-import Button1 from './Buttons/Button1/Button1'
+import { Button1, Button2, Button3, DownloadButton, FacebookButton, GithubButton, GoogleButton } from './Buttons'
 import Container from './Container/Container'
 import Footer from './Footer/Footer'
 import Header from './Header/Header'
@@ -19,9 +19,16 @@ import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 import Card1 from './Cards/Card1/Card1'
 import OverlayFormat from './DisplayFormats/OverlayFormat/OverlayFormat'
 import Messages from './Messages/Messages'
+import ExcelDownload from './Download/ExcelDownload/ExcelDownload'
 
 export  {
     Button1,
+    Button2,
+    Button3,
+    DownloadButton,
+    FacebookButton,
+    GithubButton,
+    GoogleButton,
     Container,
     Footer,
     Header,
@@ -42,6 +49,7 @@ export  {
     Card1,
     OverlayFormat,
     Messages,
+    ExcelDownload,
     
 
 };

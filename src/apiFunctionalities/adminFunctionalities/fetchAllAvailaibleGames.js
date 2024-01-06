@@ -29,16 +29,16 @@ async function fetchAllAvailaibleGames(
         
         if(data.message === undefined){
             setData(data);
-            console.log("Fetch all games data :- ",data);
-            console.log("Successfully fetched all games from backend");
+            // console.log("Fetch all games data :- ",data);
+            // console.log("Successfully fetched all games from backend");
         }
         else{
-            console.log("Failed fetching all availaible games from backend Error :- ");
+            // console.log("Failed fetching all availaible games from backend Error :- ");
         }
 
     }
     catch(err){
-        console.log("Admin Home Fetch all games Error :",err);
+        // console.log("Admin Home Fetch all games Error :",err);
         error.push(err);
     }
 

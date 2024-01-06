@@ -28,19 +28,19 @@ async function updateArchive(
         });
 
         if(response.status === 200){
-            console.log("Successfully updated archive value");
+            // console.log("Successfully updated archive value");
             messages.push(`Successfully updated archive value to '${data.archive}' for Course Code '${data.courseCode}'`);
             status = true;
         }
         else{
-            console.log("Failed updating archive value");
+            // console.log("Failed updating archive value");
             errors.push("Archive updation failed");
             status = false;
         }
 
     }
     catch(err){
-        console.log("Update archive error :",err);
+        // console.log("Update archive error :",err);
         errors.push("Archive updation failed");
         status = false;
     }
