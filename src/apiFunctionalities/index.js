@@ -1,7 +1,7 @@
 import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from './adminFunctionalities';
 import { fetchAllCourses, fetchHistoryBasedOnCourseCode, updateArchive, updateAttempts, updateSchedule } from './instructorFunctionalities'
 import { fetchHistory, saveResult } from './gameFunctionalities'
-import { login, resetPassword, checkUsernameAvailability, checkEmailAvailability, sendOTP, verifyOTP, createAccount, checkEmailForUsernameAndSendOTP } from './authFunctionalities'
+import { login, resetPassword, checkUsernameAvailability, checkEmailAvailability, sendOTP, verifyOTP, createAccount, checkEmailForUsernameAndSendOTP, saveProfilePicture, getProfilePicture } from './authFunctionalities'
 import { enrollInGame, joinGame, fetchEnrolledGames } from './participantFunctionalities'
 
 export {
@@ -35,6 +35,8 @@ export {
     verifyOTP,
     createAccount,
     checkEmailForUsernameAndSendOTP,
+    saveProfilePicture,
+    getProfilePicture,
     
     // participant functionalities
     enrollInGame,

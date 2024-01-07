@@ -67,7 +67,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                 if(input.type.includes('dateAndTime')){
                                     return  <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                                 {input.label && (
-                                                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                    <label className='mb-1 pl-1 flex justify-start items-center' htmlFor={id}>
                                                         <div className=''>
                                                             {input.label}
                             
@@ -145,7 +145,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                 if(input.type === 'select'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                                 {input.label && (
-                                                    <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                    <label className='mb-1 pl-1 flex justify-start items-center' htmlFor={id}>
                                                         <div className=''>
                                                             {input.label}
                             
@@ -202,7 +202,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                 if(input.type === 'checkbox'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                         {input.label && (
-                                            <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                            <label className='mb-1 pl-1 flex justify-start items-center' htmlFor={id}>
                                                 <div className=''>
                                                     {input.label}
                     
@@ -248,7 +248,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                 if(input.type === 'radio'){
                                     return <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                         {input.label && (
-                                            <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                            <label className='mb-1 pl-1 flex justify-start items-center' htmlFor={id}>
                                                 <div className=''>
                                                     {input.label}
                     
@@ -296,7 +296,7 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                     return (
                                         <div key={index} className='w-full h-full flex flex-col justify-start items-start'>
                                             {input.label && (
-                                                <label className='mb-1 pl-1 flex justify-start items-center font-semibold' htmlFor={id}>
+                                                <label className='mb-1 pl-1 flex justify-start items-center' htmlFor={id}>
                                                     <div className=''>
                                                         {input.label}
                         

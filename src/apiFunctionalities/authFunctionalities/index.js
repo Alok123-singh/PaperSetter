@@ -6,6 +6,8 @@ import sendOTP from "./sendOTP";
 import verifyOTP from "./verifyOTP";
 import createAccount from "./createAccount";
 import checkEmailForUsernameAndSendOTP from "./checkEmailForUsernameAndSendOTP";
+import saveProfilePicture from "./saveProfilePicture";
+import getProfilePicture from "./getProfilePicture";
 
 export {
     login,
@@ -16,6 +18,8 @@ export {
     verifyOTP,
     createAccount,
     checkEmailForUsernameAndSendOTP,
+    saveProfilePicture,
+    getProfilePicture,
 
     
 };

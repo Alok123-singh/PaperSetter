@@ -176,7 +176,7 @@ function Header() {
                                         }
                                         
 
-                                        <div className=''> 
+                                        {/* <div className=''> 
                                             <div 
                                             className='p-2 cursor-pointer' 
                                             onClick={() => {
@@ -185,7 +185,7 @@ function Header() {
                                             }}>
                                                 Logout
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 )}
 
@@ -349,7 +349,7 @@ function Header() {
                                                     </Link>
                                                 }
 
-                                                <div className=''> 
+                                                {/* <div className=''> 
                                                     <div 
                                                     className='p-2 cursor-pointer' 
                                                     onClick={() => {
@@ -358,7 +358,7 @@ function Header() {
                                                     }}>
                                                         Logout
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         )}
 

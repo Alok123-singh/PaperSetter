@@ -20,6 +20,7 @@ import Card1 from './Cards/Card1/Card1'
 import OverlayFormat from './DisplayFormats/OverlayFormat/OverlayFormat'
 import Messages from './Messages/Messages'
 import ExcelDownload from './Download/ExcelDownload/ExcelDownload'
+import PictureUpload from './PictureUpload/PictureUpload'
 
 export  {
     Button1,
@@ -50,6 +51,7 @@ export  {
     OverlayFormat,
     Messages,
     ExcelDownload,
+    PictureUpload,
     
 
 };
