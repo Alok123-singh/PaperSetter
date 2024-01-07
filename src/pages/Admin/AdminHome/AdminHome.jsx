@@ -1,9 +1,11 @@
 import React,{ useState, useEffect } from 'react'
 import { FaPencilAlt, FaTrash, FaInfoCircle } from 'react-icons/fa';
-// import { IoIosAdd } from 'react-icons/io';
+import { IoMdOpen } from 'react-icons/io';
 import { OverlayForm1, OverlayForm2, Loading1, SearchEngine, TablePagination, CardPagination, Button1, Button3, Messages } from '../../../components/index'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteInstructorAccount, fetchAllInstructors, fetchAllInstructorsAccounts, fetchAllAvailaibleGames, createNewCourse, createNewGame, updatePassword } from '../../../apiFunctionalities'
+import { setCourseEntities, setInstructorName } from '../../../store/courseSlice'
+import { useNavigate } from 'react-router-dom';
 
 
 function AdminHome() {
@@ -25,6 +27,9 @@ function AdminHome() {
     const [hoveredDetails, setHoveredDetails] = useState([]);
     const [allInstructorAccounts, setAllInstructorAccounts] = useState([]);
     const [allAvailaibleGames, setAllAvailaibleGames] = useState([]);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const username = useSelector(state => state.auth.username);
     // const username = "anand12";
@@ -509,25 +514,26 @@ function AdminHome() {
             },
             dataRender: (index, value, currentItem) => {
                 // console.log("Current Item", currentItem);
-
-                const props = {
-                    courseEntities: JSON.stringify(currentItem.courseEntities),
-                    instructorName: currentItem.fullName,
-                }
-
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
                 
-                return  <a 
-                        onMouseEnter={() => handleMouseEnter([index,'info'])}
-                        onMouseLeave={handleMouseLeave} 
-                        href={`/admin/instructor/courses?${queryString}`}
-                        target='_blank'
-                        className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                return  <div
+                        onClick={() => {
 
-                            {<FaInfoCircle size={14} className=' cursor-pointer' /> }
-                        </a>
+                            let items = currentItem.courseEntities;
+
+                            items.map(item => {
+                                item.startTime = convertTimeObjectToIsoString(item.startTime);
+                                item.endTime = convertTimeObjectToIsoString(item.endTime);
+                            });
+
+                            dispatch(setInstructorName(currentItem.fullName));
+                            dispatch(setCourseEntities(items));
+                            // console.log("Item", item);
+                            navigate('/admin/instructor/courses')
+                        }}
+                        className={`h-[3rem] ml-1 cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
+
+                            <IoMdOpen />
+                        </div>
             } 
         },
     ];
@@ -814,29 +820,26 @@ function AdminHome() {
             
               
             dataRender: (index, value, currentItem) => {
-                const props = {
-                    courseEntities: JSON.stringify(currentItem.courseEntities),
-                    instructorName: currentItem.fullName,
-                }
-
-                const queryString = Object.keys(props)
-                    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(props[key])}`)
-                    .join('&');
 
                 return  <div
-                            className={`w-1/2 h-full text-start text-slate-500 font-bold flex flex-wrap justify-end items-center`}
-                        >
-                            <a 
-                            onMouseEnter={() => handleMouseEnter([index,'info'])}
-                            onMouseLeave={handleMouseLeave} 
-                            href={`/admin/instructor/courses?${queryString}`}
-                            target='_blank'
-                            className={`w-full h-[3rem] flex justify-center items-center ${hoveredDetails.length > 0 && hoveredDetails[0] === index && hoveredDetails[1] === 'info' ? ' animate-bounce' : ''}`}>
+                        onClick={() => {
 
-                                {<FaInfoCircle size={14} className=' cursor-pointer' /> }
-                            </a>
-                            
-                        </div>;
+                            let items = currentItem.courseEntities;
+
+                            items.map(item => {
+                                item.startTime = convertTimeObjectToIsoString(item.startTime);
+                                item.endTime = convertTimeObjectToIsoString(item.endTime);
+                            });
+
+                            dispatch(setInstructorName(currentItem.fullName));
+                            dispatch(setCourseEntities(items));
+                            // console.log("Item", item);
+                            navigate('/admin/instructor/courses')
+                        }}
+                        className={`h-[3rem] ml-1 cursor-alias text-blue-600 font-bold flex justify-center items-center`}>
+
+                            <IoMdOpen />
+                        </div>
             }
         },
     ];
@@ -868,7 +871,7 @@ function AdminHome() {
     }
 
     const createNewCourseSubmit = async (data) => {
-        console.log("Create new course Data :-",data);
+        // console.log("Create new course Data :-",data);
         // console.log(data.assignToEmail);
 
         // include gameId also in data according to data.courseName value
@@ -890,7 +893,7 @@ function AdminHome() {
     }
 
     const createNewGameSubmit = async (data) => {
-        console.log("Create new game Data :-",data);
+        // console.log("Create new game Data :-",data);
 
         createNewGame(data,setRefreshData,setLoading,setMessages,setErrors);
     }
@@ -1080,7 +1083,7 @@ function AdminHome() {
 
                 {errors.length > 0 && 
                     <div className='w-full flex justify-center items-center mt-4'>
-                        <Messages messages={errors} messageType='errors' setMessages={setErrors} appearanceTime={10} />
+                        <Messages messages={errors} messageType='errors' setMessages={setErrors} appearanceTime={15} />
                     </div>
                 }
             </div>
@@ -1094,7 +1097,7 @@ function AdminHome() {
             </div>} */}
 
             {/* Crdate new game and Create new course form */}
-            <div className='w-[98%] md:w-[90%] my-6 flex justify-between items-center'>
+            <div className='w-[98%] md:w-[90%] mt-6 mb-6 md:mb-0 flex justify-between items-center'>
 
                 <div className=''>
                     {/* Create new game button section */}

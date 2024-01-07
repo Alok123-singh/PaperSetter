@@ -47,19 +47,19 @@ function MyProfile() {
         <div className="flex w-full h-auto flex-col my-5 justify-center items-center">
             <div className='w-full h-auto mb-4 flex justify-center items-center'>
                 {role === ROLES.PARTICIPANT && 
-                    <p className='text-3xl font-bold text-rose-500'>
+                    <p className='text-3xl font-bold text-rose-500 hover:text-rose-400'>
                         Student Profile
                     </p>
                 }
 
                 {role === ROLES.INSTRUCTOR && 
-                    <p className='text-3xl font-bold text-rose-500'>
+                    <p className='text-3xl font-bold text-rose-500 hover:text-rose-400'>
                         Instructor Profile
                     </p>
                 }
 
                 {role === ROLES.ADMIN && 
-                    <p className='text-3xl font-bold text-rose-500'>
+                    <p className='text-3xl font-bold text-rose-500 hover:text-rose-400'>
                         Admin Profile
                     </p>
                 }
@@ -107,10 +107,7 @@ function MyProfile() {
                     {/* Name Section */}
                     <div className="">
                         <div className='w-full rounded-md flex flex-col justify-center items-center'>
-                            {/* <div className='w-full text-2xl font-bold  flex justify-center items-center'>
-                                Full Name
-                            </div> */}
-                            <div className='w-full font-bold text-lg flex justify-center items-start'>
+                            <div className='w-full hover:text-gray-600 font-bold text-lg flex justify-center items-start'>
                                 {fullName}
                             </div>
                         </div>
@@ -169,25 +166,25 @@ function MyProfile() {
                 </div>
 
                 {/* Right-hand side with selected option details */}
-                <div className="w-full cursor-default h-auto md:h-[25rem] bg-gray-100 hover:bg-slate-100 rounded-md flex justify-center items-start lg:w-2/3 ">
+                <div className="w-full cursor-default h-auto md:h-[26rem] bg-gray-100 hover:bg-slate-100 rounded-md flex justify-center items-start lg:w-2/3 ">
                     <div className="w-[96%] h-full sm:w-1/2 p-1 flex flex-col justify-center items-start">
                         {/* Render the selected option component based on the state */}
                         {selectedOption === 'email' && 
                             <div className='w-full h-full rounded-md flex flex-col justify-start items-center'>
-                                <div className='w-full underline mb-2 text-3xl font-bold text-blue-500 flex justify-center items-center'>
+                                <div className='w-full underline mb-2 text-3xl font-bold text-blue-500 hover:text-blue-400 flex justify-center items-center'>
                                     Email
                                 </div>
-                                <div className='w-full font-semibold flex justify-center items-center'>
+                                <div className='w-full hover:text-gray-600 font-semibold flex justify-center items-center'>
                                     {email}
                                 </div>
                             </div>
                         }
                         {selectedOption === 'username' && 
                             <div className='w-full h-full  rounded-md flex flex-col justify-start items-center'>
-                                <div className='w-full underline mb-2  text-3xl font-bold text-blue-500 flex justify-center items-center'>
+                                <div className='w-full underline mb-2  text-3xl font-bold text-blue-500 hover:text-blue-400 flex justify-center items-center'>
                                     Username
                                 </div>
-                                <div className='w-full font-semibold flex justify-center items-start'>
+                                <div className='w-full hover:text-gray-600 font-semibold flex justify-center items-start'>
                                     {username}
                                 </div>
                             </div>

@@ -1,5 +1,6 @@
 import React,{ useId, useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { MdClose } from 'react-icons/md';
 import { Input1, Button1, Messages } from '../../index';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -71,6 +72,13 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
     return (
         <div className={`fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay2 bg-black bg-opacity-50 z-50  ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}}  onClick={handleClickOutside}>
             <div className={`relative overflow-y-auto max-h-[95%] w-[95%] md:w-3/4 lg:w-1/2 ${formData.formWidth && formData.formWidth} ${formData.formHeight && formData.formHeight}  bg-white p-[20px] rounded-md z-1001`}>
+
+                <div className="flex sm:hidden justify-end">
+                    <button onClick={onClose} className="cursor-pointer focus:outline-none">
+                        <MdClose size={24} className='text-red-400 border border-red-600' />
+                    </button>
+                </div>
+
                 <div className='space-y-1 mb-4 text-sm'>
                     <p className='pl-1 text-2xl font-bold'>{formData.title}</p>
                     <p className='pl-1'>{formData.desc}</p>

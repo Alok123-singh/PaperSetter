@@ -73,8 +73,18 @@ async function createNewCourse(
         setLoading(false);
         return (status);
     }
-    
 
+    // console.log("Licenses", data.licenses);
+    // console.log("Groups of five", data.groupOfFive);
+    // console.log("Groups of four", data.groupOfFour);
+
+    if(Number(data.licenses) !== (5*Number(data.groupOfFive) + 4*Number(data.groupOfFour))){
+        errors.push(`Number of licenses are not correctly distributed among groups of five and four for values Licenses (${data.licenses}), Number of groups of five (${data.groupOfFive}) and Number of groups of four (${data.groupOfFour})`);
+        setErrors(errors);
+        setLoading(false);
+        return (status);
+    }
+    
     // console.log("Create new course form data :- ",data);
     
     try{

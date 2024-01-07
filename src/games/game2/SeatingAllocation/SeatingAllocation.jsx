@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Pic1, Pic2 } from '../photos'
+import { Pic1 } from '../photos'
 import { Button1, Loading1 } from '../../../components'
 import { FaHome, FaQuestionCircle  } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { GAME_ENDPOINTS } from '../../../apiEndpoints/index';
-import { config } from '../../../configurations'
 import { setResult } from '../../../store/resultSlice';
 import { queries2 } from '../../../queries'
 import { useNavigate } from 'react-router-dom';
@@ -258,8 +256,19 @@ function SeatingAllocation() {
                         </Link>
                     </div>
 
-                    <div className='w-full mt-2 flex justify-center items-center'>
-                        <img className='w-[50rem] h-[22.1rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic1})`}} />
+                    <div className='w-[95%] text-lg text-white md:w-1/2 mt-2 space-y-3 flex flex-col justify-center items-start'>
+                        <p>
+                            Sample Overview :
+                        </p>
+                        <p>
+                            Hotel Star is situated in the centre of the city and enjoys the benefit of being closer to the airport and railway station. Hotel is busy all throughout the year with different guests arriving from corporate, travel agents, etc., and because of this it gets very important for them to manage the rush at their coffee shop. 
+                        </p>
+                        <p>
+                            You are appointed as the Restaurant Supervisor and your role is to manage the operations.
+                        </p>                            
+                        <p>
+                            In this round you will manage the seating arrangement.
+                        </p>
                     </div>
 
                     <div className='w-full mt-4 flex justify-center items-center'>
@@ -295,7 +304,7 @@ function SeatingAllocation() {
                     </div>
 
                     <div className='w-full mt-2 flex justify-center items-center'>
-                        <img className='w-[60rem] h-[24rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic2})`}} />
+                        <img className='w-[60rem] h-[24rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic1})`}} />
                     </div>
 
                     <div className='w-[98%] md:w-[80%] mt-3 flex flex-col md:flex-row justify-center md:justify-between items-center'>

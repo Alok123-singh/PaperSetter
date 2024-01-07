@@ -1,5 +1,5 @@
 import { useState,useEffect } from 'react';
-import { Pic1, Pic2, Pic3 } from '../photos'
+import { Pic1, Pic2 } from '../photos'
 import { Link } from 'react-router-dom';
 import { FaHome, FaQuestionCircle  } from 'react-icons/fa';
 import { queries1 } from '../../../queries'
@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../../store/resultSlice';
 import { Loading1, Button1 } from '../../../components/index'
-import { GAME_ENDPOINTS } from '../../../apiEndpoints/index';
-import { config } from '../../../configurations'
 import { saveResult } from '../../../apiFunctionalities'
 
 function InventoryManagement() {
@@ -394,8 +392,16 @@ function InventoryManagement() {
                         </Link>
                     </div>
 
-                    <div className='w-full mt-2 flex justify-center items-center'>
-                        <img className='w-[50rem] h-[22.1rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic1})`}} />
+                    <div className='w-[95%] text-lg text-white md:w-1/2 mt-2 space-y-3 flex flex-col justify-center items-start'>
+                        <p>
+                            Sample Overview :
+                        </p>
+                        <p>
+                            Hotel Star is situated in the centre of the city and enjoys the benefit of being closer to the airport and railway station. Hotel is busy all throughout the year with different guests arriving from corporate, travel agents, etc., and because of this it gets very important for them to manage the queries and room inventory.
+                        </p>
+                        <p>
+                            You are appointed as the Reservation Manager and your role is to manage the room inventory.
+                        </p>
                     </div>
 
                     <div className='w-full mt-4 flex justify-center items-center'>
@@ -431,7 +437,7 @@ function InventoryManagement() {
                     </div>
 
                     <div className='w-full mt-2 flex justify-center items-center'>
-                        <img className='w-[60rem] h-[24rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic2})`}} />
+                        <img className='w-[60rem] h-[24rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic1})`}} />
                     </div>
 
                     <div className='w-[98%] md:w-[80%] mt-3 flex flex-col md:flex-row justify-center md:justify-between items-center'>
@@ -476,7 +482,7 @@ function InventoryManagement() {
                     </div>
 
                     <div className='w-full mt-2 flex justify-center items-center'>
-                        <img className='w-[40rem] h-[29rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic3})`}} />
+                        <img className='w-[40rem] h-[29rem] rounded-lg bg-cover' style={{backgroundImage: `url(${Pic2})`}} />
                     </div>
 
                     <div className='w-[98%] md:w-[80%] mt-4 flex flex-col md:flex-row justify-center md:justify-between items-center'>

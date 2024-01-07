@@ -80,6 +80,8 @@ const initialState = {
         ]
     },
     // courseEntity : {},
+    courseEntities : [],
+    instructorName : '',
 };
 
 const courseSlice = createSlice({
@@ -89,10 +91,16 @@ const courseSlice = createSlice({
         setCourseEntity: (state,action) => {
             state.courseEntity = action.payload;
         },
+        setCourseEntities: (state,action) => {
+            state.courseEntities = action.payload;
+        },
+        setInstructorName: (state,action) => {
+            state.instructorName = action.payload;
+        }
     }
 
 });
 
-export const { setCourseEntity } = courseSlice.actions;
+export const { setCourseEntity, setCourseEntities, setInstructorName } = courseSlice.actions;
 
 export default courseSlice.reducer;

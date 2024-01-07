@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { TablePagination, Loading1, OverlayForm1, Button1, Messages } from '../../../components'
+import { TablePagination, CardPagination, Loading1, OverlayForm1, Button1, Messages } from '../../../components'
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdDescription } from 'react-icons/md';
 import { AiOutlineProfile } from 'react-icons/ai';
@@ -43,7 +43,8 @@ function EnrollGame() {
 
     const [selectedGroup, setSelectedGroup] = useState(null);
 
-    const [displayFormat,setDisplayFormat] = useState('Table');
+    const [displayFormat1,setDisplayFormat1] = useState('Table');
+    const [displayFormat2,setDisplayFormat2] = useState('Table');
     const [hoveredDetails, setHoveredDetails] = useState([]);
 
     const [showFormIndex1, setShowFormIndex1] = useState(null);
@@ -150,7 +151,7 @@ function EnrollGame() {
                 event: {
                     onMouseEnter: (index,item) => {
                         // alert('Entered')
-                        setHoveredDetails([index,'Name of the Group','groupName']);
+                        setHoveredDetails([index,'Name of the Group. Click to select this group','groupName']);
                     },
                     onMouseLeave: (index,item) => {
                         setHoveredDetails([]);
@@ -281,7 +282,121 @@ function EnrollGame() {
                 //     </a>
             } 
         },
-        
+    ];
+
+    const cardColumnsDescription1 = [
+        { // Group Name
+            header : 'Group Name',
+            dataKey: 'groupName', 
+            label: 'Group Name', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        console.log("Current Item", currentItem);
+                        setHoveredDetails([index,currentItem.groupName,'Name of the Group','groupName']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.groupName &&
+                            hoveredDetails[3] === 'groupName' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <FaInfoCircle size={16} className="text-blue-500" />
+                                        {hoveredDetails[2]}
+                                    </div>
+                                </div>
+                            )}
+                            {value}
+                            <MdDescription size={17} className=' ml-1' />
+                            
+                        </div>;
+            },
+            rowFunctionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex2 === null)
+                            setShowFormIndex2(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex2 === index && form(currentItem,selectGroupFormData,setShowFormIndex2,selectGroup)
+                }
+
+            },
+            dataRender: (index, value, currentItem) => {
+
+                return  <div
+                            className={` w-full h-full font-bold flex text-slate-500 flex-wrap justify-end items-center`}
+                        >
+                            {value}
+                            
+                        </div>;
+            } 
+        },
+        { // Students
+            header : 'Students',
+            dataKey: 'students', 
+            label: 'Students', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.groupName,'Students enrolled in this group','students']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.groupName &&
+                            hoveredDetails[3] === 'students' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            <AiOutlineProfile size={17} className='ml-1' />
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div className='flex flex-col space-y-3 justify-center items-center'>
+                            {currentItem.students !== null && currentItem.students.map((student,index) => (
+                                <div key={index}>
+                                    {student.fullName}
+                                </div>
+                            ))}
+                        </div>
+            }
+        },
     ];
 
     const tableColumnsDescription2 = [
@@ -424,7 +539,121 @@ function EnrollGame() {
                 //     </a>
             } 
         },
-        
+    ];
+
+    const cardColumnsDescription2 = [
+        { // Group Name
+            header : 'Group Name',
+            dataKey: 'groupName', 
+            label: 'Group Name', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        console.log("Current Item", currentItem);
+                        setHoveredDetails([index,currentItem.groupName,'Name of the Group','groupName']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`lg:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.groupName &&
+                            hoveredDetails[3] === 'groupName' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <FaInfoCircle size={16} className="text-blue-500" />
+                                        {hoveredDetails[2]}
+                                    </div>
+                                </div>
+                            )}
+                            {value}
+                            <MdDescription size={17} className=' ml-1' />
+                            
+                        </div>;
+            },
+            rowFunctionality: {
+                
+                event: {
+                    onClick : (index) => {
+                        if(showFormIndex2 === null)
+                            setShowFormIndex2(index);
+                    },
+                },
+                action: (currentItem,index) => {
+                    return showFormIndex2 === index && form(currentItem,selectGroupFormData,setShowFormIndex2,selectGroup)
+                }
+
+            },
+            dataRender: (index, value, currentItem) => {
+
+                return  <div
+                            className={` w-full h-full font-bold flex text-slate-500 flex-wrap justify-end items-center`}
+                        >
+                            {value}
+                            
+                        </div>;
+            } 
+        },
+        { // Students
+            header : 'Students',
+            dataKey: 'students', 
+            label: 'Students', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.groupName,'Students enrolled in this group','students']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.groupName &&
+                            hoveredDetails[3] === 'students' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            <AiOutlineProfile size={17} className='ml-1' />
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div className='flex flex-col space-y-3 justify-center items-center'>
+                            {currentItem.students !== null && currentItem.students.map((student,index) => (
+                                <div key={index}>
+                                    {student.fullName}
+                                </div>
+                            ))}
+                        </div>
+            }
+        },
     ];
 
     const handleMouseEnter = (details) => {
@@ -506,14 +735,54 @@ function EnrollGame() {
             <div className='w-full flex flex-col md:flex-row justify-evenly items-center'>
                 <div className='w-full sm:w-1/2 lg:w-1/3'>
                     
-                    {displayFormat === 'Table' && 
+                    {displayFormat1 === 'Table' && 
                         <TablePagination columnsDescription={tableColumnsDescription1} items={filteredItems1} title='Groups of Five Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
                     }
+
+                    {displayFormat1 === 'Card' && 
+                        <CardPagination columnsDescription={cardColumnsDescription1} items={filteredItems1} title='Groups of Five Students' showRowNumbers={true} columnsDesign='' rowsDesign='' />
+                    }
+
+                    {/* Select display format as Table or Card */}
+                    <div className='w-full mb-8 flex justify-center items-center'>
+                        <p className='text-green-600 font-lg font-bold cursor-default'>
+                            Select display option :
+                        </p>
+                        
+                        <select
+                            value={displayFormat1}
+                            onChange={ event => setDisplayFormat1(event.target.value) }
+                            className="flex justify-center items-center appearance-none bg-white border border-gray-400 text-gray-700 ml-6 py-2 px-4 rounded leading-tight focus:outline-none focus:border-gray-500"
+                        >
+                            <option value="Table">Table</option>
+                            <option value="Card">Card</option>
+                        </select>
+                    </div>
                 </div>
                 <div className='w-full sm:w-1/2 lg:w-1/3'>
-                    {displayFormat === 'Table' && 
+                    {displayFormat2 === 'Table' && 
                         <TablePagination columnsDescription={tableColumnsDescription2} items={filteredItems2} title='Groups of Four Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
                     }
+
+                    {displayFormat2 === 'Card' && 
+                        <CardPagination columnsDescription={cardColumnsDescription2} items={filteredItems2} title='Groups of Four Students' showRowNumbers={true} columnsDesign='' rowsDesign=''   />
+                    }
+
+                    {/* Select display format as Table or Card */}
+                    <div className='w-full mb-8 flex justify-center items-center'>
+                        <p className='text-green-600 font-lg font-bold cursor-default'>
+                            Select display option :
+                        </p>
+                        
+                        <select
+                            value={displayFormat2}
+                            onChange={ event => setDisplayFormat2(event.target.value) }
+                            className="flex justify-center items-center appearance-none bg-white border border-gray-400 text-gray-700 ml-6 py-2 px-4 rounded leading-tight focus:outline-none focus:border-gray-500"
+                        >
+                            <option value="Table">Table</option>
+                            <option value="Card">Card</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
