@@ -1,4 +1,4 @@
-import React,{ useId } from 'react';
+import React,{ useId, useState, useEffect } from 'react';
 import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
@@ -11,9 +11,21 @@ import moment from 'moment';
 
 
 function Form({ onSubmit, formData }) {
-    const { register, handleSubmit, watch, control, formState } = useForm();
+    const { register, handleSubmit, watch, control, formState, setValue } = useForm();
     const { errors } = formState;
     const id = useId();
+
+    const [dependencies, setDependencies] = useState(() => {
+        let array = [];
+        
+        formData.inputs.map((input) => {
+            if(input.autoGenerationPolicy){
+                array.push(watch(input.autoGenerationPolicy.sourceField));
+            }
+        });
+
+        return array;
+    });
 
     const addCourse = (data) => {
         onSubmit(data);
@@ -30,6 +42,24 @@ function Form({ onSubmit, formData }) {
           />
         );
     };
+
+    // Generic function to handle auto-generation based on policy
+    const generateValue = (field) => {
+        if (field.autoGenerationPolicy) {
+            const { sourceField, generationFunction } = field.autoGenerationPolicy;
+            const sourceValue = watch(sourceField); // Assuming watch is available
+            const generatedValue = generationFunction(sourceValue);
+            setValue(field.name, generatedValue);
+            // console.log("Auto generation run");
+        }
+    };
+
+
+    useEffect(() => {
+        // console.log("Inside useEffect");
+        formData.inputs.forEach((field) => generateValue(field));
+
+    }, [ [...dependencies] ]);
 
     return (
         <div className={`cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay3 ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} >

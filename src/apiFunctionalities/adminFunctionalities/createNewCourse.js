@@ -1,5 +1,6 @@
 import { config } from "../../configurations";
 import { ADMIN_ENDPOINTS } from "../../apiEndpoints";
+import { set } from "react-hook-form";
 
 function convertTimeObjectToIsoString(isoString) {
     // Create a new Date object from the ISO string
@@ -62,6 +63,16 @@ async function createNewCourse(
     // console.log("Type of startTime :-", typeof data.startTime);
     // console.log("startTime :-", data.startTime);
     // console.log("Create new course form data :- ",data);
+
+    setErrors(prev => prev.filter(err => err !== 'Number of groups of five can not be -1' && err !== 'Number of groups of fpur can not be -1'));
+
+    if(data.groupOfFive === -1 || data.groupOfFour === -1){
+        errors.push(`${data.groupOfFive === -1 && 'Number of groups of five can not be -1'}`)
+        errors.push(`${data.groupOfFour === -1 && 'Number of groups of four can not be -1'}`)
+        setErrors(errors);
+        setLoading(false);
+        return (status);
+    }
     
 
     // console.log("Create new course form data :- ",data);

@@ -1,4 +1,4 @@
-import React,{ useId } from 'react';
+import React,{ useId, useState, useEffect } from 'react';
 import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Input1, Button1 } from '../../index';
 import Datetime from 'react-datetime';
@@ -12,9 +12,21 @@ import moment from 'moment';
 
 function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
 
-    const { register, handleSubmit, watch, control, formState } = useForm();
+    const { register, handleSubmit, watch, control, formState, setValue } = useForm();
     const { errors } = formState;
     const id = useId();
+
+    const [dependencies, setDependencies] = useState(() => {
+        let array = [];
+        
+        formData.inputs.map((input) => {
+            if(input.autoGenerationPolicy){
+                array.push(watch(input.autoGenerationPolicy.sourceField));
+            }
+        });
+
+        return array;
+    });
 
     const addCourse = (data) => {
         onSubmit(data);
@@ -37,6 +49,24 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
           />
         );
     };
+
+     // Generic function to handle auto-generation based on policy
+     const generateValue = (field) => {
+        if (field.autoGenerationPolicy) {
+            const { sourceField, generationFunction } = field.autoGenerationPolicy;
+            const sourceValue = watch(sourceField); // Assuming watch is available
+            const generatedValue = generationFunction(sourceValue);
+            setValue(field.name, generatedValue);
+            // console.log("Auto generation run");
+        }
+    };
+
+
+    useEffect(() => {
+        // console.log("Inside useEffect");
+        formData.inputs.forEach((field) => generateValue(field));
+
+    }, [ [...dependencies] ]);
 
     return (
         <div className=" fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex justify-center items-center z-1000 modal-overlay bg-black bg-opacity-50 z-50" style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}} onClick={handleClickOutside}>
@@ -337,7 +367,8 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                                 defaultValue={parentData[input.defaultValue]}
                                                 placeholder={input.placeholder}
                                                 name={input.name}
-                                                disabled={input.disabled}
+                                                readOnly={input.readOnly || false}
+                                                // disabled={input.disabled}
                                                 {...register(input.name, { required: input.required })}
                                             />
 
@@ -349,7 +380,8 @@ function OverlayForm1({ onClose, onSubmit, formData, parentData }) {
                                     className='cursor-pointer'
                                     placeholder={input.placeholder}
                                     name={input.name}
-                                    disabled={input.disabled}
+                                    readOnly={input.readOnly || false}
+                                    // disabled={input.disabled}
                                     {...register(input.name, { required: input.required })}
                                 />
                             }

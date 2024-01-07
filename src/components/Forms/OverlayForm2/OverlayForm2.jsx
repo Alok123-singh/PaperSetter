@@ -1,4 +1,4 @@
-import React,{ useId, useState } from 'react';
+import React,{ useId, useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Input1, Button1, Messages } from '../../index';
 import Datetime from 'react-datetime';
@@ -11,8 +11,20 @@ import moment from 'moment';
 
 
 function OverlayForm2({ onClose, onSubmit, formData }) {
-    const { register, handleSubmit, watch, control, formState } = useForm();
-    // const { errors } = formState;
+    const { register, handleSubmit, watch, control, setValue } = useForm();
+
+    const [dependencies, setDependencies] = useState(() => {
+        let array = [];
+        
+        formData.inputs.map((input) => {
+            if(input.autoGenerationPolicy){
+                array.push(watch(input.autoGenerationPolicy.sourceField));
+            }
+        });
+
+        return array;
+    });
+
     const id = useId();
     const [errors, setErrors] = useState(formData.errors);
 
@@ -37,6 +49,24 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
           />
         );
     };
+
+    // Generic function to handle auto-generation based on policy
+    const generateValue = (field) => {
+        if (field.autoGenerationPolicy) {
+            const { sourceField, generationFunction } = field.autoGenerationPolicy;
+            const sourceValue = watch(sourceField); // Assuming watch is available
+            const generatedValue = generationFunction(sourceValue);
+            setValue(field.name, generatedValue);
+            // console.log("Auto generation run");
+        }
+    };
+
+
+    useEffect(() => {
+        // console.log("Inside useEffect");
+        formData.inputs.forEach((field) => generateValue(field));
+
+    }, [ [...dependencies] ]);
 
     return (
         <div className={`fixed cursor-default top-0 left-0 w-[100%] h-[100%] flex  items-center modal-overlay2 bg-black bg-opacity-50 z-50  ${(formData.formDesign && formData.formDesign.start) ? formData.formDesign.start : 'justify-center'} `} style={{backgroundColor : 'rgba(0, 0, 0, 0.5)'}}  onClick={handleClickOutside}>
@@ -133,7 +163,7 @@ function OverlayForm2({ onClose, onSubmit, formData }) {
                                                                 timeFormat="HH:mm"
                                                                 timeIntervals={15}
                                                                 dateFormat={input.dateFormat != undefined ? input.dateFormat : "MMMM d, yyyy h:mm aa"}  
-                                                                className='w-[18rem] px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
+                                                                className='w-[18rem] overflow-y-auto px-3 py-4 rounded-md bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-400 placeholder:text-gray-500'
                                                             />
                                                         )}
                                                         id={id}

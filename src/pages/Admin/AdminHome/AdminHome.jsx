@@ -53,7 +53,7 @@ function AdminHome() {
     const updateFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Instructor Username', type: 'text', placeholder: 'Instructor Username', name: 'username', required: true, defaultValue: 'username', },
+            { label: 'Instructor Username', type: 'text', placeholder: 'Instructor Username', name: 'username', required: true, defaultValue: 'username', readOnly : true },
             { label: 'New Password', type: 'password', placeholder: 'New Password', name: 'newPassword', required: true, defaultValue: 'password', },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
             // Add more input configurations as needed
@@ -73,7 +73,7 @@ function AdminHome() {
     const assignFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'email', required: true, defaultValue: 'email', },
+            { label: 'Email', type: 'text', placeholder: 'Instructor Email', name: 'email', required: true, defaultValue: 'email', readOnly : true },
             { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true },
             { label: 'Course Name', type: 'text', placeholder: 'Course Name', name: 'courseName', required: true },
             // { label: '', type: 'text', placeholder: 'Student Name', name: 'studentName', required: true }
@@ -897,6 +897,25 @@ function AdminHome() {
 
     const [courseCode, setCourseCode] = useState(() => generateUniqueCourseCode());
 
+    const findXandY = (targetValue) => {
+        if (targetValue < 0) {
+            console.log("The value is too small to find X and Y.");
+            return [-1, -1];
+        }
+      
+        let x = Math.floor(targetValue / 5);
+        
+        while (x >= 0) {
+            const remainder = targetValue - 5 * x;
+            if (remainder % 4 === 0) {
+                const y = remainder / 4;
+                return [x, y];
+            }
+            x--;
+        }
+      
+        return [-1, -1];
+    }
 
     const createNewCourseFormData = {
         inputs : [
@@ -908,11 +927,45 @@ function AdminHome() {
             { label: 'Course Code', type: 'text', placeholder: '', name: 'courseCode', required: true, defaultValue: courseCode, readOnly : true },
             // { label: 'Course Name', type: 'text', placeholder: '', name: 'courseName', required: true,  },
             { label: 'No. of Licenses / Users', type: 'text', placeholder: '', name: 'licenses', required: true,  },
-            { label: 'Number of Groups with 5 students', type: 'text', placeholder: '', name: 'groupOfFive', required: true,  },
-            { label: 'Number of Groups with 4 students', type: 'text', placeholder: '', name: 'groupOfFour', required: true,  },
+            { label: 'Number of Groups with 5 students', type: 'text', placeholder: '', name: 'groupOfFive', required: true, autoGenerationPolicy: {
+                    sourceField: 'licenses',
+                    generationFunction: (value) => {
+                        value = Number(value);
+                        
+                        const response = findXandY(value);
+                        return response[0];
+                    },
+                }, 
+            },
+            { label: 'Number of Groups with 4 students', type: 'text', placeholder: '', name: 'groupOfFour', required: true, autoGenerationPolicy: {
+                    sourceField: 'licenses',
+                    generationFunction: (value) => {
+                        value = Number(value);
+
+                        const response = findXandY(value);
+                        return response[1];
+                    },
+                }, 
+            },
             { label: 'Start Date & Time', type: 'dateAndTime2', placeholder: '', name: 'startTime', required: true,  },
-            { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true,  },
-            { label: 'Number of attempts', type: 'text', placeholder: '', name: 'attempts', required: true,  },
+            { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true, autoGenerationPolicy: {
+                    sourceField: 'startTime',
+                    generationFunction: (value) => {
+                        // console.log("Type of",typeof value);;
+                        // console.log("Value",value);
+
+                        if (Array.isArray(value) && value.length > 0 && value[0] instanceof Date) {
+                            // Access the first element (assumed to be a Date object)
+                            const dateObject = value[0];
+                            
+                            // Increment the hours by 1
+                            dateObject.setHours(dateObject.getHours() + 1);
+                        }
+                        return (value);
+                    },
+                }, 
+            },
+            { label: 'Number of attempts', type: 'text', placeholder: '', name: 'attempts', required: true, defaultValue : 5,  },
             // Add more input configurations as needed
         ],
         buttons : [

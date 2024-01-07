@@ -60,7 +60,7 @@ function InstructorHome() {
     const editAttemptsFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', },
+            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', readOnly : true },
             { label: 'No of Attempts', type: 'text', placeholder: 'Student Course Attempts', name: 'studentAttempts', required: true, defaultValue: 'attempts', },
             // Add more input configurations as needed
         ],
@@ -79,7 +79,7 @@ function InstructorHome() {
     const editArchiveFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', },
+            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', readOnly : true },
             { label: 'Archive', type: 'select', options : ['No','Yes'], placeholder: 'Select archive option', name: 'archive', required: true, defaultValue: 'Select archive option', },
             // { label: 'Checkbox', type: 'checkbox', options : ['Yes','No'], placeholder: 'Checkbox', name: 'bad', required: true, defaultValue: 'bad' },
             // { label: 'Radio', type: 'radio', options : ['Yes','No'], placeholder: 'Radio', name: 'bad', required: true, defaultValue: 'bad' },
@@ -100,9 +100,10 @@ function InstructorHome() {
     const editScheduleFormData = {
         inputs : [
             // Define your form inputs here
-            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', },
+            { label: 'Course Code', type: 'text', placeholder: 'Course Code', name: 'courseCode', required: true, defaultValue: 'courseCode', readOnly : true },
             { label: 'Start Time', type: 'dateAndTime2', placeholder: 'Start Time', name: 'startTime', required: true, defaultValue: 'startTime',  },
-            { label: 'End Time', type: 'dateAndTime2', placeholder: 'End Time', name: 'endTime', required: true, defaultValue: 'endTime', },
+            { label: 'End Time', type: 'dateAndTime2', placeholder: 'End Time', name: 'endTime', required: true, defaultValue: 'endTime', 
+            },
             // Add more input configurations as needed
         ],
         buttons : [
