@@ -951,23 +951,7 @@ function AdminHome() {
                 }, 
             },
             { label: 'Start Date & Time', type: 'dateAndTime2', placeholder: '', name: 'startTime', required: true,  },
-            { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true, autoGenerationPolicy: {
-                    sourceField: 'startTime',
-                    generationFunction: (value) => {
-                        // console.log("Type of",typeof value);;
-                        // console.log("Value",value);
-
-                        if (Array.isArray(value) && value.length > 0 && value[0] instanceof Date) {
-                            // Access the first element (assumed to be a Date object)
-                            const dateObject = value[0];
-                            
-                            // Increment the hours by 1
-                            dateObject.setHours(dateObject.getHours() + 1);
-                        }
-                        return (value);
-                    },
-                }, 
-            },
+            { label: 'End Date & Time', type: 'dateAndTime2', placeholder: '', name: 'endTime', required: true },
             { label: 'Number of attempts', type: 'text', placeholder: '', name: 'attempts', required: true, defaultValue : 5,  },
             // Add more input configurations as needed
         ],

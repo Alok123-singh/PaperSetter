@@ -1022,13 +1022,13 @@ function StudentsEnrolled() {
 
             {/* Groups display section */}
             <div className='w-full flex flex-col md:flex-row justify-evenly items-center'>
-                <div className='w-full sm:w-1/2 lg:w-1/3'>
+                <div className={`w-full sm:w-1/2 lg:w-1/3 ${filteredItems1.length === 0 && 'hidden'}`}>
                     
-                    {displayFormat1 === 'Table' && 
+                    {displayFormat1 === 'Table' && filteredItems1.length > 0 && 
                         <TablePagination columnsDescription={tableColumnsDescription1} items={filteredItems1} title='Groups of Five Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
                     }
 
-                    {displayFormat1 === 'Card' && 
+                    {displayFormat1 === 'Card' && filteredItems1.length > 0 && 
                         <CardPagination columnsDescription={cardColumnsDescription1} items={filteredItems1} title='Groups of Five Students' showRowNumbers={true} columnsDesign='' rowsDesign='' />
                     }
 
@@ -1048,7 +1048,7 @@ function StudentsEnrolled() {
                         </select>
                     </div>
                 </div>
-                <div className='w-full sm:w-1/2 lg:w-1/3'>
+                <div className={`w-full sm:w-1/2 lg:w-1/3 ${filteredItems2.length === 0 && 'hidden'}`}>
                     {displayFormat2 === 'Table' && 
                         <TablePagination columnsDescription={tableColumnsDescription2} items={filteredItems2} title='Groups of Four Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
                     }

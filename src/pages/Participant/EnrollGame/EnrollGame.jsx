@@ -733,7 +733,7 @@ function EnrollGame() {
 
             {/* Groups display section */}
             <div className='w-full flex flex-col md:flex-row justify-evenly items-center'>
-                <div className='w-full sm:w-1/2 lg:w-1/3'>
+                <div className={`w-full sm:w-1/2 lg:w-1/3 ${filteredItems1.length === 0 && 'hidden'}`}>
                     
                     {displayFormat1 === 'Table' && 
                         <TablePagination columnsDescription={tableColumnsDescription1} items={filteredItems1} title='Groups of Five Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
@@ -759,7 +759,7 @@ function EnrollGame() {
                         </select>
                     </div>
                 </div>
-                <div className='w-full sm:w-1/2 lg:w-1/3'>
+                <div className={`w-full sm:w-1/2 lg:w-1/3 ${filteredItems2.length === 0 && 'hidden'}`}>
                     {displayFormat2 === 'Table' && 
                         <TablePagination columnsDescription={tableColumnsDescription2} items={filteredItems2} title='Groups of Four Students' showRowNumbers={false} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
                     }

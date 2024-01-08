@@ -14,6 +14,7 @@ function CardPagination({
     roundedDesign = '',
     columnsDesign = '',
     rowsDesign = '',
+    errorMessage = 'No Records Found!',
     enableExcelDownload=false,
     excludedFields = ["id"],
     filename='',
@@ -269,7 +270,7 @@ function CardPagination({
         <div className='flex flex-col justify-center items-center h-[15rem] space-y-5'>
             <div className="flex flex-col items-center justify-center">
                 <MdError style={{ fontSize: '3rem', marginRight: '0.5rem' }} />
-                <span className="font-bold text-lg">No Records Found!</span>
+                <span className="font-bold text-lg">{errorMessage}</span>
             </div>
         </div>
         )

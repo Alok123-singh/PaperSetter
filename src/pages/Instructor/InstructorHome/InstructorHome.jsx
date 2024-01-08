@@ -209,132 +209,132 @@ function InstructorHome() {
     };
 
     const [items,setItems] = useState([
-        {
-            courseCode : generateUniqueCourseCode(),
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Logistics Practice',
+        //     courseName : 'Logistics Practice',
             
-            studentRegistered : '0',
+        //     studentRegistered : '0',
 
-            attempts : '3',
+        //     attempts : '3',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '15',
+        //     licenses : '15',
 
-            startTime : new Date('2024-01-26T13:00:00'),
+        //     startTime : new Date('2024-01-26T13:00:00'),
 
-            endTime : new Date('2024-01-26T14:00:00'),
+        //     endTime : new Date('2024-01-26T14:00:00'),
 
-            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+        //     // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
 
-            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
-        },
-        {
-            courseCode : generateUniqueCourseCode(),
+        //     // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        // },
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Nego Test',
+        //     courseName : 'Nego Test',
             
-            studentRegistered : '1',
+        //     studentRegistered : '1',
 
-            attempts : '5',
+        //     attempts : '5',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '2',
+        //     licenses : '2',
 
-            startTime : new Date('2024-01-28T16:00:00'),
+        //     startTime : new Date('2024-01-28T16:00:00'),
 
-            endTime : new Date('2024-01-28T18:00:00'),
+        //     endTime : new Date('2024-01-28T18:00:00'),
 
-            // startTime : parseDateAndTime('28/01/2024 04:00 AM'),
+        //     // startTime : parseDateAndTime('28/01/2024 04:00 AM'),
 
-            // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
-        },
-        {
-            courseCode : generateUniqueCourseCode(),
+        //     // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
+        // },
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Inventory Management',
+        //     courseName : 'Inventory Management',
             
-            studentRegistered : '7',
+        //     studentRegistered : '7',
 
-            attempts : '5',
+        //     attempts : '5',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '2',
+        //     licenses : '2',
 
-            startTime : new Date('2024-01-20T14:00:00'),
+        //     startTime : new Date('2024-01-20T14:00:00'),
 
-            endTime : new Date('2024-01-20T16:00:00'),
+        //     endTime : new Date('2024-01-20T16:00:00'),
 
-            // startTime : parseDateAndTime('28/01/2024 04:00 AM'),
+        //     // startTime : parseDateAndTime('28/01/2024 04:00 AM'),
 
-            // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
-        },
-        {
-            courseCode : generateUniqueCourseCode(),
+        //     // endTime : parseDateAndTime('28/01/2024 06:00 PM'),
+        // },
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Logistics Practice2',
+        //     courseName : 'Logistics Practice2',
             
-            studentRegistered : '0',
+        //     studentRegistered : '0',
 
-            attempts : '3',
+        //     attempts : '3',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '15',
+        //     licenses : '15',
 
-            startTime : new Date('2024-01-24T13:00:00'),
+        //     startTime : new Date('2024-01-24T13:00:00'),
 
-            endTime : new Date('2024-01-30T14:00:00'),
+        //     endTime : new Date('2024-01-30T14:00:00'),
 
-            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+        //     // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
 
-            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
-        },
-        {
-            courseCode : generateUniqueCourseCode(),
+        //     // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        // },
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Logistics Practice3',
+        //     courseName : 'Logistics Practice3',
             
-            studentRegistered : '0',
+        //     studentRegistered : '0',
 
-            attempts : '3',
+        //     attempts : '3',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '15',
+        //     licenses : '15',
 
-            startTime : new Date('2024-01-21T13:00:00'),
+        //     startTime : new Date('2024-01-21T13:00:00'),
 
-            endTime : new Date('2024-01-21T14:00:00'),
+        //     endTime : new Date('2024-01-21T14:00:00'),
 
-            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+        //     // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
 
-            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
-        },
-        {
-            courseCode : generateUniqueCourseCode(),
+        //     // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        // },
+        // {
+        //     courseCode : generateUniqueCourseCode(),
 
-            courseName : 'Logistics Practice4',
+        //     courseName : 'Logistics Practice4',
             
-            studentRegistered : '0',
+        //     studentRegistered : '0',
 
-            attempts : '3',
+        //     attempts : '3',
 
-            archive : 'No',
+        //     archive : 'No',
 
-            licenses : '15',
+        //     licenses : '15',
 
-            startTime : new Date('2024-01-22T13:00:00'),
+        //     startTime : new Date('2024-01-22T13:00:00'),
 
-            endTime : new Date('2024-01-22T14:00:00'),
+        //     endTime : new Date('2024-01-22T14:00:00'),
 
-            // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
+        //     // startTime : parseDateAndTime('26/01/2024 12:00 AM'),
 
-            // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
-        },
+        //     // endTime : parseDateAndTime('26/01/2024 02:00 PM'),
+        // },
     ]);
 
     function convertIsoStringToObject(isoString) {
@@ -1299,11 +1299,11 @@ function InstructorHome() {
             </div>
 
             {displayFormat === 'Table' && 
-                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border'  />
+                <TablePagination columnsDescription={tableColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='cursor-default bg-[#a7b1c7] border-gray-500 text-slate-800 border' rowsDesign='hover:bg-gray-200 cursor-default border' errorMessage='No Courses Found!' />
             }
             
             {displayFormat === 'Card' && 
-                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign='' />
+                <CardPagination columnsDescription={cardColumnsDescription} items={filteredItems} showRowNumbers={true} columnsDesign='' rowsDesign='' errorMessage='No Courses Found!' />
             }
             
             {/* Select display format as Table or Card */}

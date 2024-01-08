@@ -56,13 +56,14 @@ async function createNewCourse(
     setLoading(true);
     let status = false;
 
-    
+    console.log("New course data", data);    
     // console.log("startTime :-", data.startTime);
     data.startTime = convertTimeObjectToIsoString(data.startTime[0]);
     data.endTime = convertTimeObjectToIsoString(data.endTime[0]);
     // console.log("Type of startTime :-", typeof data.startTime);
     // console.log("startTime :-", data.startTime);
     // console.log("Create new course form data :- ",data);
+    // return;
 
     setErrors(prev => prev.filter(err => err !== 'Number of groups of five can not be -1' && err !== 'Number of groups of fpur can not be -1'));
 

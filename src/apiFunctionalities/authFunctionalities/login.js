@@ -42,11 +42,14 @@ async function login(
                 body: JSON.stringify(data), // Convert the data to a JSON string
             });
             data2 = await response.json();
-            console.log("Data2",data2);
+            // console.log("Data2",data2);
 
             if((data2.validateByEmailOTP === true) && validateByOtp === false){
                 setValidateByOtp(true);
                 setMessage('OTP has been sent to mail and is valid for 30 minutes');
+                dispatch(setFullName(data2.fullName));
+                dispatch(setEmail(data2.email));
+                dispatch(setUsername(data2.username));
                 // console.log('OTP sent to mail');
                 setLoading(false);
                 return;
@@ -73,9 +76,6 @@ async function login(
             // console.log('Data type of data3',typeof data3);
 
             if(data3.message === undefined){
-                dispatch(setFullName(data2.fullName));
-                dispatch(setEmail(data2.email));
-                dispatch(setUsername(data2.username));
                 dispatch(setLoginStatus(true));
                 dispatch(setRole(ROLES.ADMIN));
                 
