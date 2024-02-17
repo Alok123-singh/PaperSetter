@@ -1,9 +1,9 @@
 import React from 'react'
 import { LogoImage } from '../../assets'
 
-function Logo({width = '100px'}) {
+function Logo({width = '300px'}) {
     return (
-        <img className='w-[4rem] h-[3rem] rounded-lg bg-cover' style={{backgroundImage: `url(${LogoImage})`}} />
+        <img className='w-[8.5rem] h-[1.7rem] flex justify-center items-center rounded-sm bg-cover' style={{backgroundImage: `url(${LogoImage})`}} />
     )
 }
 

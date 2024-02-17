@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button3, PictureUpload, Messages } from '../../../../components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaHome  } from 'react-icons/fa';
 import { getProfilePicture } from '../../../../apiFunctionalities';
 import { ROLES } from '../../../../roles'
 import { setLoginStatus } from '../../../../store/authSlice'
@@ -45,7 +46,7 @@ function MyProfile() {
 
     return (
         <div className="flex w-full h-auto flex-col my-5 justify-center items-center">
-            <div className='w-full h-auto mb-4 flex justify-center items-center'>
+            <div className='w-full h-auto mb-1 flex justify-center items-center'>
                 {role === ROLES.PARTICIPANT && 
                     <p className='text-3xl font-bold text-rose-500 hover:text-rose-400'>
                         Student Profile
@@ -63,6 +64,12 @@ function MyProfile() {
                         Admin Profile
                     </p>
                 }
+            </div>
+
+            <div className=' w-[98%] sm:w-[57%] mb-4 flex justify-end items-center'>
+                <Link to={'/'}>
+                    <FaHome size={25} className='text-emerald-500' />
+                </Link>
             </div>
 
             <div className={`w-3/4 flex justify-center items-center ${(messages.length > 0 || errors.length > 0) && 'mb-9'}`}>

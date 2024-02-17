@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 function AdminHome() {
 
     const [loading, setLoading] = useState(false);
-    const [showAddCourse, setShowAddCourse] = useState(false);
     const [errors,setErrors] = useState([]);
     const [messages,setMessages] = useState([]);
 
@@ -265,7 +264,7 @@ function AdminHome() {
                     {value}
                   </div>
                 );
-              },
+            },
               
             dataRender: (index, value, currentItem) => {
                 return  <div
@@ -1080,7 +1079,7 @@ function AdminHome() {
                     }
             </div>} */}
 
-            {/* Crdate new game and Create new course form */}
+            {/* Create new game and Create new course form */}
             <div className='w-[98%] md:w-[90%] mt-6 mb-6 md:mb-0 flex justify-between items-center'>
 
                 <div className=''>

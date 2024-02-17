@@ -17,6 +17,39 @@ function Courses() {
     const instructorName = useSelector(state => state.course.instructorName);
     const courseEntities = useSelector(state => state.course.courseEntities);
 
+    function formatToCustomString(dateTimeString, showTime = true) {
+        // Try to parse the input string into a Date object
+        const dateObject = new Date(dateTimeString);
+      
+        // Check if the parsing was successful and it's a valid Date object
+        if (!isNaN(dateObject.getTime())) {
+            // If it's a valid Date object, return the custom formatted string
+            let options = {};
+            if(showTime === true){
+                options = {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                };
+            }
+            else{
+                options = {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                };
+            }
+            return dateObject.toLocaleString('en-US', options);
+        } 
+        else {
+          // If parsing fails, return the original input (or handle it as needed)
+          return dateTimeString;
+        }
+    }
+
 
     const tableColumnsDescription = [
         { // Course Code
@@ -118,6 +151,55 @@ function Courses() {
                         </div>;
             },
         },
+        { // Created Date
+            header : 'Created Date',
+            dataKey: 'createdDate', 
+            label: 'Created Date', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,item) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,'Date when course was created','createdDate']);
+                    },
+                    onMouseLeave: (index,item) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index, value) => {
+                return (
+                  <div
+                    className={`lg:cursor-help w-full h-full flex flex-wrap justify-center items-center relative ${
+                      hoveredDetails.length > 0 &&
+                      hoveredDetails[0] === index &&
+                      hoveredDetails[2] === 'createdDate'
+                        ? 'z-10'
+                        : 'z-1'
+                    }`}
+                  >
+                    {hoveredDetails.length > 0 &&
+                      hoveredDetails[0] === index &&
+                      hoveredDetails[2] === 'createdDate' && (
+                        <div
+                          className={`hidden lg:flex w-[10rem] justify-center items-center text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                        >
+                          <div className='flex flex-col justify-center items-center'>
+                            <FaInfoCircle size={16} className="text-blue-500" />
+                            {hoveredDetails[1]}
+                          </div>
+                        </div>
+                    )}
+                    {value}
+                  </div>
+                );
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div className='w-full flex justify-center items-center text-center'>
+                            {formatToCustomString(value,false)}
+                        </div>;
+            },
+        },
         
     ];
 
@@ -213,6 +295,53 @@ function Courses() {
                             className={` w-full h-full font-bold flex text-slate-500 flex-wrap justify-end items-center`}
                         >
                             {value}
+                            
+                        </div>;
+            }
+        },
+        { // Created Date 
+            header : 'Created Date',
+            dataKey: 'createdDate', 
+            label: 'Created Date', 
+            columnFunctionality : {
+                event: {
+                    onMouseEnter: (index,value,currentItem) => {
+                        // alert('Entered')
+                        setHoveredDetails([index,currentItem.courseCode,'Date when course was created','createdDate']);
+                    },
+                    onMouseLeave: (index,value,currentItem) => {
+                        setHoveredDetails([]);
+                    }
+                },
+    
+            },
+            columnRender: (index,value,currentItem) => {
+                return <div
+                            // onMouseEnter={() => handleMouseEnter([index,currentItem.courseCode,'editSchedulecolumn'])}
+                            onMouseLeave={handleMouseLeave} 
+                            className={`g:cursor-help w-full h-full flex flex-wrap text-start justify-start items-center relative `}
+                        >
+                            {hoveredDetails.length > 0 &&
+                            hoveredDetails[0] === index && hoveredDetails[1] === currentItem.courseCode &&
+                            hoveredDetails[3] === 'createdDate' && (
+                                <div
+                                className={`hidden lg:flex w-[10rem] text-center justify-center items-center  text-sm absolute bottom-full left-1/2 transform -translate-x-1/2 bg-white p-2 px-2 rounded shadow-md border border-gray-300 z-1001`}
+                                >
+                                <div className='flex flex-col justify-center items-center'>
+                                    <FaInfoCircle size={16} className="text-blue-500" />
+                                    {hoveredDetails[2]}
+                                </div>
+                                </div>
+                            )}
+                            {value}
+                            
+                        </div>;
+            },
+            dataRender: (index, value, currentItem) => {
+                return  <div
+                            className={` w-full h-full font-bold flex text-slate-500 flex-wrap justify-end items-center`}
+                        >
+                            {formatToCustomString(value,false)}
                             
                         </div>;
             }

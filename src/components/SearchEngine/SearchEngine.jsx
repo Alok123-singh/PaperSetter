@@ -410,7 +410,11 @@ const SearchEngine = (
         <div className='w-[98%] relative flex justify-center items-center' >
             <div ref={searchRef} className={`flex flex-col justify-center w-[90%] sm:w-[50%] md:w-[50%] lg:w-[30%] items-center ${width}`}>
                 {/* Input field section */}
-                <div className='w-full relative'>
+                <div 
+                className='w-full relative' 
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                >
                     <Input1
                         type="text"
                         placeholder={formatPlaceholder()}
@@ -421,8 +425,6 @@ const SearchEngine = (
                         }}
                         onChange={(event) => handleInputChange(event)}
                         onKeyDown={(event) => handleKeyDown(event)}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
                         className={`${isHovered === true ? 'pr-2 sm:pr-7' : 'pr-2'} h-[2.6rem] ${highlightedIndex === -1 && 'focus:bg-slate-200 hover:bg-gray-100 '}`}
                     />
                     

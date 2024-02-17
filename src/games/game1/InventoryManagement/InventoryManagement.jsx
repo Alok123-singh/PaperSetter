@@ -123,7 +123,6 @@ function InventoryManagement() {
     };
 
     useEffect(() => {
-        
         if(index <= queries.length){
             const currentQuery = queries[index];
             setQuery(() => currentQuery);
@@ -163,9 +162,9 @@ function InventoryManagement() {
         }
 
         // console.log("Index",index);
-        console.log("Matrix",matrix);
-        console.log("Current Query",query);
-        console.log("Query No.",index);
+        // console.log("Matrix",matrix);
+        // console.log("Current Query",query);
+        // console.log("Query No.",index);
 
         if(index > queries.length){
             
@@ -173,12 +172,11 @@ function InventoryManagement() {
 
             saveResult({score: result, examType: 'INVENTORY_MANAGEMENT', courseCode: courseCode, email: email, time: '', resultDescription : 'Total number of rooms occupied in the exam'},queries.length,'/inventory-management/result', dispatch, navigate, setResult, setLoading, setError);
 
-            console.log("Game Ended");
+            // console.log("Game Ended");
 
         }
 
     }, [index]);
-
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -191,11 +189,11 @@ function InventoryManagement() {
                     if(!text) return;
 
                     setPrevMatrix(() => matrix);
-                    console.log("Information about Query No : ",index);
-                    console.log("Check matrix",checkMatrix);
-                    console.log("Selectable column",selectableColumn);
-                    console.log("Selectable Row",selectableRow);
-                    console.log("------------------------------------");
+                    // console.log("Information about Query No : ",index);
+                    // console.log("Check matrix",checkMatrix);
+                    // console.log("Selectable column",selectableColumn);
+                    // console.log("Selectable Row",selectableRow);
+                    // console.log("------------------------------------");
 
                     const showMessage = (status) => {
                         // const text = document.querySelector('.queryShow');
@@ -240,7 +238,7 @@ function InventoryManagement() {
     // Step 2: Save the matrix to local storage whenever it changes
     useEffect(() => {
     if(matrix.length === 0) return;
-        console.log("Matrix stored in local storage !");
+        // console.log("Matrix stored in local storage !");
         localStorage.setItem('matrix', JSON.stringify(matrix));
         // console.log("Matrix ",matrix);
     }, [matrix]);

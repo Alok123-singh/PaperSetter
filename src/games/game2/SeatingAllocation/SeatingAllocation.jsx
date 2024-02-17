@@ -76,8 +76,8 @@ function SeatingAllocation() {
 
                     // Execute your function every 30 seconds
 
-                    console.log("Information about Query No : ",index);
-                    console.log("------------------------------------");
+                    // console.log("Information about Query No : ",index);
+                    // console.log("------------------------------------");
 
                     const text = document.querySelector('.queryShow');
                     if(!text) return;
@@ -101,7 +101,7 @@ function SeatingAllocation() {
                     if(selectedTable !== -1){
                         let tempSelectedTables = selectedTables;
                         tempSelectedTables.push([index, query.seatsRequired, selectedTable]);
-                        console.log('Selected Tables',selectedTables);
+                        // console.log('Selected Tables',selectedTables);
 
                         setSelectedTables(tempSelectedTables);
                     }
@@ -113,7 +113,7 @@ function SeatingAllocation() {
                     setError('');
 
                     if(index === queries.length){
-                        console.log("Game Ended !");
+                        // console.log("Game Ended !");
                         const result = calculateResult();
 
                         saveResult({score: result, examType: 'SEATING_ALLOCATION', courseCode: courseCode, email: email, time: '', resultDescription : 'Total number of seats that got reserved in the test to total capacity of all seats in the hotel.'},queries.length,'/seating-allocation/result', dispatch, navigate, setResult, setLoading, setError);

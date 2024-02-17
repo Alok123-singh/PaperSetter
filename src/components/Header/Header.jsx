@@ -100,17 +100,17 @@ function Header() {
 
                     {/* for large devices */}
                     <div className='w-full hidden sm:flex'>
-                        <div className='w-1/3'>
+                        <div className='w-1/3 flex justify-start items-center'>
                             <Link to='/' >
-                                <Logo width='70px'   />
+                                <Logo  />
                             </Link>
                         </div>
 
                         <div className={`w-1/3 flex justify-center items-center`}>
 
-                            <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
+                            {/* <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
                                 SIMLEARN
-                            </div>
+                            </div> */}
                             
                         </div>
 
@@ -232,9 +232,9 @@ function Header() {
                                     <Logo width='70px'   />
                                 </Link>
 
-                                <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
+                                {/* <div className='flex justify-center items-center text-xl cursor-default font-sans font-bold text-green-600'>
                                         SIMLEARN
-                                </div>
+                                </div> */}
 
                                 <div className='flex sm:hidden'>
                                     <button 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Loading1, SearchEngine, TablePagination, CardPagination, OverlayForm1, Messages } from '../../../components/index'
-import { FaPencilAlt, FaInfoCircle, FaBell,  } from 'react-icons/fa';
+import { FaPencilAlt, FaInfoCircle, FaBell } from 'react-icons/fa';
 import { IoMdOpen } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';

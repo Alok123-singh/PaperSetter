@@ -103,7 +103,7 @@ async function createNewCourse(
         
         if(response.status === 200){
             setRefreshData(prev =>!prev);
-            messages.push(`Successfully create new course and assigned ${data.courseName} with course code ${data.courseCode} having course duration from ${formatToCustomString(data.startTime)} to ${formatToCustomString(data.endTime)}, to Instructor ${data.fullName} with email id ${data.assignToEmail} with number of licenses ${data.licenses}`)
+            messages.push(`Successfully created new course and assigned ${data.courseName} with course code ${data.courseCode} having course duration from ${formatToCustomString(data.startTime)} to ${formatToCustomString(data.endTime)}, to Instructor ${data.fullName} with email id ${data.assignToEmail} with number of licenses ${data.licenses}`)
 
             // console.log("For submitted to backend");
             status = true;
